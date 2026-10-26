@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>UPTex TI · Portal y Sistema de Gestión de Laboratorios</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.material-symbols-outlined{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;font-size:20px;line-height:1;display:inline-block;text-transform:none;letter-spacing:normal;word-wrap:normal;white-space:nowrap;direction:ltr;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-surface":"#1b1c18","on-surface-variant":"#404944","on-secondary-fixed-variant":"#16512c","secondary":"#316a42","on-secondary-fixed":"#00210c","inverse-primary":"#9ad3b7","tertiary":"#675a4e","on-secondary-container":"#377047","surface-container-high":"#eae8e1","surface-dim":"#dbdad3","tertiary-fixed":"#f2dfd0","outline":"#707973","surface-container":"#efeee7","primary":"#2f664f","primary-fixed-dim":"#9ad3b7","error-container":"#ffdad6","surface-tint":"#326852","surface-container-lowest":"#ffffff","outline-variant":"#c0c9c2","primary-fixed":"#b5efd2","on-primary-fixed":"#002115","on-error":"#ffffff","tertiary-fixed-dim":"#d5c3b5","secondary-fixed-dim":"#98d4a4","surface-container-low":"#f5f4ec","on-tertiary-fixed":"#231a11","primary-container":"#497f67","error":"#ba1a1a","on-secondary":"#ffffff","on-tertiary":"#ffffff","on-primary-container":"#f5fff7","inverse-on-surface":"#f2f1e9","secondary-fixed":"#b3f1be","on-primary":"#ffffff","tertiary-container":"#807265","on-error-container":"#93000a","surface-variant":"#e4e3db","secondary-container":"#b3f1be","background":"#fbf9f2","on-background":"#1b1c18","on-primary-fixed-variant":"#16503b","surface":"#fbf9f2","on-tertiary-fixed-variant":"#514539","on-tertiary-container":"#fffbff","surface-container-highest":"#e4e3db","inverse-surface":"#30312c","surface-bright":"#fbf9f2"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-sm":"0.5rem","space-xl":"2rem","space-lg":"1.5rem","space-md":"1rem","space-xs":"0.25rem","margin":"2rem"},"fontFamily":{"headline-xl":["Work Sans"],"body-lg":["Work Sans"],"numeric-table":["Work Sans"],"body-md":["Work Sans"],"label-lg":["Work Sans"],"body-sm":["Work Sans"],"label-md":["Work Sans"],"headline-sm":["Work Sans"],"headline-md":["Work Sans"],"label-sm":["Work Sans"],"headline-lg":["Work Sans"]},"fontSize":{"headline-xl":["2.25rem",{"lineHeight":"2.75rem","letterSpacing":"-0.02em","fontWeight":"800"}],"body-lg":["1rem",{"lineHeight":"1.5rem","fontWeight":"400"}],"numeric-table":["0.875rem",{"lineHeight":"1.25rem","fontWeight":"500"}],"body-md":["0.875rem",{"lineHeight":"1.25rem","fontWeight":"400"}],"label-lg":["0.875rem",{"lineHeight":"1.25rem","letterSpacing":"0.01em","fontWeight":"500"}],"body-sm":["0.75rem",{"lineHeight":"1rem","fontWeight":"400"}],"label-md":["0.75rem",{"lineHeight":"1rem","letterSpacing":"0.02em","fontWeight":"500"}],"headline-sm":["1.125rem",{"lineHeight":"1.5rem","letterSpacing":"0em","fontWeight":"700"}],"headline-md":["1.375rem",{"lineHeight":"1.75rem","letterSpacing":"-0.01em","fontWeight":"700"}],"label-sm":["0.6875rem",{"lineHeight":"0.875rem","letterSpacing":"0.05em","fontWeight":"700"}],"headline-lg":["1.75rem",{"lineHeight":"2.25rem","letterSpacing":"-0.015em","fontWeight":"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-surface-container-highest"><div class="h-16 px-margin flex items-center justify-between gap-space-lg border-b border-surface-container-highest"><div class="flex items-center gap-space-md shrink-0"><div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[22px]">terminal</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface leading-tight">UPTex TI</span><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Portal y Gestión de Laboratorios</span></div></div><div class="flex-1 max-w-2xl"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-space-md text-outline pointer-events-none text-[18px]">search</span><input class="w-full h-10 pl-10 pr-space-md bg-surface-container rounded-lg border border-outline-variant font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:bg-surface-container-lowest transition-colors" placeholder="Buscar salas, software, reglamentos, activos o matrículas... [Ctrl + K]" type="text"/></div></div><div class="flex items-center gap-space-md shrink-0"><div class="relative"><select aria-label="Selector de modo de acceso" class="h-10 px-space-md pr-8 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface focus:outline-none focus:border-primary cursor-pointer appearance-none"><option>Modo Gestión Interna (Ing. Carlos Mendoza)</option><option>Modo Público (Estudiantes / Docentes)</option><option>Modo Administración General</option></select><span class="material-symbols-outlined absolute right-space-sm top-2.5 text-outline pointer-events-none text-[18px]">arrow_drop_down</span></div><button aria-label="Notificaciones" class="relative w-10 h-10 rounded-lg border border-outline-variant bg-surface-container-lowest flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary"></span></button><div class="flex items-center gap-space-sm pl-space-sm border-l border-surface-container-highest"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-bold leading-tight">Ing. Carlos Mendoza</span><span class="font-label-sm text-label-sm text-secondary font-semibold leading-tight">Encargado TI · L-04</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div><div class="h-[46px] px-margin bg-surface-container-lowest flex items-center"><nav class="flex items-center gap-space-xs overflow-x-auto w-full h-full text-nowrap" data-active-classes="bg-surface-container text-on-surface font-bold border-b-2 border-primary"><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inicio-y-servicios" href="#">Inicio y Servicios</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="salas-y-disponibilidad" href="#">Salas y Disponibilidad</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="horarios-y-practicas" href="#">Horarios y Prácticas</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="catalogo-de-software" href="#">Catálogo de Software</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="prestamos-en-ventanilla" href="#">Préstamos en Ventanilla</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reglamento-oficial" href="#">Reglamento Oficial</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reportar-averia" href="#">Reportar Avería</a><div class="h-5 w-[1px] bg-surface-container-highest mx-space-sm shrink-0"></div><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="panel-operativo" href="#">Panel Operativo</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="malla-topologica" href="#">Malla Topológica</a><a aria-current="page" class="h-full flex items-center px-space-md transition-colors bg-surface-container text-on-surface font-bold border-b-2 border-primary" data-path="mesa-de-incidencias" href="#">Mesa de Incidencias</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inventario-y-auditoria" href="#">Inventario y Auditoría</a></nav></div></header><main class="w-full pt-[110px] bg-surface"><div class="max-w-[1440px] mx-auto px-margin py-space-lg"><div class="flex flex-col w-full">
+<!-- Encabezado de Gestión de Incidencias -->
+<div class="flex flex-col gap-space-md mb-space-lg">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs text-tertiary mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Módulo Operativo L-04</span>
+<span class="text-outline">/</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Gestión de Fallas & SLA</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface">Mesa de Incidencias Técnicas y Soporte de Laboratorios</h1>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="inline-flex items-center gap-space-xs px-space-md py-space-sm bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">file_download</span>
+<span>Exportar Bitácora</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-space-sm bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add_task</span>
+<span>+ Levantar Nueva Incidencia Técnica</span>
+</button>
+</div>
+</div>
+<!-- Barra de Filtros Rápidos por Prioridad y Búsqueda -->
+<div class="flex flex-wrap items-center justify-between gap-space-md p-space-sm bg-surface-container-lowest rounded-xl">
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md font-bold" type="button">
+          Todas <span class="ml-1 px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-numeric-table text-body-sm">14</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md" type="button">
+<span class="inline-block w-2 h-2 rounded-full bg-error mr-1.5"></span>
+          Críticas <span class="ml-1 px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-numeric-table text-body-sm">2</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md" type="button">
+<span class="inline-block w-2 h-2 rounded-full bg-tertiary mr-1.5"></span>
+          Altas <span class="ml-1 px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-numeric-table text-body-sm">3</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md" type="button">
+<span class="inline-block w-2 h-2 rounded-full bg-outline mr-1.5"></span>
+          Medias <span class="ml-1 px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-numeric-table text-body-sm">5</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md" type="button">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary mr-1.5"></span>
+          Bajas <span class="ml-1 px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-numeric-table text-body-sm">4</span>
+</button>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Responsable en Turno:</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Ing. Carlos Mendoza (TI-Admin)</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold ml-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          GUARDIA ACTIVA
+        </span>
+</div>
+</div>
+</div>
+<!-- Matriz Kanban / Columnas de Flujo Operativo de Mantenimiento -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-gutter mb-space-xl">
+<!-- Columna 1: Reportadas (Sin Asignar) -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary">inbox</span>
+<span class="font-label-md text-label-md font-bold uppercase tracking-wider text-on-surface">Reportadas (Sin Asignar)</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-numeric-table text-body-sm font-bold">3</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Ticket #INC-089 -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold tracking-wider">#INC-089</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm font-bold">Alta</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">PC-14 Lab Software 2 · Pantalla Parpadea y Sin Señal HDMI</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Reportado por Alumno: Matrícula 2022134012. Cable suelto o fallo de salida de video integrada.</p>
+<div class="pt-space-xs flex items-center justify-between text-outline">
+<div class="flex items-center gap-1 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>45 min</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Sin técnico</span>
+</div>
+</div>
+<!-- Ticket #INC-092 -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold tracking-wider">#INC-092</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Baja</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">Teclado con teclas atoradas · PC-03 Lab Redes 1</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Reportado vía formulario público. Suciedad en switch membrana, requiere reemplazo o sopleteado.</p>
+<div class="pt-space-xs flex items-center justify-between text-outline">
+<div class="flex items-center gap-1 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>2 hrs</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Sin técnico</span>
+</div>
+</div>
+<!-- Ticket adicional simulado para cumplir contador 3 -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold tracking-wider">#INC-094</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">Media</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">Mouse USB desconectado constantemente · PC-20 L-02</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Falso contacto en panel frontal. Requiere prueba en puerto posterior de motherboard.</p>
+<div class="pt-space-xs flex items-center justify-between text-outline">
+<div class="flex items-center gap-1 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>3 hrs</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Sin técnico</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Columna 2: En Diagnóstico / Revisión -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary">troubleshoot</span>
+<span class="font-label-md text-label-md font-bold uppercase tracking-wider text-on-surface">En Diagnóstico / Revisión</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-numeric-table text-body-sm font-bold">2</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Ticket #INC-084 (Seleccionado / En Foco) -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary font-bold tracking-wider">#INC-084 · EN PROCESO</span>
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold">Crítica</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">Lab Redes 1 · Puerto Switch 24 deshabilitado por bucle STP</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Topología colapsada temporalmente. Tráfico broadcast saturó switch de acceso perimetral SW-LRED-01.</p>
+<div class="pt-space-xs flex items-center justify-between text-on-surface-variant">
+<div class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">account_circle</span>
+<span class="font-bold">Ing. Carlos Mendoza</span>
+</div>
+<span class="font-numeric-table text-body-sm font-semibold">1h 10m</span>
+</div>
+</div>
+<!-- Ticket #INC-088 -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold tracking-wider">#INC-088</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">Media</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">PC-02 Lab Móvil · Fallo de autenticación en LDAP</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sincronización desfasada del reloj NTP con el controlador de dominio institucional.</p>
+<div class="pt-space-xs flex items-center justify-between text-outline">
+<div class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">account_circle</span>
+<span>Ing. Carlos Mendoza</span>
+</div>
+<span class="font-numeric-table text-body-sm">4h 20m</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Columna 3: En Reparación / Taller Técnico -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-tertiary">build</span>
+<span class="font-label-md text-label-md font-bold uppercase tracking-wider text-on-surface">En Reparación / Taller</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-numeric-table text-body-sm font-bold">3</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Ticket #INC-079 -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold tracking-wider">#INC-079</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm font-bold">Alta</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">PC-08 Lab IA · Reemplazo de Ventilador GPU RTX 4070</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ruido excesivo y thermal throttling superando los 91°C. En mesa de desarmado con pasta térmica Arctic MX-4.</p>
+<div class="pt-space-xs flex items-center justify-between text-outline">
+<div class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+<span>Aux. Raúl Ibáñez</span>
+</div>
+<span class="font-numeric-table text-body-sm">En banco</span>
+</div>
+</div>
+<!-- Ticket #INC-081 -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold tracking-wider">#INC-081</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm">Media</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">Rack 2 Lab Redes · Reemplazo de Fuente Redundante PoE</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Alarma de fallo de ventilador interno de la PSU modular 500W.</p>
+<div class="pt-space-xs flex items-center justify-between text-outline">
+<div class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+<span>Aux. Raúl Ibáñez</span>
+</div>
+<span class="font-numeric-table text-body-sm">Pieza en almacén</span>
+</div>
+</div>
+<!-- Ticket #INC-083 -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold tracking-wider">#INC-083</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Baja</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">Impresora L-04 · Obstrucción de rodillo de arrastre</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Limpieza química de rodillo y reemplazo de kit de mantenimiento.</p>
+<div class="pt-space-xs flex items-center justify-between text-outline">
+<div class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+<span>Técnico Externo</span>
+</div>
+<span class="font-numeric-table text-body-sm">En espera</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Columna 4: Resueltas y Verificadas (Hoy) -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified</span>
+<span class="font-label-md text-label-md font-bold uppercase tracking-wider text-on-surface">Resueltas (Hoy)</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-numeric-table text-body-sm font-bold">6</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Ticket #INC-076 -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold tracking-wider">#INC-076</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+              Verificado
+            </span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">PC-22 Cómputo General · Reinstalación de Imagen Windows 11 DeepFreeze</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sector de arranque dañado solucionado con clonación PXE institucional en 18 minutos.</p>
+<div class="pt-space-xs flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm text-outline">Resuelto: 09:10 hrs</span>
+<span class="font-label-sm text-label-sm font-bold text-secondary">Aprobado</span>
+</div>
+</div>
+<!-- Ticket #INC-075 -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold tracking-wider">#INC-075</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+              Verificado
+            </span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-snug">Proyector Aula Magna · Calibración de color y HDMI</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Resolución forzada a 1080p 60Hz. Audio sincronizado.</p>
+<div class="pt-space-xs flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm text-outline">Resuelto: 08:30 hrs</span>
+<span class="font-label-sm text-label-sm font-bold text-secondary">Aprobado</span>
+</div>
+</div>
+<div class="p-space-sm bg-surface-container rounded-lg text-center">
+<span class="font-label-sm text-label-sm text-outline font-bold">+ 4 tickets resueltos archivados</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Formulario de Cierre y Dictamen Técnico (Panel Inferior Dividido) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-xl">
+<!-- Panel Izquierdo: Ficha Detallada de la Incidencia Seleccionada (#INC-084) -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-space-lg flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">terminal</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-outline uppercase font-bold tracking-wider">Detalle de Dictamen Técnico</span>
+<span class="px-2 py-0.2 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold">TICKET #INC-084</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold">Bucle de Capa 2 en Switch Perimetral L-04</h2>
+</div>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[16px]">pin_drop</span>
+<span>Edificio E · Lab Redes 1 · Rack Perimetral A</span>
+</div>
+</div>
+<!-- Bloques de Diagnóstico y Acciones -->
+<div class="grid grid-cols-1 gap-space-md">
+<div class="flex flex-col gap-1 p-space-md bg-surface-container-low rounded-lg">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">1. Diagnóstico Técnico de Infraestructura</span>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+            Bucle de capa 2 detectado por conexión no autorizada de patch cord entre estaciones PC-05 y PC-06. BPDU Guard activó shutdown en puerto Fa0/24. La tormenta de broadcast causó pérdida de paquetes de hasta el 84% en las primeras 6 estaciones del segmento de prácticas de enrutamiento estático.
+          </p>
+</div>
+<div class="flex flex-col gap-1 p-space-md bg-surface-container-low rounded-lg">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">2. Acciones Tomadas en Sitio</span>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+            Desconexión de cable redundante, reconfiguración de puerto con portfast habilitado y verificación de conectividad ping al gateway institucional. Se aplicó comando <code class="px-1.5 py-0.5 bg-surface-container rounded font-numeric-table text-body-sm text-primary font-bold">errdisable recovery cause bpduguard</code> y se ajustó el temporizador a 300 segundos.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1 p-space-md bg-surface-container-low rounded-lg">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">3. Repuestos y Materiales Utilizados</span>
+<div class="flex items-center gap-space-xs mt-1">
+<span class="material-symbols-outlined text-[20px] text-tertiary">cable</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Cable UTP Cat 6A nuevo (1.5m) · Panduit TX6</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline mt-1">N.º Serie Almacén: UPT-CAB-2025-098 · Sustitución de cable defectuoso de retorno.</span>
+</div>
+<div class="flex flex-col gap-1 p-space-md bg-surface-container-low rounded-lg">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">4. Técnico Dictaminador</span>
+<div class="flex items-center gap-space-xs mt-1">
+<span class="material-symbols-outlined text-[20px] text-primary">engineering</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Ing. Carlos Mendoza (Encargado L-04)</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline mt-1">Firma digital token validada · Cédula Laboratorios #44091</span>
+</div>
+</div>
+</div>
+<!-- Checklist de Validación & Botón Primario de Cierre -->
+<div class="p-space-md bg-surface-container rounded-lg flex flex-col gap-space-md mt-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface font-bold">Checklist de Validación Pre-Cierre (Obligatorio)</span>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<label class="flex items-center gap-space-xs cursor-pointer p-space-sm bg-surface-container-lowest rounded-lg">
+<input checked="" class="w-4 h-4 text-primary rounded bg-surface border-outline focus:ring-0" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface font-medium">Conectividad a Internet verificada</span>
+</label>
+<label class="flex items-center gap-space-xs cursor-pointer p-space-sm bg-surface-container-lowest rounded-lg">
+<input checked="" class="w-4 h-4 text-primary rounded bg-surface border-outline focus:ring-0" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface font-medium">Acceso a servidor de licencias</span>
+</label>
+<label class="flex items-center gap-space-xs cursor-pointer p-space-sm bg-surface-container-lowest rounded-lg">
+<input checked="" class="w-4 h-4 text-primary rounded bg-surface border-outline focus:ring-0" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface font-medium">Prueba de estrés 15 min superada</span>
+</label>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-xs text-secondary font-label-md text-label-md font-bold">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Los 3 criterios de aceptación técnica han sido auditados con éxito.</span>
+</div>
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-space-sm bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md rounded-lg font-bold transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+<span>Dictaminar y Cerrar Ticket de Incidencia</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Panel Derecho: Calendario Semanal de Mantenimiento Preventivo Planificado -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[20px] text-tertiary">event_note</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Mantenimiento Planificado</h2>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Semana 12</span>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Evento 1 -->
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm font-bold">Sábado 08:00 - 12:00</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase">Programado</span>
+</div>
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Lab Redes 1</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Soplado y limpieza de polvo en 30 estaciones de trabajo, cambio de filtros de aire en gabinetes de switch y pruebas de continuidad de cableado estructurado.</p>
+<div class="pt-space-xs flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>Responsable: Aux. Raúl Ibáñez</span>
+<span>30 Equipos</span>
+</div>
+</div>
+<!-- Evento 2 -->
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm font-bold">Sábado 14:00 - 18:00</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase">Programado</span>
+</div>
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Cómputo General A</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Actualización de parches de seguridad de Windows 11, actualización de catálogo de compiladores C++/Python y clonación de imágenes maestras vía servidor Fog.</p>
+<div class="pt-space-xs flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>Responsable: Ing. Carlos Mendoza</span>
+<span>45 Equipos</span>
+</div>
+</div>
+<!-- Evento Próximo Ciclo -->
+<div class="p-space-md bg-surface-container-lowest rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm font-bold">Martes 18:00 - 20:00</span>
+<span class="font-label-sm text-label-sm text-outline uppercase font-bold">Revisión Mensual</span>
+</div>
+<span class="font-label-lg text-label-lg font-bold text-on-surface">Servidor Central L-04</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mantenimiento a banco de baterías UPS Smart-UPS RT 5000VA y prueba de corte controlado.</p>
+</div>
+</div>
+<!-- Resumen de Recursos de Taller -->
+<div class="mt-auto pt-space-md flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">Disponibilidad de Consumibles en Taller</span>
+<div class="grid grid-cols-2 gap-space-sm text-body-sm font-label-md">
+<div class="p-space-sm bg-surface-container-low rounded flex items-center justify-between">
+<span>Latas Aire Comprimido</span>
+<span class="font-bold text-on-surface">8 uds</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded flex items-center justify-between">
+<span>Alcohol Isopropílico</span>
+<span class="font-bold text-on-surface">3.5 L</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div></main><footer class="w-full bg-surface-container-lowest border-t border-surface-container-highest mt-space-xl"><div class="max-w-[1440px] mx-auto px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-gutter pb-space-lg border-b border-surface-container-highest"><div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm text-primary"><span class="material-symbols-outlined text-[20px]">dns</span><span class="font-headline-sm text-headline-sm text-on-surface font-bold">UPTex TI</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">División de Tecnologías de la Información y Comunicación. Soporte de infraestructura informática y cómputo especializado universitario.</p></div><div class="flex flex-col gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Atención Técnica</span><span class="font-body-sm text-body-sm text-on-surface-variant">Lunes a Sábado: 07:00 – 20:00 hrs</span><span class="font-body-sm text-body-sm text-on-surface-variant">Edificio E, Planta Baja · Laboratorio L-04</span><span class="font-body-sm text-body-sm text-on-surface-variant">soporte.laboratorios@uptex.edu.mx</span></div><div class="flex flex-col gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Directorio Operativo</span><span class="font-body-sm text-body-sm text-on-surface-variant">Extensión Soporte: 4012 / 4015</span><span class="font-body-sm text-body-sm text-on-surface-variant">Jefatura de Laboratorios: Ext. 4010</span><span class="font-body-sm text-body-sm text-on-surface-variant">Mesa de Ayuda de Red Institucional</span></div><div class="flex flex-col gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Normativa y Seguridad</span><p class="font-body-sm text-body-sm text-outline">El uso de los laboratorios y equipos informáticos se rige bajo el Reglamento Oficial UPTex. Prohibido el ingreso de alimentos y bebidas en todas las áreas de cómputo.</p></div></div><div class="pt-space-md flex flex-col md:flex-row items-center justify-between gap-space-sm text-on-surface-variant"><span class="font-body-sm text-body-sm">© 2025 Universidad Politécnica de Texcoco · Subdirección de Informática y Telecomunicaciones</span><div class="flex items-center gap-space-md font-label-sm text-label-sm"><span class="text-secondary font-bold">ESTADO: TODOS LOS SERVICIOS OPERATIVOS</span><span class="text-outline">|</span><span class="text-outline">v3.4.1-prod</span></div></div></div></footer></body></html>

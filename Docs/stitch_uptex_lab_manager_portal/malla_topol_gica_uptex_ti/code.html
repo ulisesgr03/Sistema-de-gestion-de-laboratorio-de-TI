@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>UPTex TI · Portal y Sistema de Gestión de Laboratorios</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.material-symbols-outlined{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;font-size:20px;line-height:1;display:inline-block;text-transform:none;letter-spacing:normal;word-wrap:normal;white-space:nowrap;direction:ltr;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-surface":"#1b1c18","on-surface-variant":"#404944","on-secondary-fixed-variant":"#16512c","secondary":"#316a42","on-secondary-fixed":"#00210c","inverse-primary":"#9ad3b7","tertiary":"#675a4e","on-secondary-container":"#377047","surface-container-high":"#eae8e1","surface-dim":"#dbdad3","tertiary-fixed":"#f2dfd0","outline":"#707973","surface-container":"#efeee7","primary":"#2f664f","primary-fixed-dim":"#9ad3b7","error-container":"#ffdad6","surface-tint":"#326852","surface-container-lowest":"#ffffff","outline-variant":"#c0c9c2","primary-fixed":"#b5efd2","on-primary-fixed":"#002115","on-error":"#ffffff","tertiary-fixed-dim":"#d5c3b5","secondary-fixed-dim":"#98d4a4","surface-container-low":"#f5f4ec","on-tertiary-fixed":"#231a11","primary-container":"#497f67","error":"#ba1a1a","on-secondary":"#ffffff","on-tertiary":"#ffffff","on-primary-container":"#f5fff7","inverse-on-surface":"#f2f1e9","secondary-fixed":"#b3f1be","on-primary":"#ffffff","tertiary-container":"#807265","on-error-container":"#93000a","surface-variant":"#e4e3db","secondary-container":"#b3f1be","background":"#fbf9f2","on-background":"#1b1c18","on-primary-fixed-variant":"#16503b","surface":"#fbf9f2","on-tertiary-fixed-variant":"#514539","on-tertiary-container":"#fffbff","surface-container-highest":"#e4e3db","inverse-surface":"#30312c","surface-bright":"#fbf9f2"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-sm":"0.5rem","space-xl":"2rem","space-lg":"1.5rem","space-md":"1rem","space-xs":"0.25rem","margin":"2rem"},"fontFamily":{"headline-xl":["Work Sans"],"body-lg":["Work Sans"],"numeric-table":["Work Sans"],"body-md":["Work Sans"],"label-lg":["Work Sans"],"body-sm":["Work Sans"],"label-md":["Work Sans"],"headline-sm":["Work Sans"],"headline-md":["Work Sans"],"label-sm":["Work Sans"],"headline-lg":["Work Sans"]},"fontSize":{"headline-xl":["2.25rem",{"lineHeight":"2.75rem","letterSpacing":"-0.02em","fontWeight":"800"}],"body-lg":["1rem",{"lineHeight":"1.5rem","fontWeight":"400"}],"numeric-table":["0.875rem",{"lineHeight":"1.25rem","fontWeight":"500"}],"body-md":["0.875rem",{"lineHeight":"1.25rem","fontWeight":"400"}],"label-lg":["0.875rem",{"lineHeight":"1.25rem","letterSpacing":"0.01em","fontWeight":"500"}],"body-sm":["0.75rem",{"lineHeight":"1rem","fontWeight":"400"}],"label-md":["0.75rem",{"lineHeight":"1rem","letterSpacing":"0.02em","fontWeight":"500"}],"headline-sm":["1.125rem",{"lineHeight":"1.5rem","letterSpacing":"0em","fontWeight":"700"}],"headline-md":["1.375rem",{"lineHeight":"1.75rem","letterSpacing":"-0.01em","fontWeight":"700"}],"label-sm":["0.6875rem",{"lineHeight":"0.875rem","letterSpacing":"0.05em","fontWeight":"700"}],"headline-lg":["1.75rem",{"lineHeight":"2.25rem","letterSpacing":"-0.015em","fontWeight":"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-surface-container-highest"><div class="h-16 px-margin flex items-center justify-between gap-space-lg border-b border-surface-container-highest"><div class="flex items-center gap-space-md shrink-0"><div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[22px]">terminal</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface leading-tight">UPTex TI</span><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Portal y Gestión de Laboratorios</span></div></div><div class="flex-1 max-w-2xl"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-space-md text-outline pointer-events-none text-[18px]">search</span><input class="w-full h-10 pl-10 pr-space-md bg-surface-container rounded-lg border border-outline-variant font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:bg-surface-container-lowest transition-colors" placeholder="Buscar salas, software, reglamentos, activos o matrículas... [Ctrl + K]" type="text"/></div></div><div class="flex items-center gap-space-md shrink-0"><div class="relative"><select aria-label="Selector de modo de acceso" class="h-10 px-space-md pr-8 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface focus:outline-none focus:border-primary cursor-pointer appearance-none"><option>Modo Gestión Interna (Ing. Carlos Mendoza)</option><option>Modo Público (Estudiantes / Docentes)</option><option>Modo Administración General</option></select><span class="material-symbols-outlined absolute right-space-sm top-2.5 text-outline pointer-events-none text-[18px]">arrow_drop_down</span></div><button aria-label="Notificaciones" class="relative w-10 h-10 rounded-lg border border-outline-variant bg-surface-container-lowest flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary"></span></button><div class="flex items-center gap-space-sm pl-space-sm border-l border-surface-container-highest"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-bold leading-tight">Ing. Carlos Mendoza</span><span class="font-label-sm text-label-sm text-secondary font-semibold leading-tight">Encargado TI · L-04</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div><div class="h-[46px] px-margin bg-surface-container-lowest flex items-center"><nav class="flex items-center gap-space-xs overflow-x-auto w-full h-full text-nowrap" data-active-classes="bg-surface-container text-on-surface font-bold border-b-2 border-primary"><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inicio-y-servicios" href="#">Inicio y Servicios</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="salas-y-disponibilidad" href="#">Salas y Disponibilidad</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="horarios-y-practicas" href="#">Horarios y Prácticas</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="catalogo-de-software" href="#">Catálogo de Software</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="prestamos-en-ventanilla" href="#">Préstamos en Ventanilla</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reglamento-oficial" href="#">Reglamento Oficial</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reportar-averia" href="#">Reportar Avería</a><div class="h-5 w-[1px] bg-surface-container-highest mx-space-sm shrink-0"></div><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="panel-operativo" href="#">Panel Operativo</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="malla-topologica" href="#">Malla Topológica</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="mesa-de-incidencias" href="#">Mesa de Incidencias</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inventario-y-auditoria" href="#">Inventario y Auditoría</a></nav></div></header><main class="w-full pt-[110px] bg-surface"><div class="max-w-[1440px] mx-auto px-margin py-space-lg"><div class="flex flex-col w-full">
+<!-- Panel de Control y Encabezado Técnico de Sala -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl mb-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-md">
+<div>
+<div class="flex items-center gap-space-xs text-primary font-label-sm uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">lan</span>
+<span>Infraestructura y Redes Físicas · UPTex Edificio E</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Malla Topológica de Estaciones de Cómputo</h1>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<label class="sr-only" for="room-selector">Seleccionar Laboratorio</label>
+<div class="relative min-w-[260px]">
+<select class="w-full h-10 px-space-md pr-9 bg-surface border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface focus:outline-none focus:border-primary cursor-pointer appearance-none" id="room-selector">
+<option selected="" value="E-104">Lab Software 2 (E-104) · Capacidad 30</option>
+<option value="E-201">Laboratorio Redes 1 (E-201) · Capacidad 30</option>
+<option value="F-205">Lab Inteligencia Artificial (F-205) · Capacidad 32</option>
+<option value="F-102">Lab Internet de las Cosas IoT (F-102) · Capacidad 24</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-sm top-2.5 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<button class="h-10 px-space-md bg-surface border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface flex items-center gap-space-xs hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+<span>Sincronizar Ping</span>
+</button>
+</div>
+</div>
+<!-- Telemetría de Gateway y Leyendas Operativas Planas -->
+<div class="pt-space-md border-t border-surface-container-highest flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm bg-surface-container-low px-space-md py-space-xs rounded-lg text-on-surface-variant font-body-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">hub</span>
+<span><strong class="text-on-surface font-semibold">Switch Troncal:</strong> Cisco Catalyst 3850 (IP: 192.168.10.1 · VLAN 20 Docencia · SFP+ 10Gbps Uplink)</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm font-bold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+          Estación Libre / Operativa: 8
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-surface-container-highest text-on-surface font-label-sm font-bold">
+<span class="material-symbols-outlined text-[15px] text-tertiary">lock</span>
+          En Uso por Alumno: 19
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-inverse-surface text-inverse-on-surface font-label-sm font-bold">
+<span class="material-symbols-outlined text-[15px] text-error-container">build</span>
+          En Mantenimiento / Reportada: 3
+        </span>
+</div>
+</div>
+</section>
+<!-- Contenedor Maestro: Grid Topológico 5x6 + Drawer Técnico Integrado -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-start">
+<!-- Matriz Topológica de 30 Estaciones (Distribución Física de Pasillos) -->
+<div class="xl:col-span-8 2xl:col-span-9 flex flex-col gap-space-md">
+<!-- Letrero de Guía Espacial de Sala Física -->
+<div class="flex items-center justify-between px-space-md py-2 bg-surface-container rounded-lg text-on-surface-variant font-label-sm uppercase tracking-wider">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">podium</span>
+<span>Estrado Docente & Proyector de Red (Frente Norte)</span>
+</div>
+<span>Rack Local R-E104 / Patch Panel A</span>
+</div>
+<!-- Grid 5 Filas x 6 Columnas -->
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3" id="workstation-matrix">
+<!-- PC-01 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-01', '2021134011', 'Ana Karen Solís', '192.168.10.101', '01h 10m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-01</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.101</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134011</div>
+<div class="text-[11px] text-on-surface-variant truncate">A. Solís · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>45m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-02 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-02', '2021134022', 'Miguel Ángel Téllez', '192.168.10.102', '00h 50m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-02</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.102</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134022</div>
+<div class="text-[11px] text-on-surface-variant truncate">M. Téllez · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>50m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-03 (Libre) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-03', null, null, '192.168.10.103', null, 'libre')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-03</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant">LIBRE</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.103</div>
+<div class="text-body-sm font-medium text-secondary">Disponible</div>
+<div class="text-[11px] text-outline">En espera de login</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-outline">
+<span>Listo</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-04 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-04', '2020134088', 'Diana Laura Ruiz', '192.168.10.104', '01h 30m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-04</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.104</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2020134088</div>
+<div class="text-[11px] text-on-surface-variant truncate">D. Ruiz · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 30m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-05 (Libre) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-05', null, null, '192.168.10.105', null, 'libre')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-05</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant">LIBRE</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.105</div>
+<div class="text-body-sm font-medium text-secondary">Disponible</div>
+<div class="text-[11px] text-outline">En espera de login</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-outline">
+<span>Listo</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-06 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-06', '2022134015', 'Ernesto Galván', '192.168.10.106', '00h 25m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-06</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.106</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2022134015</div>
+<div class="text-[11px] text-on-surface-variant truncate">E. Galván · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>25m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-07 (Mantenimiento Técnico) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border-2 border-error hover:border-on-surface transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-07', null, null, '192.168.10.107', null, 'mantenimiento')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-error">PC-07</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-inverse-surface text-inverse-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px] text-error-container">build</span> MTTO
+              </span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.107</div>
+<div class="text-body-sm font-bold text-error truncate">Falla Puerto RJ-45</div>
+<div class="text-[11px] text-outline truncate">Ticket ST-4091</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-error">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px]">warning</span> No enlace</span>
+<span class="material-symbols-outlined text-[14px] text-outline">link_off</span>
+</div>
+</div>
+<!-- PC-08 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-08', '2021134055', 'Roberto Nava', '192.168.10.108', '01h 05m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-08</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.108</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134055</div>
+<div class="text-[11px] text-on-surface-variant truncate">R. Nava · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 05m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-09 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-09', '2021134033', 'Camila Ortiz', '192.168.10.109', '01h 40m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-09</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.109</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134033</div>
+<div class="text-[11px] text-on-surface-variant truncate">C. Ortiz · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 40m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-10 (Libre) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-10', null, null, '192.168.10.110', null, 'libre')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-10</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant">LIBRE</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.110</div>
+<div class="text-body-sm font-medium text-secondary">Disponible</div>
+<div class="text-[11px] text-outline">En espera de login</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-outline">
+<span>Listo</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-11 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-11', '2021134044', 'Luis Mario Becerra', '192.168.10.111', '01h 12m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-11</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.111</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134044</div>
+<div class="text-[11px] text-on-surface-variant truncate">L. Becerra · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 12m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-12 (SELECCIONADA ACTUALMENTE - Borde Grueso #5B9279) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border-[3px] border-primary transition-all flex flex-col justify-between h-[156px]" id="card-PC-12" onclick="selectStation('PC-12', '2021134089', 'Juan Carlos Pérez Gómez', '192.168.10.112', '01h 15m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-primary flex items-center gap-1">
+                PC-12
+                <span class="material-symbols-outlined text-[15px]">check_circle</span>
+</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.112</div>
+<div class="text-body-sm font-bold text-on-surface truncate">2021134089</div>
+<div class="text-[11px] text-primary font-semibold truncate">J. Pérez · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-on-surface">
+<span class="font-semibold text-primary">1h 15m de 2h máx</span>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-13 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-13', '2021134061', 'Sofía Castillo', '192.168.10.113', '00h 42m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-13</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.113</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134061</div>
+<div class="text-[11px] text-on-surface-variant truncate">S. Castillo · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>42m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-14 (Mantenimiento Técnico) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border-2 border-error hover:border-on-surface transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-14', null, null, '192.168.10.114', null, 'mantenimiento')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-error">PC-14</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-inverse-surface text-inverse-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px] text-error-container">build</span> MTTO
+              </span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.114</div>
+<div class="text-body-sm font-bold text-error truncate">Falla Puerto RJ-45</div>
+<div class="text-[11px] text-outline truncate">Ticket ST-4094</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-error">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px]">warning</span> No enlace</span>
+<span class="material-symbols-outlined text-[14px] text-outline">link_off</span>
+</div>
+</div>
+<!-- PC-15 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-15', '2021134070', 'Héctor Mendoza', '192.168.10.115', '00h 33m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-15</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.115</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134070</div>
+<div class="text-[11px] text-on-surface-variant truncate">H. Mendoza · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>33m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-16 (Libre) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-16', null, null, '192.168.10.116', null, 'libre')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-16</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant">LIBRE</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.116</div>
+<div class="text-body-sm font-medium text-secondary">Disponible</div>
+<div class="text-[11px] text-outline">En espera de login</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-outline">
+<span>Listo</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-17 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-17', '2021134077', 'Paola Estrada', '192.168.10.117', '01h 00m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-17</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.117</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134077</div>
+<div class="text-[11px] text-on-surface-variant truncate">P. Estrada · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 00m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-18 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-18', '2021134081', 'Rodrigo Salazar', '192.168.10.118', '01h 18m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-18</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.118</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134081</div>
+<div class="text-[11px] text-on-surface-variant truncate">R. Salazar · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 18m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-19 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-19', '2021134092', 'Valeria Guzmán', '192.168.10.119', '00h 48m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-19</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.119</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134092</div>
+<div class="text-[11px] text-on-surface-variant truncate">V. Guzmán · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>48m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-20 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-20', '2021134099', 'Gabriel Medina', '192.168.10.120', '01h 04m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-20</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.120</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134099</div>
+<div class="text-[11px] text-on-surface-variant truncate">G. Medina · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 04m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-21 (Libre) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-21', null, null, '192.168.10.121', null, 'libre')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-21</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant">LIBRE</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.121</div>
+<div class="text-body-sm font-medium text-secondary">Disponible</div>
+<div class="text-[11px] text-outline">En espera de login</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-outline">
+<span>Listo</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-22 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-22', '2021134105', 'Mariana Cuevas', '192.168.10.122', '00h 58m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-22</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.122</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134105</div>
+<div class="text-[11px] text-on-surface-variant truncate">M. Cuevas · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>58m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-23 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-23', '2021134112', 'Esteban Pineda', '192.168.10.123', '01h 22m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-23</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.123</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134112</div>
+<div class="text-[11px] text-on-surface-variant truncate">E. Pineda · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 22m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-24 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-24', '2021134120', 'Natalia Rivas', '192.168.10.124', '00h 37m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-24</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.124</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134120</div>
+<div class="text-[11px] text-on-surface-variant truncate">N. Rivas · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>37m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-25 (Libre) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-25', null, null, '192.168.10.125', null, 'libre')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-25</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant">LIBRE</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.125</div>
+<div class="text-body-sm font-medium text-secondary">Disponible</div>
+<div class="text-[11px] text-outline">En espera de login</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-outline">
+<span>Listo</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-26 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-26', '2021134125', 'Alan Barrientos', '192.168.10.126', '01h 05m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-26</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.126</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134125</div>
+<div class="text-[11px] text-on-surface-variant truncate">A. Barrientos · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 05m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-27 (Libre) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-27', null, null, '192.168.10.127', null, 'libre')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-27</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant">LIBRE</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.127</div>
+<div class="text-body-sm font-medium text-secondary">Disponible</div>
+<div class="text-[11px] text-outline">En espera de login</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-outline">
+<span>Listo</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-28 (Libre) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-28', null, null, '192.168.10.128', null, 'libre')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-28</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant">LIBRE</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.128</div>
+<div class="text-body-sm font-medium text-secondary">Disponible</div>
+<div class="text-[11px] text-outline">En espera de login</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-outline">
+<span>Listo</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-29 (Ocupada) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border border-surface-container-highest hover:border-outline transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-29', '2021134139', 'Ignacio Vera', '192.168.10.129', '01h 14m', 'operativa')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-on-surface">PC-29</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-surface-container-highest text-on-surface">OCUPADA</span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.129</div>
+<div class="text-body-sm font-semibold text-on-surface truncate">2021134139</div>
+<div class="text-[11px] text-on-surface-variant truncate">I. Vera · ITI-801</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-tertiary">
+<span>1h 14m / 2h</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">settings_ethernet</span>
+<span class="material-symbols-outlined text-[14px]">usb</span>
+</div>
+</div>
+</div>
+<!-- PC-30 (Mantenimiento Técnico) -->
+<div class="station-card cursor-pointer bg-surface-container-lowest p-space-sm rounded-xl border-2 border-error hover:border-on-surface transition-all flex flex-col justify-between h-[156px]" onclick="selectStation('PC-30', null, null, '192.168.10.130', null, 'mantenimiento_os')">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-headline-sm text-label-lg font-bold text-error">PC-30</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-inverse-surface text-inverse-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px] text-error-container">build</span> MTTO
+              </span>
+</div>
+<div class="font-body-sm text-[11px] text-outline font-mono leading-none mb-2">192.168.10.130</div>
+<div class="text-body-sm font-bold text-error truncate">Falla Imagen SO</div>
+<div class="text-[11px] text-outline truncate">Ticket ST-4098</div>
+</div>
+<div class="pt-2 border-t border-surface-container-highest flex items-center justify-between text-[11px] text-error">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px]">warning</span> Reinicio</span>
+<span class="material-symbols-outlined text-[14px] text-outline">sync_problem</span>
+</div>
+</div>
+</div>
+<!-- Letrero de Guía Espacial Posterior -->
+<div class="flex items-center justify-between px-space-md py-2 bg-surface-container rounded-lg text-on-surface-variant font-label-sm uppercase tracking-wider">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">meeting_room</span>
+<span>Acceso Principal / Pasillo Sur (Puerta L-104)</span>
+</div>
+<span>Canaleta Perimetral B · Conmutador Secundario</span>
+</div>
+</div>
+<!-- Panel Drawer Lateral Integrado (360px) - Detalle de Estación -->
+<aside class="xl:col-span-4 2xl:col-span-3 bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg flex flex-col gap-space-md sticky top-[130px]">
+<!-- Cabecera del Drawer -->
+<div class="pb-space-sm border-b border-surface-container-highest">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">Consola de Puesto</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant" id="detail-badge">EN SESIÓN ACTIVA</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface leading-snug" id="detail-title">Detalle Técnico · Estación PC-12</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Laboratorio Software 2 (E-104) · Nodo VLAN 20</span>
+</div>
+<!-- Sección Usuario Actual -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col gap-1.5">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-bold">Identidad de Alumno</span>
+<div class="flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0 text-sm font-bold">
+            JP
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-label-lg text-on-surface font-bold truncate" id="detail-user-name">Juan Carlos Pérez Gómez</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-mono" id="detail-user-id">Matrícula: 2021134089 · ITI-801</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-surface-container-highest text-body-sm font-numeric-table">
+<div>
+<span class="text-outline block text-[11px] uppercase">Inicio de Sesión</span>
+<strong class="text-on-surface">08:30 hrs</strong>
+</div>
+<div>
+<span class="text-outline block text-[11px] uppercase">Vencimiento Máx.</span>
+<strong class="text-on-surface">10:30 hrs</strong>
+</div>
+</div>
+</div>
+<!-- Hardware e Identificadores de Red -->
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-bold">Especificaciones Físicas</span>
+<div class="bg-surface border border-surface-container-highest rounded-lg divide-y divide-surface-container-highest text-body-sm">
+<div class="px-3 py-2 flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md">Procesador</span>
+<span class="font-semibold text-on-surface">AMD Ryzen 7 5700G</span>
+</div>
+<div class="px-3 py-2 flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md">Memoria RAM</span>
+<span class="font-semibold text-on-surface">32 GB DDR4 @ 3200MHz</span>
+</div>
+<div class="px-3 py-2 flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md">Almacenamiento</span>
+<span class="font-semibold text-on-surface">SSD NVMe 1TB M.2</span>
+</div>
+<div class="px-3 py-2 flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md">MAC Address</span>
+<span class="font-mono text-[12px] text-on-surface">00:1A:2B:3C:4D:5E</span>
+</div>
+<div class="px-3 py-2 flex justify-between items-center">
+<span class="text-on-surface-variant font-label-md">IP Institucional</span>
+<span class="font-mono text-[12px] font-bold text-primary" id="detail-ip">192.168.10.112</span>
+</div>
+</div>
+</div>
+<!-- Software en Ejecución Detectado -->
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-bold">Software en Ejecución Detectado</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 bg-surface-container rounded font-label-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">code</span>
+            Visual Studio Code v1.95
+          </span>
+<span class="px-2.5 py-1 bg-surface-container rounded font-label-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">deployed_code</span>
+            Docker Engine 27.2
+          </span>
+<span class="px-2.5 py-1 bg-surface-container rounded font-label-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">database</span>
+            PostgreSQL 16 Server
+          </span>
+</div>
+</div>
+<!-- Acciones de Gestión de Estación (Botones Planos) -->
+<div class="pt-space-sm border-t border-surface-container-highest flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-bold">Comandos Operativos</span>
+<button class="w-full h-10 px-space-md bg-surface border border-outline-variant hover:bg-surface-container rounded-lg font-label-md text-label-md text-on-surface flex items-center justify-center gap-2 transition-colors" onclick="alert('Mensaje enviado al monitor de PC-12: Recordatorio de término de práctica institucional.')" type="button">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span>Enviar Mensaje a Pantalla</span>
+</button>
+<button class="w-full h-10 px-space-md bg-surface border border-outline-variant hover:bg-surface-container rounded-lg font-label-md text-label-md text-on-surface flex items-center justify-center gap-2 transition-colors" onclick="confirm('¿Desea enviar señal ACPI de reinicio forzado a la estación remota?') && alert('Señal de reinicio emitida exitosamente.')" type="button">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+<span>Reiniciar Terminal Remota</span>
+</button>
+<button class="w-full h-10 px-space-md bg-surface border border-outline-variant hover:bg-surface-container rounded-lg font-label-md text-label-md text-error flex items-center justify-center gap-2 transition-colors" onclick="confirm('¿Confirmar cierre de sesión de Juan Carlos Pérez Gómez?') && alert('Sesión cerrada en servidor Active Directory.')" type="button">
+<span class="material-symbols-outlined text-[18px]">power_settings_new</span>
+<span>Cerrar Sesión Forzada</span>
+</button>
+<button class="w-full h-10 px-space-md bg-primary hover:bg-primary-container text-on-primary rounded-lg font-label-md text-label-md font-semibold flex items-center justify-center gap-2 transition-colors" onclick="alert('Abriendo formulario de Incidencia Técnica para asignación en mesa de servicio.')" type="button">
+<span class="material-symbols-outlined text-[18px]">build</span>
+<span>Levantar Orden Técnica / Reportar Falla</span>
+</button>
+</div>
+</aside>
+</div>
+<script>
+    function selectStation(stationId, studentId, studentName, ipAddress, sessionDuration, state) {
+      // Remover highlight previo
+      document.querySelectorAll('.station-card').forEach(el => {
+        el.classList.remove('border-[3px]', 'border-primary');
+        if (!el.classList.contains('border-error')) {
+          el.classList.add('border', 'border-surface-container-highest');
+        }
+      });
+
+      // Añadir highlight al elemento clickeado
+      const targetCard = window.event ? window.event.currentTarget : document.getElementById('card-' + stationId);
+      if (targetCard) {
+        targetCard.classList.remove('border', 'border-surface-container-highest');
+        targetCard.classList.add('border-[3px]', 'border-primary');
+      }
+
+      // Actualizar Drawer Lateral
+      document.getElementById('detail-title').innerText = 'Detalle Técnico · Estación ' + stationId;
+      document.getElementById('detail-ip').innerText = ipAddress;
+
+      const userNameEl = document.getElementById('detail-user-name');
+      const userIdEl = document.getElementById('detail-user-id');
+      const badgeEl = document.getElementById('detail-badge');
+
+      if (state === 'operativa') {
+        userNameEl.innerText = studentName || 'Estudiante Asignado';
+        userIdEl.innerText = 'Matrícula: ' + (studentId || '2021134000') + ' · ITI-801';
+        badgeEl.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant';
+        badgeEl.innerText = 'EN SESIÓN ACTIVA';
+      } else if (state === 'libre') {
+        userNameEl.innerText = 'Terminal Sin Usuario';
+        userIdEl.innerText = 'En espera de autenticación Active Directory';
+        badgeEl.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-secondary-fixed text-on-secondary-fixed-variant';
+        badgeEl.innerText = 'DISPONIBLE';
+      } else {
+        userNameEl.innerText = 'Equipo Fuera de Servicio';
+        userIdEl.innerText = 'Reporte activo en Mesa de Incidencias TI';
+        badgeEl.className = 'px-2 py-0.5 rounded text-[11px] font-bold bg-inverse-surface text-inverse-on-surface';
+        badgeEl.innerText = 'EN MANTENIMIENTO';
+      }
+    }
+  </script>
+</div></div></main><footer class="w-full bg-surface-container-lowest border-t border-surface-container-highest mt-space-xl"><div class="max-w-[1440px] mx-auto px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-gutter pb-space-lg border-b border-surface-container-highest"><div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm text-primary"><span class="material-symbols-outlined text-[20px]">dns</span><span class="font-headline-sm text-headline-sm text-on-surface font-bold">UPTex TI</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">División de Tecnologías de la Información y Comunicación. Soporte de infraestructura informática y cómputo especializado universitario.</p></div><div class="flex flex-col gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Atención Técnica</span><span class="font-body-sm text-body-sm text-on-surface-variant">Lunes a Sábado: 07:00 – 20:00 hrs</span><span class="font-body-sm text-body-sm text-on-surface-variant">Edificio E, Planta Baja · Laboratorio L-04</span><span class="font-body-sm text-body-sm text-on-surface-variant">soporte.laboratorios@uptex.edu.mx</span></div><div class="flex flex-col gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Directorio Operativo</span><span class="font-body-sm text-body-sm text-on-surface-variant">Extensión Soporte: 4012 / 4015</span><span class="font-body-sm text-body-sm text-on-surface-variant">Jefatura de Laboratorios: Ext. 4010</span><span class="font-body-sm text-body-sm text-on-surface-variant">Mesa de Ayuda de Red Institucional</span></div><div class="flex flex-col gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Normativa y Seguridad</span><p class="font-body-sm text-body-sm text-outline">El uso de los laboratorios y equipos informáticos se rige bajo el Reglamento Oficial UPTex. Prohibido el ingreso de alimentos y bebidas en todas las áreas de cómputo.</p></div></div><div class="pt-space-md flex flex-col md:flex-row items-center justify-between gap-space-sm text-on-surface-variant"><span class="font-body-sm text-body-sm">© 2025 Universidad Politécnica de Texcoco · Subdirección de Informática y Telecomunicaciones</span><div class="flex items-center gap-space-md font-label-sm text-label-sm"><span class="text-secondary font-bold">ESTADO: TODOS LOS SERVICIOS OPERATIVOS</span><span class="text-outline">|</span><span class="text-outline">v3.4.1-prod</span></div></div></div></footer></body></html>
