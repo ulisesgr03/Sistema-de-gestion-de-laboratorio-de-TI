@@ -50,4 +50,14 @@ class Laboratorio extends Model
             'user_id'
         )->withPivot('tipo_acceso')->withTimestamps();
     }
+
+    public function mantenimientos(): HasMany
+    {
+        return $this->hasMany(Mantenimiento::class);
+    }
+
+    public function scopeActivos($query)
+    {
+        return $query->where('activo', true);
+    }
 }

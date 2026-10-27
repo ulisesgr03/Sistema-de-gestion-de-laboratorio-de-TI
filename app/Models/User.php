@@ -17,7 +17,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'matricula',
         'password',
+        'activo',
+        'telefono',
     ];
 
     protected $hidden = [
@@ -30,6 +33,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'activo' => 'boolean',
         ];
     }
 
@@ -112,5 +116,82 @@ class User extends Authenticatable
     public function reservas(): HasMany
     {
         return $this->hasMany(ReservaLaboratorio::class);
+    }
+
+    public function mantenimientos(): HasMany
+    {
+        return $this->hasMany(Mantenimiento::class);
+    }
+
+    public function scopeActivos($query)
+    {
+        return $query->where('activo', true);
+    }
+
+    public function hasRole(string|array $roles): bool
+    {
+        $roleList = is_array($roles) ? $roles : func_get_args();
+
+        $userRoles = $this->roles->map(function ($r) {
+            return strtolower(trim($r->nombre));
+        })->toArray();
+
+        foreach ($roleList as $role) {
+            $normalized = strtolower(trim((string) $role));
+            if (in_array($normalized, $userRoles, true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function assignRole(string|Rol $role): void
+    {
+        if (is_string($role)) {
+            $roleModel = Rol::whereRaw('LOWER(nombre) = ?', [strtolower(trim($role))])->first();
+            if ($roleModel) {
+                $this->roles()->syncWithoutDetaching([$roleModel->id]);
+            }
+        } elseif ($role instanceof Rol) {
+            $this->roles()->syncWithoutDetaching([$role->id]);
+        }
+    }
+
+    public function removeRole(string|Rol $role): void
+    {
+        if (is_string($role)) {
+            $roleModel = Rol::whereRaw('LOWER(nombre) = ?', [strtolower(trim($role))])->first();
+            if ($roleModel) {
+                $this->roles()->detach($roleModel->id);
+            }
+        } elseif ($role instanceof Rol) {
+            $this->roles()->detach($role->id);
+        }
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('administrador', 'admin');
+    }
+
+    public function isEncargado(): bool
+    {
+        return $this->hasRole('encargado', 'encargado de laboratorio');
+    }
+
+    public function isDocente(): bool
+    {
+        return $this->hasRole('docente', 'profesor');
+    }
+
+    public function isAlumno(): bool
+    {
+        return $this->hasRole('alumno', 'estudiante');
+    }
+
+    public function isActive(): bool
+    {
+        return (bool) $this->activo;
     }
 }
