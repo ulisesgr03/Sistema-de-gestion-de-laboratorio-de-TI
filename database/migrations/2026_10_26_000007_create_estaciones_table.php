@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -9,14 +10,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('estaciones', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('laboratorio_id')->constrained('laboratorios')->cascadeOnDelete();
-    $table->string('nombre');
-    $table->string('ubicacion')->nullable();
-    $table->string('estado')->default('activa');
-    $table->timestamps();
-    $table->unique(['laboratorio_id', 'nombre']);
-});
+            $table->id();
+
+            $table->foreignId('laboratorio_id')
+                ->constrained('laboratorios')
+                ->cascadeOnDelete();
+
+            $table->string('nombre', 100);
+            $table->string('ubicacion', 255)->nullable();
+            $table->string('estado', 30)->default('disponible');
+            $table->timestamps();
+
+            $table->unique(['laboratorio_id', 'nombre']);
+        });
     }
 
     public function down(): void

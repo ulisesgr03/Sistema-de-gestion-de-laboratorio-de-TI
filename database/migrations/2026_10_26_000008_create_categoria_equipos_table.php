@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -9,11 +10,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categoria_equipos', function (Blueprint $table) {
-    $table->id();
-    $table->string('nombre')->unique();
-    $table->text('descripcion')->nullable();
-    $table->timestamps();
-});
+            $table->id();
+            $table->string('nombre', 100)->unique();
+            $table->text('descripcion')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function down(): void

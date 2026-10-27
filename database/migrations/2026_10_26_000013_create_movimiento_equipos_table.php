@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -9,15 +10,32 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('movimiento_equipos', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('equipo_id')->constrained('equipos')->restrictOnDelete();
-    $table->foreignId('laboratorio_origen_id')->nullable()->constrained('laboratorios')->nullOnDelete();
-    $table->foreignId('laboratorio_destino_id')->nullable()->constrained('laboratorios')->nullOnDelete();
-    $table->foreignId('realizado_por')->constrained('users')->restrictOnDelete();
-    $table->dateTime('fecha_movimiento');
-    $table->text('motivo')->nullable();
-    $table->timestamps();
-});
+            $table->id();
+
+            $table->foreignId('equipo_id')
+                ->constrained('equipos')
+                ->restrictOnDelete();
+
+            $table->foreignId('laboratorio_origen_id')
+                ->nullable()
+                ->constrained('laboratorios')
+                ->nullOnDelete();
+
+            $table->foreignId('laboratorio_destino_id')
+                ->nullable()
+                ->constrained('laboratorios')
+                ->nullOnDelete();
+
+            $table->foreignId('realizado_por')
+                ->constrained('users')
+                ->restrictOnDelete();
+
+            $table->dateTime('fecha_movimiento');
+            $table->text('motivo')->nullable();
+            $table->timestamps();
+
+            $table->index(['equipo_id', 'fecha_movimiento']);
+        });
     }
 
     public function down(): void

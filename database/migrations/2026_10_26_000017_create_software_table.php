@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -9,13 +10,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('software', function (Blueprint $table) {
-    $table->id();
-    $table->string('nombre')->unique();
-    $table->string('version')->nullable();
-    $table->string('fabricante')->nullable();
-    $table->text('descripcion')->nullable();
-    $table->timestamps();
-});
+            $table->id();
+            $table->string('nombre', 150)->unique();
+            $table->string('version', 50)->nullable();
+            $table->string('fabricante', 150)->nullable();
+            $table->text('descripcion')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function down(): void

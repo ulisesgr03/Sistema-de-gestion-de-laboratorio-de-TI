@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -9,13 +10,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('usuario_laboratorio', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-    $table->foreignId('laboratorio_id')->constrained('laboratorios')->cascadeOnDelete();
-    $table->string('tipo_acceso')->nullable();
-    $table->timestamps();
-    $table->unique(['user_id', 'laboratorio_id']);
-});
+            $table->id();
+
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
+
+            $table->foreignId('laboratorio_id')
+                ->constrained('laboratorios')
+                ->cascadeOnDelete();
+
+            $table->string('tipo_acceso', 50)->default('consulta');
+            $table->timestamps();
+
+            $table->unique(['user_id', 'laboratorio_id']);
+        });
     }
 
     public function down(): void
