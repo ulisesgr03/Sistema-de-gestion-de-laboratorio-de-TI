@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>UPTex TI · Portal y Sistema de Gestión de Laboratorios</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.material-symbols-outlined{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;font-size:20px;line-height:1;display:inline-block;text-transform:none;letter-spacing:normal;word-wrap:normal;white-space:nowrap;direction:ltr;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-surface":"#1b1c18","on-surface-variant":"#404944","on-secondary-fixed-variant":"#16512c","secondary":"#316a42","on-secondary-fixed":"#00210c","inverse-primary":"#9ad3b7","tertiary":"#675a4e","on-secondary-container":"#377047","surface-container-high":"#eae8e1","surface-dim":"#dbdad3","tertiary-fixed":"#f2dfd0","outline":"#707973","surface-container":"#efeee7","primary":"#2f664f","primary-fixed-dim":"#9ad3b7","error-container":"#ffdad6","surface-tint":"#326852","surface-container-lowest":"#ffffff","outline-variant":"#c0c9c2","primary-fixed":"#b5efd2","on-primary-fixed":"#002115","on-error":"#ffffff","tertiary-fixed-dim":"#d5c3b5","secondary-fixed-dim":"#98d4a4","surface-container-low":"#f5f4ec","on-tertiary-fixed":"#231a11","primary-container":"#497f67","error":"#ba1a1a","on-secondary":"#ffffff","on-tertiary":"#ffffff","on-primary-container":"#f5fff7","inverse-on-surface":"#f2f1e9","secondary-fixed":"#b3f1be","on-primary":"#ffffff","tertiary-container":"#807265","on-error-container":"#93000a","surface-variant":"#e4e3db","secondary-container":"#b3f1be","background":"#fbf9f2","on-background":"#1b1c18","on-primary-fixed-variant":"#16503b","surface":"#fbf9f2","on-tertiary-fixed-variant":"#514539","on-tertiary-container":"#fffbff","surface-container-highest":"#e4e3db","inverse-surface":"#30312c","surface-bright":"#fbf9f2"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-sm":"0.5rem","space-xl":"2rem","space-lg":"1.5rem","space-md":"1rem","space-xs":"0.25rem","margin":"2rem"},"fontFamily":{"headline-xl":["Work Sans"],"body-lg":["Work Sans"],"numeric-table":["Work Sans"],"body-md":["Work Sans"],"label-lg":["Work Sans"],"body-sm":["Work Sans"],"label-md":["Work Sans"],"headline-sm":["Work Sans"],"headline-md":["Work Sans"],"label-sm":["Work Sans"],"headline-lg":["Work Sans"]},"fontSize":{"headline-xl":["2.25rem",{"lineHeight":"2.75rem","letterSpacing":"-0.02em","fontWeight":"800"}],"body-lg":["1rem",{"lineHeight":"1.5rem","fontWeight":"400"}],"numeric-table":["0.875rem",{"lineHeight":"1.25rem","fontWeight":"500"}],"body-md":["0.875rem",{"lineHeight":"1.25rem","fontWeight":"400"}],"label-lg":["0.875rem",{"lineHeight":"1.25rem","letterSpacing":"0.01em","fontWeight":"500"}],"body-sm":["0.75rem",{"lineHeight":"1rem","fontWeight":"400"}],"label-md":["0.75rem",{"lineHeight":"1rem","letterSpacing":"0.02em","fontWeight":"500"}],"headline-sm":["1.125rem",{"lineHeight":"1.5rem","letterSpacing":"0em","fontWeight":"700"}],"headline-md":["1.375rem",{"lineHeight":"1.75rem","letterSpacing":"-0.01em","fontWeight":"700"}],"label-sm":["0.6875rem",{"lineHeight":"0.875rem","letterSpacing":"0.05em","fontWeight":"700"}],"headline-lg":["1.75rem",{"lineHeight":"2.25rem","letterSpacing":"-0.015em","fontWeight":"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-surface-container-highest"><div class="h-16 px-margin flex items-center justify-between gap-space-lg border-b border-surface-container-highest"><div class="flex items-center gap-space-md shrink-0"><div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[22px]">terminal</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface leading-tight">UPTex TI</span><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Portal y Gestión de Laboratorios</span></div></div><div class="flex-1 max-w-2xl"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-space-md text-outline pointer-events-none text-[18px]">search</span><input class="w-full h-10 pl-10 pr-space-md bg-surface-container rounded-lg border border-outline-variant font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:bg-surface-container-lowest transition-colors" placeholder="Buscar salas, software, reglamentos, activos o matrículas... [Ctrl + K]" type="text"/></div></div><div class="flex items-center gap-space-md shrink-0"><div class="relative"><select aria-label="Selector de modo de acceso" class="h-10 px-space-md pr-8 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface focus:outline-none focus:border-primary cursor-pointer appearance-none"><option>Modo Gestión Interna (Ing. Carlos Mendoza)</option><option>Modo Público (Estudiantes / Docentes)</option><option>Modo Administración General</option></select><span class="material-symbols-outlined absolute right-space-sm top-2.5 text-outline pointer-events-none text-[18px]">arrow_drop_down</span></div><button aria-label="Notificaciones" class="relative w-10 h-10 rounded-lg border border-outline-variant bg-surface-container-lowest flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary"></span></button><div class="flex items-center gap-space-sm pl-space-sm border-l border-surface-container-highest"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface font-bold leading-tight">Ing. Carlos Mendoza</span><span class="font-label-sm text-label-sm text-secondary font-semibold leading-tight">Encargado TI · L-04</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div><div class="h-[46px] px-margin bg-surface-container-lowest flex items-center"><nav class="flex items-center gap-space-xs overflow-x-auto w-full h-full text-nowrap" data-active-classes="bg-surface-container text-on-surface font-bold border-b-2 border-primary"><a aria-current="page" class="h-full flex items-center px-space-md transition-colors bg-surface-container text-on-surface font-bold border-b-2 border-primary" data-path="inicio-y-servicios" href="#">Inicio y Servicios</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="salas-y-disponibilidad" href="#">Salas y Disponibilidad</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="horarios-y-practicas" href="#">Horarios y Prácticas</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="catalogo-de-software" href="#">Catálogo de Software</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="prestamos-en-ventanilla" href="#">Préstamos en Ventanilla</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reglamento-oficial" href="#">Reglamento Oficial</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reportar-averia" href="#">Reportar Avería</a><div class="h-5 w-[1px] bg-surface-container-highest mx-space-sm shrink-0"></div><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="panel-operativo" href="#">Panel Operativo</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="malla-topologica" href="#">Malla Topológica</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="mesa-de-incidencias" href="#">Mesa de Incidencias</a><a class="h-full flex items-center px-space-md font-label-md text-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="inventario-y-auditoria" href="#">Inventario y Auditoría</a></nav></div></header><main class="w-full pt-[110px] bg-surface"><div class="max-w-[1440px] mx-auto px-margin py-space-lg"><div class="flex flex-col w-full">
+<!-- Hero Institucional Sobrio -->
+<section class="w-full bg-surface-container-lowest border-b border-surface-container-highest py-space-xl px-space-xl rounded-xl">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-xl">
+<div class="max-w-3xl flex flex-col gap-space-sm">
+<div class="inline-flex items-center gap-space-xs self-start px-space-sm py-1 bg-surface-container rounded font-label-sm text-label-sm text-tertiary uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px] text-primary">lan</span>
+          División de Tecnologías de la Información · Universidad Politécnica de Texcoco
+        </div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface font-extrabold tracking-tight">
+          Infraestructura de Cómputo y Laboratorios de TI
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+          Plataforma centralizada de monitoreo y acceso técnico para la comunidad universitaria de la UPTex. Soporte de alta disponibilidad orientado a la docencia especializada, investigación aplicada, certámenes tecnológicos y prácticas de ingeniería.
+        </p>
+<div class="flex flex-wrap items-center gap-space-md pt-space-sm">
+<a class="inline-flex items-center gap-space-xs px-space-lg py-2.5 bg-primary text-on-primary rounded-lg font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-sm" href="#salas-en-vivo">
+<span class="material-symbols-outlined text-[20px]">sensors</span>
+            Consultar Salas Disponibles
+          </a>
+<a class="inline-flex items-center gap-space-xs px-space-lg py-2.5 bg-surface-container-lowest border border-surface-container-highest text-on-surface rounded-lg font-label-lg text-label-lg hover:bg-surface-container transition-colors" data-path="reglamento-oficial" href="#">
+<span class="material-symbols-outlined text-[20px] text-tertiary">gavel</span>
+            Ver Reglamento Oficial
+          </a>
+</div>
+</div>
+<!-- Telemetría Operativa Compacta -->
+<div class="flex flex-col gap-space-sm p-space-md bg-surface-container-low rounded-xl border border-surface-container-highest w-full lg:w-80 shrink-0">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-highest">
+<span class="font-label-sm text-label-sm text-tertiary uppercase font-bold tracking-wider">Telemetría de Servidores</span>
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary font-bold">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+            En Línea
+          </span>
+</div>
+<div class="space-y-space-xs">
+<div class="flex justify-between items-center font-numeric-table text-numeric-table">
+<span class="text-on-surface-variant">Latencia Gateway UPTex:</span>
+<span class="font-bold text-on-surface">3.4 ms</span>
+</div>
+<div class="flex justify-between items-center font-numeric-table text-numeric-table">
+<span class="text-on-surface-variant">Conectividad Backbone:</span>
+<span class="font-bold text-on-surface">10 Gbps Fibra</span>
+</div>
+<div class="flex justify-between items-center font-numeric-table text-numeric-table">
+<span class="text-on-surface-variant">Sincronización NTP:</span>
+<span class="font-bold text-on-surface">07:22:15 hrs CST</span>
+</div>
+</div>
+<div class="pt-space-xs border-t border-surface-container-highest">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+            Sistemas validados bajo norma ISO/IEC 27001
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Fila de 4 KPIs Públicos Planos -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-gutter mt-space-lg">
+<!-- KPI 1 -->
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary">Infraestructura Física</span>
+<span class="material-symbols-outlined text-primary text-[22px]">domain</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface font-extrabold mt-space-xs">6 Salas Activas</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs">
+          Redes, Software, IA, IoT y Cómputo General A & B con clima controlado.
+        </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-container-highest flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>Edificios E y F</span>
+<span class="text-primary font-bold">100% Operativas</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary">Nodos Computacionales</span>
+<span class="material-symbols-outlined text-primary text-[22px]">desktop_windows</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface font-extrabold mt-space-xs">180 Estaciones</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs">
+          Dell OptiPlex, Precision e iMacs enlazadas en red LAN Gigabit certificada.
+        </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-container-highest flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>Dual Boot UEFI</span>
+<span class="text-secondary font-bold">Sin anomalías</span>
+</div>
+</div>
+<!-- KPI 3: Destacado Disponibilidad -->
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary">Capacidad Inmediata</span>
+<span class="material-symbols-outlined text-secondary text-[22px]">event_seat</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-space-xs">
+<div class="font-headline-lg text-headline-lg text-on-surface font-extrabold">42</div>
+<span class="font-label-md text-label-md text-on-surface-variant">libres en este instante</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-space-sm py-1 mt-space-xs bg-secondary-container text-on-secondary-container rounded font-label-md text-label-md font-bold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+          Práctica Libre Autorizada
+        </div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-container-highest flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>Control por credencial institucional</span>
+<span class="text-on-surface font-bold">Tiempo Real</span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary">Régimen de Operación</span>
+<span class="material-symbols-outlined text-primary text-[22px]">schedule</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface font-extrabold mt-space-xs">07:00 – 20:00</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs">
+          Lunes a Sábado en jornada continua. Asistencia técnica presencial permanente.
+        </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-container-highest flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>Ventanilla L-04</span>
+<span class="text-on-surface font-bold">Turnos Mat. / Vesp.</span>
+</div>
+</div>
+</section>
+<!-- Mosaico de Salas Públicas -->
+<section class="mt-space-xl" id="salas-en-vivo">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm pb-space-sm border-b border-surface-container-highest">
+<div>
+<div class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary font-bold">Monitor de Ocupación en Tiempo Real</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold">Estado de Laboratorios de Cómputo</h2>
+</div>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm">
+<span class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+          Práctica Libre
+        </span>
+<span class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+          Clase Programada
+        </span>
+<span class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+          Taller de Investigación
+        </span>
+</div>
+</div>
+<!-- Grid de 4 laboratorios -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter mt-space-lg">
+<!-- Lab 1: Redes y Telecomunicaciones -->
+<article class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase font-bold tracking-wider">Edificio E · Planta Alta (E-201)</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold mt-0.5">Laboratorio de Redes y Telecomunicaciones (Lab Redes 1)</h3>
+</div>
+<span class="shrink-0 inline-flex items-center gap-1 px-space-sm py-1 bg-surface-container text-on-surface rounded font-label-sm text-label-sm font-bold border border-surface-container-highest">
+<span class="material-symbols-outlined text-[16px] text-primary">school</span>
+              Clase en Curso
+            </span>
+</div>
+<!-- Métrica de Ocupación con Barra de Progreso Plana -->
+<div class="mt-space-md p-space-md bg-surface-container-low rounded-lg border border-surface-container-highest">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">Aforo Ocupado: 24 de 30 estaciones</span>
+<span class="font-bold text-primary font-numeric-table">80%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-highest rounded-full overflow-hidden mt-space-xs">
+<div class="h-full bg-primary rounded-full" style="width: 80%;"></div>
+</div>
+<div class="flex justify-between items-center font-label-sm text-label-sm text-outline mt-space-xs">
+<span>6 estaciones en reserva</span>
+<span>Conmutador CISCO Catalyst 3850 activo</span>
+</div>
+</div>
+<!-- Metadatos de la Sesión -->
+<div class="mt-space-md grid grid-cols-1 sm:grid-cols-3 gap-space-sm py-space-sm border-y border-surface-container-highest">
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Asignatura</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Redes WAN y Ruteo</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Docente Titular</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Mtro. Fernando Morales</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Grupo / Turno</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">ITI-801 · Matutino</span>
+</div>
+</div>
+<!-- Ficha Técnica -->
+<details class="mt-space-md group" open="">
+<summary class="flex items-center justify-between cursor-pointer font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider select-none">
+<span>Especificación de Hardware & Software Base</span>
+<span class="material-symbols-outlined text-[18px] group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-space-sm p-space-sm bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface-variant space-y-1 border border-surface-container-highest">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary">memory</span>
+<span><strong>Hardware:</strong> Intel Core i7-12700, 32GB RAM DDR5, SSD NVMe 512GB, Display 24" IPS FHD.</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary">terminal</span>
+<span><strong>Software:</strong> Cisco Packet Tracer 8.2, GNS3, Wireshark, Putty, Ubuntu 22.04 LTS & Windows 11 Pro Dual-Boot.</span>
+</div>
+</div>
+</details>
+</div>
+<div class="mt-space-lg pt-space-sm border-t border-surface-container-highest flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Próximo cambio: 10:00 hrs</span>
+<button class="px-space-md py-1.5 bg-surface-container hover:bg-surface-container-highest text-on-surface rounded font-label-md text-label-md font-semibold transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+            Ver Malla de Estaciones
+          </button>
+</div>
+</article>
+<!-- Lab 2: Software -->
+<article class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase font-bold tracking-wider">Edificio E · Planta Baja (E-104)</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold mt-0.5">Laboratorio de Ingeniería de Software (Lab Software 2)</h3>
+</div>
+<span class="shrink-0 inline-flex items-center gap-1 px-space-sm py-1 bg-secondary-container text-on-secondary-container rounded font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+              Práctica Libre Autorizada
+            </span>
+</div>
+<!-- Métrica de Ocupación con Barra de Progreso Plana -->
+<div class="mt-space-md p-space-md bg-surface-container-low rounded-lg border border-surface-container-highest">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">Aforo Ocupado: 18 de 30 estaciones</span>
+<span class="font-bold text-secondary font-numeric-table">60%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-highest rounded-full overflow-hidden mt-space-xs">
+<div class="h-full bg-secondary rounded-full" style="width: 60%;"></div>
+</div>
+<div class="flex justify-between items-center font-label-sm text-label-sm text-outline mt-space-xs">
+<span class="text-secondary font-bold">12 estaciones libres para ingreso</span>
+<span>Acceso directo con credencial</span>
+</div>
+</div>
+<!-- Metadatos de la Sesión -->
+<div class="mt-space-md grid grid-cols-1 sm:grid-cols-3 gap-space-sm py-space-sm border-y border-surface-container-highest">
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Modalidad Actual</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Proyectos Terminales</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Encargado de Mesa</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Ing. Carlos Mendoza</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Cupo Abierto</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Todas las ingenierías</span>
+</div>
+</div>
+<!-- Ficha Técnica -->
+<details class="mt-space-md group" open="">
+<summary class="flex items-center justify-between cursor-pointer font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider select-none">
+<span>Especificación de Hardware & Software Base</span>
+<span class="material-symbols-outlined text-[18px] group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-space-sm p-space-sm bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface-variant space-y-1 border border-surface-container-highest">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary">memory</span>
+<span><strong>Hardware:</strong> AMD Ryzen 7 5700G, 32GB RAM DDR4 3200MHz, SSD NVMe 1TB, Monitores duales.</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary">code</span>
+<span><strong>Software:</strong> VS Code, Docker Desktop, Node.js 20, IntelliJ IDEA Ultimate, PostgreSQL 16, Git.</span>
+</div>
+</div>
+</details>
+</div>
+<div class="mt-space-lg pt-space-sm border-t border-surface-container-highest flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Sin clase asignada hasta 13:00 hrs</span>
+<button class="px-space-md py-1.5 bg-primary hover:bg-primary-container text-on-primary rounded font-label-md text-label-md font-semibold transition-colors flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+            Registrar Ingreso en Sala
+          </button>
+</div>
+</article>
+<!-- Lab 3: Inteligencia Artificial y Datos -->
+<article class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase font-bold tracking-wider">Edificio F · Planta Alta (F-205)</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold mt-0.5">Laboratorio de Inteligencia Artificial y Datos (Lab IA)</h3>
+</div>
+<span class="shrink-0 inline-flex items-center gap-1 px-space-sm py-1 bg-surface-container text-on-surface rounded font-label-sm text-label-sm font-bold border border-surface-container-highest">
+<span class="material-symbols-outlined text-[16px] text-tertiary">biotech</span>
+              Taller Especializado
+            </span>
+</div>
+<!-- Métrica de Ocupación -->
+<div class="mt-space-md p-space-md bg-surface-container-low rounded-lg border border-surface-container-highest">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">Aforo Ocupado: 28 de 30 estaciones</span>
+<span class="font-bold text-primary font-numeric-table">93%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-highest rounded-full overflow-hidden mt-space-xs">
+<div class="h-full bg-primary rounded-full" style="width: 93%;"></div>
+</div>
+<div class="flex justify-between items-center font-label-sm text-label-sm text-outline mt-space-xs">
+<span>2 estaciones en cómputo batch</span>
+<span>GPU Clusters con refrigeración activa</span>
+</div>
+</div>
+<!-- Metadatos de la Sesión -->
+<div class="mt-space-md grid grid-cols-1 sm:grid-cols-3 gap-space-sm py-space-sm border-y border-surface-container-highest">
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Asignatura</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Deep Learning & Visión</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Docente Titular</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Dra. Elena Ramírez</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Grupo / Posgrado</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">ITI-902 · Especialidad</span>
+</div>
+</div>
+<!-- Ficha Técnica -->
+<details class="mt-space-md group" open="">
+<summary class="flex items-center justify-between cursor-pointer font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider select-none">
+<span>Especificación de Hardware & Software Base</span>
+<span class="material-symbols-outlined text-[18px] group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-space-sm p-space-sm bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface-variant space-y-1 border border-surface-container-highest">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary">memory</span>
+<span><strong>Hardware:</strong> Dell Precision 3660, NVIDIA RTX 4070 12GB VRAM, 64GB DDR5, SSD NVMe 2TB.</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary">developer_board</span>
+<span><strong>Software:</strong> CUDA Toolkit 12.2, PyTorch 2.2, TensorFlow, JupyterHub, Python 3.11, Anaconda.</span>
+</div>
+</div>
+</details>
+</div>
+<div class="mt-space-lg pt-space-sm border-t border-surface-container-highest flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Cierre de sesión: 11:30 hrs</span>
+<button class="px-space-md py-1.5 bg-surface-container hover:bg-surface-container-highest text-on-surface rounded font-label-md text-label-md font-semibold transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+            Ver Malla de Estaciones
+          </button>
+</div>
+</article>
+<!-- Lab 4: Internet de las Cosas y Embebidos -->
+<article class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase font-bold tracking-wider">Edificio F · Planta Baja (F-102)</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold mt-0.5">Laboratorio de Internet de las Cosas y Embebidos (Lab IoT)</h3>
+</div>
+<span class="shrink-0 inline-flex items-center gap-1 px-space-sm py-1 bg-secondary-container text-on-secondary-container rounded font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+              Práctica Libre Disponible
+            </span>
+</div>
+<!-- Métrica de Ocupación -->
+<div class="mt-space-md p-space-md bg-surface-container-low rounded-lg border border-surface-container-highest">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">Aforo Ocupado: 12 de 30 estaciones</span>
+<span class="font-bold text-secondary font-numeric-table">40%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container-highest rounded-full overflow-hidden mt-space-xs">
+<div class="h-full bg-secondary rounded-full" style="width: 40%;"></div>
+</div>
+<div class="flex justify-between items-center font-label-sm text-label-sm text-outline mt-space-xs">
+<span class="text-secondary font-bold">18 módulos libres con instrumental</span>
+<span>Osciloscopios y fuentes en línea</span>
+</div>
+</div>
+<!-- Metadatos de la Sesión -->
+<div class="mt-space-md grid grid-cols-1 sm:grid-cols-3 gap-space-sm py-space-sm border-y border-surface-container-highest">
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Asignatura</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Sistemas Embebidos</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Docente Asesor</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Dr. Arturo Vega</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-tertiary uppercase font-bold">Bancos Asignados</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Módulos A1 a B6</span>
+</div>
+</div>
+<!-- Ficha Técnica -->
+<details class="mt-space-md group" open="">
+<summary class="flex items-center justify-between cursor-pointer font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider select-none">
+<span>Especificación de Hardware & Software Base</span>
+<span class="material-symbols-outlined text-[18px] group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-space-sm p-space-sm bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface-variant space-y-1 border border-surface-container-highest">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary">memory</span>
+<span><strong>Hardware:</strong> Intel Core i5-11400, 16GB RAM, Osciloscopios Rigol DS1054Z, Fuentes DC triples.</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-tertiary">cable</span>
+<span><strong>Kits & Software:</strong> STM32CubeIDE, Arduino IDE 2.3, Raspberry Pi 4 B, ESP32, Keil uVision, Wireshark IoT.</span>
+</div>
+</div>
+</details>
+</div>
+<div class="mt-space-lg pt-space-sm border-t border-surface-container-highest flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">Próxima práctica: 12:00 hrs</span>
+<button class="px-space-md py-1.5 bg-primary hover:bg-primary-container text-on-primary rounded font-label-md text-label-md font-semibold transition-colors flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+            Registrar Ingreso en Sala
+          </button>
+</div>
+</article>
+</div>
+</section>
+<!-- Sección Rápida de Avisos Oficiales del Administrador -->
+<section class="mt-space-xl bg-surface-container-lowest border border-surface-container-highest rounded-xl p-space-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-md border-b border-surface-container-highest gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[24px]">campaign</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Tablón Técnico de Avisos Oficiales</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Emitido por: Ing. Carlos Mendoza · Jefatura de Operaciones de Cómputo</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Período Académico Cuatrimestral 2025-1</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mt-space-md">
+<!-- Aviso 1: Mantenimiento -->
+<div class="p-space-md bg-surface-container-low rounded-lg border border-surface-container-highest flex flex-col justify-between">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 bg-surface-container-highest text-on-surface rounded font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px] text-tertiary">build</span>
+              Mantenimiento Programado
+            </span>
+<span class="font-numeric-table text-numeric-table text-outline">Sábado próximo · 14:00 - 18:00 hrs</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">Suspensión Temporal en Lab Cómputo General A</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Se llevará a cabo el despliegue de imágenes de sistema operativo y parcheo de seguridad para 30 terminales. Los usuarios con reservación en ese horario serán reubicados sin penalización al Laboratorio B.
+          </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-container-highest flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-tertiary font-medium">Impacto estimado: Bajo</span>
+<a class="text-primary hover:underline font-bold inline-flex items-center gap-0.5" href="#">
+            Ver Circular Interna
+            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Aviso 2: Licencias MATLAB -->
+<div class="p-space-md bg-surface-container-low rounded-lg border border-surface-container-highest flex flex-col justify-between">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 bg-secondary-container text-on-secondary-container rounded font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px] text-secondary">verified_user</span>
+              Licenciamiento Institucional
+            </span>
+<span class="font-numeric-table text-numeric-table text-outline">Vigencia Anual 2025</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">Renovación de MATLAB R2024b y Oracle Academy</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Las suites de cálculo numérico MATLAB, Simulink y los entornos de base de datos Oracle SQL Developer han sido reactivados en todas las imágenes de laboratorio. Los estudiantes pueden activar su copia individual con el correo institucional @uptex.edu.mx.
+          </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-surface-container-highest flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-secondary font-medium">Disponible de inmediato</span>
+<a class="text-primary hover:underline font-bold inline-flex items-center gap-0.5" data-path="catalogo-de-software" href="#">
+            Instructivo de Activación
+            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</div></div></main><footer class="w-full bg-surface-container-lowest border-t border-surface-container-highest mt-space-xl"><div class="max-w-[1440px] mx-auto px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-gutter pb-space-lg border-b border-surface-container-highest"><div class="flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm text-primary"><span class="material-symbols-outlined text-[20px]">dns</span><span class="font-headline-sm text-headline-sm text-on-surface font-bold">UPTex TI</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">División de Tecnologías de la Información y Comunicación. Soporte de infraestructura informática y cómputo especializado universitario.</p></div><div class="flex flex-col gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Atención Técnica</span><span class="font-body-sm text-body-sm text-on-surface-variant">Lunes a Sábado: 07:00 – 20:00 hrs</span><span class="font-body-sm text-body-sm text-on-surface-variant">Edificio E, Planta Baja · Laboratorio L-04</span><span class="font-body-sm text-body-sm text-on-surface-variant">soporte.laboratorios@uptex.edu.mx</span></div><div class="flex flex-col gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Directorio Operativo</span><span class="font-body-sm text-body-sm text-on-surface-variant">Extensión Soporte: 4012 / 4015</span><span class="font-body-sm text-body-sm text-on-surface-variant">Jefatura de Laboratorios: Ext. 4010</span><span class="font-body-sm text-body-sm text-on-surface-variant">Mesa de Ayuda de Red Institucional</span></div><div class="flex flex-col gap-space-xs"><span class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-wider">Normativa y Seguridad</span><p class="font-body-sm text-body-sm text-outline">El uso de los laboratorios y equipos informáticos se rige bajo el Reglamento Oficial UPTex. Prohibido el ingreso de alimentos y bebidas en todas las áreas de cómputo.</p></div></div><div class="pt-space-md flex flex-col md:flex-row items-center justify-between gap-space-sm text-on-surface-variant"><span class="font-body-sm text-body-sm">© 2025 Universidad Politécnica de Texcoco · Subdirección de Informática y Telecomunicaciones</span><div class="flex items-center gap-space-md font-label-sm text-label-sm"><span class="text-secondary font-bold">ESTADO: TODOS LOS SERVICIOS OPERATIVOS</span><span class="text-outline">|</span><span class="text-outline">v3.4.1-prod</span></div></div></div></footer></body></html>
