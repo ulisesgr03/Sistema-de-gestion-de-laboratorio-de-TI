@@ -11,13 +11,13 @@ class Mantenimiento extends Model
 
     protected $fillable = [
         'equipo_id',
-        'user_id',
-        'incidencia_id',
         'laboratorio_id',
+        'user_id',
         'tipo',
-        'descripcion',
-        'actividades_realizadas',
+        'titulo',
+        'actividades',
         'resultado',
+        'fecha_programada',
         'fecha_inicio',
         'fecha_fin',
         'estado',
@@ -27,9 +27,10 @@ class Mantenimiento extends Model
     protected function casts(): array
     {
         return [
+            'fecha_programada' => 'datetime',
             'fecha_inicio' => 'datetime',
-            'fecha_fin'    => 'datetime',
-            'costo'        => 'decimal:2',
+            'fecha_fin' => 'datetime',
+            'costo' => 'decimal:2',
         ];
     }
 
@@ -38,18 +39,13 @@ class Mantenimiento extends Model
         return $this->belongsTo(Equipo::class);
     }
 
-    public function responsable(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function incidencia(): BelongsTo
-    {
-        return $this->belongsTo(Incidencia::class);
-    }
-
     public function laboratorio(): BelongsTo
     {
         return $this->belongsTo(Laboratorio::class);
+    }
+
+    public function responsable(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

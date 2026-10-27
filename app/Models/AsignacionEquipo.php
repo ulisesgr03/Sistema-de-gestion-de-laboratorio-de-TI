@@ -13,15 +13,19 @@ class AsignacionEquipo extends Model
         'laboratorio_id',
         'asignado_por',
         'fecha_asignacion',
+        'fecha_limite',
         'fecha_devolucion',
         'estado',
         'observaciones',
+        'estado_fisico_entrega',
+        'estado_fisico_devolucion',
     ];
 
     protected function casts(): array
     {
         return [
             'fecha_asignacion' => 'datetime',
+            'fecha_limite' => 'datetime',
             'fecha_devolucion' => 'datetime',
         ];
     }

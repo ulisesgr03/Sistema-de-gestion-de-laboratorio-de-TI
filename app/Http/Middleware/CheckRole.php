@@ -4,60 +4,68 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckRole
 {
     /**
-     * Maneja la petición entrante y verifica si el usuario autenticado
-     * cuenta con al menos uno de los roles autorizados.
+     * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      * @param  string  ...$roles
      */
-    public function handle(Request $request, Closure $next, ...$roles): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        $user = $request->user();
-
-        // 1. Validar autenticación
-        if (!$user) {
+        if (!Auth::check()) {
             if ($request->expectsJson()) {
                 return response()->json([
-                    'error' => 'No autenticado',
-                    'message' => 'Debes iniciar sesión para acceder a este módulo.',
+                    'success' => false,
+                    'message' => 'No autenticado. Por favor inicie sesión.',
                 ], Response::HTTP_UNAUTHORIZED);
             }
 
-            return redirect()->guest(route('login', [], false))
-                ->with('error', 'Debes iniciar sesión con tu cuenta institucional para continuar.');
+            return redirect()->guest('/login');
         }
 
-        // Si no se especificaron roles, continuar
+        $user = Auth::user();
+
+        // Verificar si la cuenta de usuario se encuentra activa
+        if (isset($user->activo) && !$user->activo) {
+            Auth::logout();
+            if ($request->hasSession()) {
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+            }
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Su cuenta se encuentra desactivada. Contacte al administrador.',
+                ], Response::HTTP_FORBIDDEN);
+            }
+
+            return redirect('/login')->withErrors([
+                'email' => 'Su cuenta se encuentra desactivada. Contacte al administrador.',
+            ]);
+        }
+
+        // Si no se pasaron roles específicos, permitir acceso a usuarios autenticados
         if (empty($roles)) {
             return $next($request);
         }
 
-        // 2. Normalizar roles (permitir tanto sintaxis variádica como roles separados por coma)
-        $flattenedRoles = [];
-        foreach ($roles as $role) {
-            foreach (explode(',', $role) as $subRole) {
-                $trimmed = trim($subRole);
-                if ($trimmed !== '') {
-                    $flattenedRoles[] = $trimmed;
-                }
-            }
-        }
-
-        // 3. Verificar si el usuario cuenta con alguno de los roles
-        if (!$user->hasRole($flattenedRoles)) {
+        // Verificar si el usuario tiene alguno de los roles solicitados
+        if (!$user->hasRole($roles)) {
             if ($request->expectsJson()) {
                 return response()->json([
-                    'error' => 'Acceso Denegado',
-                    'message' => 'No cuentas con el rol requerido (' . implode(', ', $flattenedRoles) . ') para esta operación.',
+                    'success' => false,
+                    'message' => 'Acceso denegado: no cuenta con los permisos o rol requeridos para esta acción.',
+                    'required_roles' => $roles,
                 ], Response::HTTP_FORBIDDEN);
             }
 
-            abort(Response::HTTP_FORBIDDEN, 'Acceso Denegado: Esta área está restringida exclusivamente a usuarios con rol ' . implode(' o ', $flattenedRoles) . '.');
+            abort(Response::HTTP_FORBIDDEN, 'Acceso denegado: no cuenta con el rol requerido.');
         }
 
         return $next($request);

@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
+use App\Exceptions\BusinessRuleException;
 use App\Models\Equipo;
 use App\Models\InstalacionSoftware;
 use App\Models\Licencia;
 use App\Models\Software;
-use DomainException;
+use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class SoftwareService
 {
@@ -18,163 +18,263 @@ class SoftwareService
     ) {}
 
     /**
-     * Da de alta un nuevo paquete de software en el catálogo institucional.
+     * Registrar un nuevo software en el catálogo institucional.
      */
-    public function registrarSoftware(array $datos, ?int $operadorId = null): Software
+    public function registrarSoftware(array $datos, ?int $userId = null): Software
     {
-        return DB::transaction(function () use ($datos, $operadorId) {
-            $software = Software::create([
-                'nombre'      => $datos['nombre'],
-                'version'     => $datos['version'] ?? 'Última estable',
-                'fabricante'  => $datos['fabricante'] ?? null,
-                'descripcion' => $datos['descripcion'] ?? null,
-            ]);
+        $nombre = trim($datos['nombre']);
 
-            $this->bitacoraService->registrar(
-                accion: "Alta de software: {$software->nombre} ({$software->version})",
-                modulo: 'Catálogo de Software',
-                detalle: [
-                    'software_id' => $software->id,
-                    'fabricante'  => $software->fabricante,
-                ],
-                userId: $operadorId ?? Auth::id()
+        if (Software::where('nombre', $nombre)->exists()) {
+            throw new BusinessRuleException(
+                "El software '{$nombre}' ya se encuentra registrado en el catálogo.",
+                'SOFTWARE_DUPLICADO'
             );
+        }
 
-            return $software;
-        });
+        $software = Software::create([
+            'nombre' => $nombre,
+            'version' => $datos['version'] ?? null,
+            'fabricante' => $datos['fabricante'] ?? null,
+            'descripcion' => $datos['descripcion'] ?? null,
+        ]);
+
+        $this->bitacoraService->registrar(
+            accion: 'Registrar Software',
+            modulo: 'Software y Licencias',
+            detalle: "Software registrado: {$software->nombre} (Versión: {$software->version})",
+            userId: $userId
+        );
+
+        return $software;
     }
 
     /**
-     * Asocia una clave o contrato de licenciamiento a un título de software.
+     * Actualizar información de un software.
      */
-    public function registrarLicencia(int $softwareId, array $datos, ?int $operadorId = null): Licencia
+    public function actualizarSoftware(Software $software, array $datos, ?int $userId = null): Software
     {
-        return DB::transaction(function () use ($softwareId, $datos, $operadorId) {
-            $software = Software::findOrFail($softwareId);
+        if (isset($datos['nombre']) && $datos['nombre'] !== $software->nombre) {
+            $existe = Software::where('nombre', trim($datos['nombre']))
+                ->where('id', '!=', $software->id)
+                ->exists();
 
-            $licencia = Licencia::create([
-                'software_id'        => $software->id,
-                'tipo'               => $datos['tipo'] ?? 'academica',
-                'clave_licencia'     => $datos['clave_licencia'] ?? null,
-                'cantidad_licencias' => (int) ($datos['cantidad_licencias'] ?? 30),
-                'fecha_inicio'       => $datos['fecha_inicio'] ?? now(),
-                'fecha_vencimiento'  => $datos['fecha_vencimiento'] ?? null,
-                'estado'             => $datos['estado'] ?? 'activa',
-            ]);
+            if ($existe) {
+                throw new BusinessRuleException(
+                    "Ya existe otro software registrado con el nombre '{$datos['nombre']}'.",
+                    'SOFTWARE_DUPLICADO'
+                );
+            }
+        }
 
-            $this->bitacoraService->registrar(
-                accion: "Registro de licencia para {$software->nombre}",
-                modulo: 'Catálogo de Software',
-                detalle: [
-                    'software_id' => $software->id,
-                    'licencia_id' => $licencia->id,
-                    'asientos'    => $licencia->cantidad_licencias,
-                    'tipo'        => $licencia->tipo,
-                ],
-                userId: $operadorId ?? Auth::id()
-            );
+        $software->update($datos);
 
-            return $licencia;
-        });
+        $this->bitacoraService->registrar(
+            accion: 'Actualizar Software',
+            modulo: 'Software y Licencias',
+            detalle: "Software ID {$software->id} actualizado.",
+            userId: $userId
+        );
+
+        return $software;
     }
 
     /**
-     * Registra la instalación de un software en una terminal o equipo, controlando cupo de licencias.
+     * Registrar una licencia para un software.
+     */
+    public function registrarLicencia(Software $software, array $datos, ?int $userId = null): Licencia
+    {
+        if (!empty($datos['clave_licencia'])) {
+            $clave = trim($datos['clave_licencia']);
+            if (Licencia::where('clave_licencia', $clave)->exists()) {
+                throw new BusinessRuleException(
+                    "La clave de licencia ya se encuentra registrada en el sistema.",
+                    'LICENCIA_CLAVE_DUPLICADA'
+                );
+            }
+        }
+
+        $licencia = Licencia::create([
+            'software_id' => $software->id,
+            'tipo' => $datos['tipo'] ?? 'educativa', // educativa, comercial, libre, oem
+            'clave_licencia' => $datos['clave_licencia'] ?? null,
+            'cantidad_licencias' => (int) ($datos['cantidad_licencias'] ?? 1),
+            'fecha_inicio' => $datos['fecha_inicio'] ?? null,
+            'fecha_vencimiento' => $datos['fecha_vencimiento'] ?? null,
+            'estado' => $datos['estado'] ?? 'activa',
+        ]);
+
+        $this->bitacoraService->registrar(
+            accion: 'Registrar Licencia',
+            modulo: 'Software y Licencias',
+            detalle: "Licencia registrada para {$software->nombre}: tipo {$licencia->tipo}, {$licencia->cantidad_licencias} asientos.",
+            userId: $userId
+        );
+
+        return $licencia;
+    }
+
+    /**
+     * Instalar software en un equipo de cómputo validando disponibilidad de licencias.
      */
     public function instalarEnEquipo(
-        int $softwareId,
         int $equipoId,
+        int $softwareId,
         ?int $licenciaId = null,
-        ?int $instaladoPorId = null
+        ?int $instaladoPor = null,
+        ?string $version = null
     ): InstalacionSoftware {
-        return DB::transaction(function () use (
-            $softwareId,
-            $equipoId,
-            $licenciaId,
-            $instaladoPorId
-        ) {
-            $software = Software::findOrFail($softwareId);
-            $equipo = Equipo::with('estacion.laboratorio')->findOrFail($equipoId);
+        $equipo = Equipo::findOrFail($equipoId);
+        $software = Software::findOrFail($softwareId);
 
-            // Verificar si ya está instalado en este equipo
-            $instalacionExistente = InstalacionSoftware::where('equipo_id', $equipoId)
-                ->where('software_id', $softwareId)
-                ->first();
-
-            if ($instalacionExistente) {
-                throw new DomainException("El paquete '{$software->nombre}' ya se encuentra instalado en el equipo '{$equipo->codigo_inventario}'.");
-            }
-
-            // Si se vincula a una licencia, verificar que esté activa y con asientos disponibles
-            if ($licenciaId) {
-                $licencia = Licencia::withCount('instalaciones')->lockForUpdate()->findOrFail($licenciaId);
-
-                if ($licencia->estado !== 'activa') {
-                    throw new DomainException("La licencia #{$licencia->id} no está activa. Estado actual: {$licencia->estado}.");
-                }
-
-                if ($licencia->cantidad_licencias > 0 && $licencia->instalaciones_count >= $licencia->cantidad_licencias) {
-                    throw new DomainException("Se ha alcanzado el límite máximo de asientos permitidos ({$licencia->cantidad_licencias}) para esta licencia.");
-                }
-            }
-
-            $instalacion = InstalacionSoftware::create([
-                'equipo_id'          => $equipo->id,
-                'software_id'        => $software->id,
-                'licencia_id'        => $licenciaId,
-                'instalado_por'      => $instaladoPorId ?? Auth::id(),
-                'fecha_instalacion'  => now(),
-            ]);
-
-            $this->bitacoraService->registrar(
-                accion: "Instalación de {$software->nombre} en {$equipo->codigo_inventario}",
-                modulo: 'Catálogo de Software',
-                detalle: [
-                    'software_id'    => $software->id,
-                    'equipo_id'      => $equipo->id,
-                    'laboratorio_id' => $equipo->estacion?->laboratorio_id,
-                    'licencia_id'    => $licenciaId,
-                ],
-                userId: $instaladoPorId ?? Auth::id()
+        // Validar que el equipo esté operativo
+        if (!$equipo->esOperativo()) {
+            throw new BusinessRuleException(
+                "No se puede instalar software en el equipo '{$equipo->codigo_inventario}' porque está en mantenimiento o fuera de servicio.",
+                'EQUIPO_NO_OPERATIVO'
             );
+        }
 
-            return $instalacion;
-        });
+        // Validar que no esté ya instalado
+        $instalacionExistente = InstalacionSoftware::where('equipo_id', $equipoId)
+            ->where('software_id', $softwareId)
+            ->first();
+
+        if ($instalacionExistente) {
+            if ($instalacionExistente->estado === 'instalado') {
+                throw new BusinessRuleException(
+                    "El software '{$software->nombre}' ya está instalado en el equipo '{$equipo->codigo_inventario}'.",
+                    'SOFTWARE_YA_INSTALADO'
+                );
+            }
+
+            // Si estaba desinstalado previamente, reactivar la instalación
+            $instalacionExistente->estado = 'instalado';
+            $instalacionExistente->licencia_id = $licenciaId;
+            $instalacionExistente->instalado_por = $instaladoPor;
+            $instalacionExistente->fecha_instalacion = Carbon::now();
+            if ($version) {
+                $instalacionExistente->version_instalada = $version;
+            }
+            $instalacionExistente->save();
+
+            return $instalacionExistente;
+        }
+
+        // Si se especificó licencia, validar disponibilidad de asientos y vigencia
+        if ($licenciaId) {
+            $licencia = Licencia::findOrFail($licenciaId);
+
+            if ($licencia->software_id !== $softwareId) {
+                throw new BusinessRuleException(
+                    "La licencia seleccionada no corresponde al software '{$software->nombre}'.",
+                    'LICENCIA_INCOMPATIBLE'
+                );
+            }
+
+            if (strtolower($licencia->estado) !== 'activa') {
+                throw new BusinessRuleException(
+                    "La licencia seleccionada no se encuentra activa (Estado: {$licencia->estado}).",
+                    'LICENCIA_INACTIVA'
+                );
+            }
+
+            if ($licencia->fecha_vencimiento && Carbon::parse($licencia->fecha_vencimiento)->isPast()) {
+                throw new BusinessRuleException(
+                    "La licencia seleccionada venció el " . Carbon::parse($licencia->fecha_vencimiento)->format('d/m/Y') . ".",
+                    'LICENCIA_VENCIDA'
+                );
+            }
+
+            // Contar instalaciones activas de esta licencia
+            $asientosUsados = InstalacionSoftware::where('licencia_id', $licenciaId)
+                ->where('estado', 'instalado')
+                ->count();
+
+            if ($asientosUsados >= $licencia->cantidad_licencias) {
+                throw new BusinessRuleException(
+                    "Se ha alcanzado el límite máximo de instalaciones ({$licencia->cantidad_licencias}) para esta licencia.",
+                    'LICENCIA_LIMITE_ALCANZADO',
+                    [
+                        'asientos_totales' => $licencia->cantidad_licencias,
+                        'asientos_usados' => $asientosUsados,
+                    ]
+                );
+            }
+        }
+
+        $instalacion = InstalacionSoftware::create([
+            'equipo_id' => $equipoId,
+            'software_id' => $softwareId,
+            'licencia_id' => $licenciaId,
+            'instalado_por' => $instaladoPor,
+            'fecha_instalacion' => Carbon::now(),
+            'version_instalada' => $version ?? $software->version,
+            'estado' => 'instalado',
+        ]);
+
+        $this->bitacoraService->registrar(
+            accion: 'Instalar Software',
+            modulo: 'Software y Licencias',
+            detalle: "Software '{$software->nombre}' instalado en equipo '{$equipo->codigo_inventario}'" . ($licenciaId ? " [Licencia ID: {$licenciaId}]" : ""),
+            userId: $instaladoPor
+        );
+
+        return $instalacion;
     }
 
     /**
-     * Desinstala un paquete de una terminal, liberando el asiento de la licencia.
+     * Desinstalar software de un equipo liberando la licencia.
      */
-    public function desinstalarDeEquipo(int $instalacionId, ?int $operadorId = null): bool
+    public function desinstalarDeEquipo(int $equipoId, int $softwareId, ?int $desinstaladoPor = null): bool
     {
-        return DB::transaction(function () use ($instalacionId, $operadorId) {
-            $instalacion = InstalacionSoftware::with(['software', 'equipo'])->findOrFail($instalacionId);
+        $instalacion = InstalacionSoftware::where('equipo_id', $equipoId)
+            ->where('software_id', $softwareId)
+            ->firstOrFail();
 
-            $softwareNombre = $instalacion->software?->nombre ?? 'Software';
-            $equipoCodigo = $instalacion->equipo?->codigo_inventario ?? 'Equipo';
+        $instalacion->delete();
 
-            $instalacion->delete();
+        $this->bitacoraService->registrar(
+            accion: 'Desinstalar Software',
+            modulo: 'Software y Licencias',
+            detalle: "Software ID {$softwareId} desinstalado del equipo ID {$equipoId}.",
+            userId: $desinstaladoPor
+        );
 
-            $this->bitacoraService->registrar(
-                accion: "Desinstalación de {$softwareNombre} de {$equipoCodigo}",
-                modulo: 'Catálogo de Software',
-                detalle: [
-                    'instalacion_id' => $instalacionId,
-                ],
-                userId: $operadorId ?? Auth::id()
-            );
-
-            return true;
-        });
+        return true;
     }
 
     /**
-     * Obtiene el catálogo completo de software con estadísticas de despliegue y licencias.
+     * Obtener licencias próximas a vencer en los siguientes $dias días.
      */
-    public function obtenerCatalogoConDisponibilidad(): Collection
+    public function obtenerLicenciasPorVencer(int $dias = 30): Collection
     {
-        return Software::with(['licencias', 'instalaciones.equipo.estacion.laboratorio'])
-            ->withCount('instalaciones')
+        $hoy = Carbon::now()->startOfDay();
+        $limite = Carbon::now()->addDays($dias)->endOfDay();
+
+        return Licencia::with('software')
+            ->where('estado', 'activa')
+            ->whereNotNull('fecha_vencimiento')
+            ->whereBetween('fecha_vencimiento', [$hoy, $limite])
+            ->orderBy('fecha_vencimiento')
             ->get();
+    }
+
+    /**
+     * Listar software con conteo de licencias e instalaciones.
+     */
+    public function listar(array $filtros = [], int $perPage = 15): LengthAwarePaginator
+    {
+        $query = Software::with(['licencias', 'instalaciones.equipo']);
+
+        if (!empty($filtros['buscar'])) {
+            $buscar = $filtros['buscar'];
+            $query->where(function ($q) use ($buscar) {
+                $q->where('nombre', 'like', "%{$buscar}%")
+                  ->orWhere('fabricante', 'like', "%{$buscar}%")
+                  ->orWhere('version', 'like', "%{$buscar}%");
+            });
+        }
+
+        return $query->orderBy('nombre')->paginate($perPage);
     }
 }

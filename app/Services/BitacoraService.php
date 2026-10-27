@@ -4,94 +4,84 @@ namespace App\Services;
 
 use App\Models\Bitacora;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 
 class BitacoraService
 {
     /**
-     * Registra un evento de auditoría en la bitácora institucional.
+     * Registrar una acción en la bitácora del sistema.
      */
     public function registrar(
         string $accion,
         string $modulo,
-        string|array|null $detalle = null,
+        ?string $detalle = null,
         ?int $userId = null,
-        ?string $ip = null
+        ?string $direccionIp = null
     ): Bitacora {
-        try {
-            $detalleJson = is_array($detalle)
-                ? json_encode($detalle, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
-                : $detalle;
+        $finalUserId = $userId ?? Auth::id();
+        $finalIp = $direccionIp ?? Request::ip();
 
-            return Bitacora::create([
-                'user_id'      => $userId ?? Auth::id(),
-                'accion'       => substr($accion, 0, 150),
-                'modulo'       => substr($modulo, 0, 100),
-                'detalle'      => $detalleJson,
-                'direccion_ip' => $ip ?? Request::ip(),
-                'fecha'        => now(),
-            ]);
-        } catch (\Throwable $e) {
-            Log::error('Fallo en BitacoraService al registrar evento: ' . $e->getMessage(), [
-                'accion' => $accion,
-                'modulo' => $modulo,
-            ]);
-
-            // Devolver modelo no persistido para evitar romper la transacción principal
-            $bitacora = new Bitacora([
-                'user_id' => $userId ?? Auth::id(),
-                'accion' => $accion,
-                'modulo' => $modulo,
-                'fecha' => now(),
-            ]);
-
-            return $bitacora;
-        }
+        return Bitacora::create([
+            'user_id' => $finalUserId,
+            'accion' => $accion,
+            'modulo' => $modulo,
+            'detalle' => $detalle,
+            'direccion_ip' => $finalIp,
+            'fecha' => Carbon::now(),
+        ]);
     }
 
     /**
-     * Obtiene el listado de registros con filtros avanzados.
+     * Obtener registros de la bitácora con filtros y paginación.
      */
-    public function consultar(
-        ?string $modulo = null,
-        ?int $userId = null,
-        ?string $fechaInicio = null,
-        ?string $fechaFin = null,
-        int $perPage = 25
-    ): LengthAwarePaginator {
+    public function listar(array $filtros = [], int $perPage = 20): LengthAwarePaginator
+    {
         $query = Bitacora::with('usuario')->latest('fecha');
 
-        if ($modulo) {
-            $query->where('modulo', $modulo);
+        if (!empty($filtros['modulo'])) {
+            $query->where('modulo', $filtros['modulo']);
         }
 
-        if ($userId) {
-            $query->where('user_id', $userId);
+        if (!empty($filtros['user_id'])) {
+            $query->where('user_id', $filtros['user_id']);
         }
 
-        if ($fechaInicio) {
-            $query->whereDate('fecha', '>=', $fechaInicio);
+        if (!empty($filtros['accion'])) {
+            $query->where('accion', 'like', '%' . $filtros['accion'] . '%');
         }
 
-        if ($fechaFin) {
-            $query->whereDate('fecha', '<=', $fechaFin);
+        if (!empty($filtros['fecha_desde'])) {
+            $query->where('fecha', '>=', Carbon::parse($filtros['fecha_desde'])->startOfDay());
+        }
+
+        if (!empty($filtros['fecha_hasta'])) {
+            $query->where('fecha', '<=', Carbon::parse($filtros['fecha_hasta'])->endOfDay());
+        }
+
+        if (!empty($filtros['buscar'])) {
+            $buscar = $filtros['buscar'];
+            $query->where(function ($q) use ($buscar) {
+                $q->where('accion', 'like', "%{$buscar}%")
+                  ->orWhere('modulo', 'like', "%{$buscar}%")
+                  ->orWhere('detalle', 'like', "%{$buscar}%");
+            });
         }
 
         return $query->paginate($perPage);
     }
 
     /**
-     * Obtiene los últimos eventos registrados para el widget del panel operativo.
+     * Obtener las actividades recientes globales.
      */
-    public function obtenerActividadReciente(int $limite = 10): Collection
+    public function obtenerActividadReciente(int $limit = 10): Collection
     {
         return Bitacora::with('usuario')
             ->latest('fecha')
-            ->limit($limite)
+            ->limit($limit)
             ->get();
     }
 }

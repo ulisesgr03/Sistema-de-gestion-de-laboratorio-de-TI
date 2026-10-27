@@ -65,4 +65,29 @@ class Equipo extends Model
     {
         return $this->hasMany(InstalacionSoftware::class);
     }
+
+    public function mantenimientos(): HasMany
+    {
+        return $this->hasMany(Mantenimiento::class);
+    }
+
+    public function scopeDisponibles($query)
+    {
+        return $query->where('estado', 'disponible');
+    }
+
+    public function scopeOperativos($query)
+    {
+        return $query->whereNotIn('estado', ['en mantenimiento', 'fuera de servicio', 'baja']);
+    }
+
+    public function esOperativo(): bool
+    {
+        return !in_array(strtolower($this->estado), ['en mantenimiento', 'fuera de servicio', 'baja'], true);
+    }
+
+    public function estaDisponible(): bool
+    {
+        return strtolower($this->estado) === 'disponible';
+    }
 }

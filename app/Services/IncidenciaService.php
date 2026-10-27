@@ -2,184 +2,209 @@
 
 namespace App\Services;
 
+use App\Exceptions\BusinessRuleException;
 use App\Models\Equipo;
 use App\Models\Incidencia;
-use DomainException;
+use App\Models\Laboratorio;
+use App\Models\ReservaLaboratorio;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class IncidenciaService
 {
     public function __construct(
-        protected BitacoraService $bitacoraService
+        protected BitacoraService $bitacoraService,
+        protected EquipoService $equipoService
     ) {}
 
     /**
-     * Registra un nuevo reporte de avería o incidencia técnica.
+     * Reportar una nueva incidencia técnica en un equipo o laboratorio.
      */
-    public function reportarIncidencia(array $datos, ?int $reportanteId = null): Incidencia
+    public function reportar(array $datos, User $reportante): Incidencia
     {
-        return DB::transaction(function () use ($datos, $reportanteId) {
-            $incidencia = Incidencia::create([
-                'equipo_id'       => $datos['equipo_id'] ?? null,
-                'laboratorio_id'  => $datos['laboratorio_id'],
-                'reportado_por'   => $reportanteId ?? Auth::id(),
-                'asignado_a'      => $datos['asignado_a'] ?? null,
-                'titulo'          => $datos['titulo'],
-                'descripcion'     => $datos['descripcion'] ?? $datos['titulo'],
-                'prioridad'       => strtolower($datos['prioridad'] ?? 'media'),
-                'estado'          => strtolower($datos['estado'] ?? 'reportada'),
-                'fecha_resolucion'=> null,
-            ]);
+        $laboratorioId = $datos['laboratorio_id'] ?? null;
+        $equipoId = $datos['equipo_id'] ?? null;
 
-            // Si la avería compromete un equipo específico, marcarlo en taller preventivo/mantenimiento
-            if (!empty($datos['equipo_id'])) {
-                $equipo = Equipo::find($datos['equipo_id']);
-                if ($equipo && $equipo->estado !== 'mantenimiento') {
-                    $equipo->update(['estado' => 'mantenimiento']);
-                }
+        $equipo = null;
+        if ($equipoId) {
+            $equipo = Equipo::with('estacion')->findOrFail($equipoId);
+            if (!$laboratorioId && $equipo->estacion) {
+                $laboratorioId = $equipo->estacion->laboratorio_id;
             }
+        }
 
-            $this->bitacoraService->registrar(
-                accion: "Nueva incidencia #{$incidencia->id}: {$incidencia->titulo}",
-                modulo: 'Mesa de Incidencias',
-                detalle: [
-                    'incidencia_id'  => $incidencia->id,
-                    'laboratorio_id' => $incidencia->laboratorio_id,
-                    'prioridad'      => $incidencia->prioridad,
-                    'equipo_id'      => $incidencia->equipo_id,
-                ],
-                userId: $reportanteId ?? Auth::id()
-            );
+        if (!$laboratorioId) {
+            $primerLab = Laboratorio::where('activo', true)->first();
+            if (!$primerLab) {
+                $primerLab = Laboratorio::create([
+                    'nombre' => 'Ventanilla General de TI',
+                    'ubicacion' => 'Edificio Central',
+                    'capacidad' => 10,
+                    'activo' => true,
+                ]);
+            }
+            $laboratorioId = $primerLab->id;
+        }
 
-            return $incidencia;
-        });
-    }
+        $prioridad = strtolower($datos['prioridad'] ?? 'media');
+        $prioridadesValidas = ['baja', 'media', 'alta', 'critica'];
+        if (!in_array($prioridad, $prioridadesValidas, true)) {
+            $prioridad = 'media';
+        }
 
-    /**
-     * Asigna un técnico de soporte responsable para diagnosticar y reparar la incidencia.
-     */
-    public function asignarTecnico(
-        int $incidenciaId,
-        int $tecnicoId,
-        ?string $nuevoEstado = 'en_diagnostico',
-        ?int $operadorId = null
-    ): Incidencia {
-        $incidencia = Incidencia::findOrFail($incidenciaId);
+        $inutilizarEquipo = !empty($datos['marcar_fuera_de_servicio']) || in_array($prioridad, ['alta', 'critica'], true);
 
-        $incidencia->update([
-            'asignado_a' => $tecnicoId,
-            'estado'     => $nuevoEstado ?? $incidencia->estado,
+        $incidencia = Incidencia::create([
+            'equipo_id' => $equipoId,
+            'laboratorio_id' => $laboratorioId,
+            'reportado_por' => $reportante->id,
+            'asignado_a' => $datos['asignado_a'] ?? null,
+            'titulo' => trim($datos['titulo']),
+            'descripcion' => trim($datos['descripcion']),
+            'prioridad' => $prioridad,
+            'estado' => 'abierta',
         ]);
 
+        // Si la falla es crítica o inutiliza el equipo, actualizar estado en inventario
+        if ($equipo && $inutilizarEquipo) {
+            $this->equipoService->cambiarEstado(
+                $equipo,
+                'fuera de servicio',
+                "Incidencia ID {$incidencia->id} [Prioridad: {$prioridad}]: {$incidencia->titulo}",
+                $reportante->id
+            );
+        }
+
         $this->bitacoraService->registrar(
-            accion: "Asignación técnica en ticket #{$incidencia->id}",
-            modulo: 'Mesa de Incidencias',
-            detalle: [
-                'incidencia_id' => $incidencia->id,
-                'tecnico_id'    => $tecnicoId,
-                'estado'        => $incidencia->estado,
-            ],
-            userId: $operadorId ?? Auth::id()
+            accion: 'Reportar Incidencia',
+            modulo: 'Incidencias',
+            detalle: "Incidencia reportada por {$reportante->name}: '{$incidencia->titulo}' [Prioridad: {$prioridad}]",
+            userId: $reportante->id
         );
 
         return $incidencia;
     }
 
     /**
-     * Actualiza el estado del ticket en el flujo Kanban.
+     * Asignar y poner en revisión/atención una incidencia.
      */
-    public function cambiarEstado(
-        int $incidenciaId,
-        string $nuevoEstado,
-        ?string $notas = null,
-        bool $restaurarEquipo = true,
-        ?int $operadorId = null
-    ): Incidencia {
-        return DB::transaction(function () use (
-            $incidenciaId,
-            $nuevoEstado,
-            $notas,
-            $restaurarEquipo,
-            $operadorId
-        ) {
-            $incidencia = Incidencia::with('equipo')->lockForUpdate()->findOrFail($incidenciaId);
-            $estadoAnterior = $incidencia->estado;
-            $estadoNormalizado = strtolower($nuevoEstado);
+    public function asignar(Incidencia $incidencia, int $tecnicoId, ?int $asignadoPor = null): Incidencia
+    {
+        $tecnico = User::findOrFail($tecnicoId);
 
-            $updateData = [
-                'estado' => $estadoNormalizado,
-            ];
+        $incidencia->asignado_a = $tecnico->id;
+        $incidencia->estado = 'en revision';
+        $incidencia->save();
 
-            if ($notas) {
-                $updateData['descripcion'] = $incidencia->descripcion 
-                    ? "{$incidencia->descripcion}\n[Actualización]: {$notas}" 
-                    : $notas;
-            }
+        $this->bitacoraService->registrar(
+            accion: 'Asignar Incidencia',
+            modulo: 'Incidencias',
+            detalle: "Incidencia ID {$incidencia->id} asignada a técnico {$tecnico->name}",
+            userId: $asignadoPor
+        );
 
-            // Si se marca como resuelta, registrar fecha de cierre y liberar el hardware
-            if ($estadoNormalizado === 'resuelta') {
-                $updateData['fecha_resolucion'] = now();
-
-                if ($restaurarEquipo && $incidencia->equipo && $incidencia->equipo->estado === 'mantenimiento') {
-                    $incidencia->equipo->update(['estado' => 'disponible']);
-                }
-            }
-
-            $incidencia->update($updateData);
-
-            $this->bitacoraService->registrar(
-                accion: "Avance ticket #{$incidencia->id} ({$estadoAnterior} -> {$estadoNormalizado})",
-                modulo: 'Mesa de Incidencias',
-                detalle: [
-                    'incidencia_id'   => $incidencia->id,
-                    'estado_anterior' => $estadoAnterior,
-                    'nuevo_estado'    => $estadoNormalizado,
-                    'notas'           => $notas,
-                ],
-                userId: $operadorId ?? Auth::id()
-            );
-
-            return $incidencia;
-        });
+        return $incidencia;
     }
 
     /**
-     * Obtiene los tickets organizados por las 4 columnas del tablero Kanban oficial UPTex TI.
+     * Iniciar proceso de reparación o diagnóstico.
      */
-    public function obtenerTableroKanban(?int $laboratorioId = null): array
+    public function enProceso(Incidencia $incidencia, ?int $userId = null): Incidencia
     {
-        $query = Incidencia::with(['equipo', 'laboratorio', 'reportante', 'encargado'])
-            ->latest();
+        $incidencia->estado = 'en proceso';
+        $incidencia->save();
 
-        if ($laboratorioId !== null) {
-            $query->where('laboratorio_id', $laboratorioId);
+        if ($incidencia->equipo && $incidencia->equipo->estado !== 'fuera de servicio') {
+            $this->equipoService->cambiarEstado(
+                $incidencia->equipo,
+                'en mantenimiento',
+                "En atención por Incidencia ID {$incidencia->id}",
+                $userId
+            );
         }
 
-        $tickets = $query->get();
+        $this->bitacoraService->registrar(
+            accion: 'Incidencia en Proceso',
+            modulo: 'Incidencias',
+            detalle: "Incidencia ID {$incidencia->id} pasó a estado 'en proceso'.",
+            userId: $userId
+        );
 
-        $reportadas = $tickets->where('estado', 'reportada')->values();
-        $enDiagnostico = $tickets->where('estado', 'en_diagnostico')->values();
-        $enReparacion = $tickets->where('estado', 'en_reparacion')->values();
-        $resueltas = $tickets->where('estado', 'resuelta')->values();
+        return $incidencia;
+    }
 
-        $criticas = $tickets->whereIn('estado', ['reportada', 'en_diagnostico', 'en_reparacion'])
-            ->where('prioridad', 'alta')
-            ->count();
+    /**
+     * Resolver la incidencia y registrar el dictamen técnico.
+     */
+    public function resolver(
+        Incidencia $incidencia,
+        string $diagnostico,
+        int $resueltoPor,
+        bool $restablecerEquipoDisponible = true
+    ): Incidencia {
+        $incidencia->estado = 'resuelta';
+        $incidencia->fecha_resolucion = Carbon::now();
+        $incidencia->descripcion = trim($incidencia->descripcion . "\n\n[Dictamen de Resolución]: " . $diagnostico);
+        $incidencia->save();
 
-        return [
-            'columnas' => [
-                'reportadas'     => $reportadas,
-                'en_diagnostico' => $enDiagnostico,
-                'en_reparacion'  => $enReparacion,
-                'resueltas'      => $resueltas,
-            ],
-            'metricas' => [
-                'total_activas'  => $reportadas->count() + $enDiagnostico->count() + $enReparacion->count(),
-                'criticas_altas' => $criticas,
-                'resueltas_hoy'  => $resueltas->where('fecha_resolucion', '>=', now()->startOfDay())->count(),
-            ],
-        ];
+        // Si el equipo estaba fuera de servicio o en mantenimiento, verificar si se restablece
+        if ($incidencia->equipo && $restablecerEquipoDisponible) {
+            $this->equipoService->cambiarEstado(
+                $incidencia->equipo,
+                'disponible',
+                "Incidencia ID {$incidencia->id} resuelta con éxito.",
+                $resueltoPor
+            );
+        }
+
+        $this->bitacoraService->registrar(
+            accion: 'Resolver Incidencia',
+            modulo: 'Incidencias',
+            detalle: "Incidencia ID {$incidencia->id} resuelta. Diagnóstico: {$diagnostico}",
+            userId: $resueltoPor
+        );
+
+        return $incidencia;
+    }
+
+    /**
+     * Listar incidencias con filtros y paginación.
+     */
+    public function listar(array $filtros = [], int $perPage = 15): LengthAwarePaginator
+    {
+        $query = Incidencia::with(['laboratorio', 'equipo', 'reportante', 'encargado'])
+            ->latest();
+
+        if (!empty($filtros['estado'])) {
+            $query->where('estado', $filtros['estado']);
+        }
+
+        if (!empty($filtros['prioridad'])) {
+            $query->where('prioridad', $filtros['prioridad']);
+        }
+
+        if (!empty($filtros['laboratorio_id'])) {
+            $query->where('laboratorio_id', $filtros['laboratorio_id']);
+        }
+
+        if (!empty($filtros['equipo_id'])) {
+            $query->where('equipo_id', $filtros['equipo_id']);
+        }
+
+        if (!empty($filtros['reportado_por'])) {
+            $query->where('reportado_por', $filtros['reportado_por']);
+        }
+
+        if (!empty($filtros['buscar'])) {
+            $buscar = $filtros['buscar'];
+            $query->where(function ($q) use ($buscar) {
+                $q->where('titulo', 'like', "%{$buscar}%")
+                  ->orWhere('descripcion', 'like', "%{$buscar}%");
+            });
+        }
+
+        return $query->paginate($perPage);
     }
 }

@@ -11,22 +11,22 @@
                 <span class="material-symbols-outlined text-[16px] text-[#2f664f]">lan</span>
                 División de Tecnologías de la Información · Universidad Politécnica de Texcoco
             </div>
-            
+
             <h1 class="text-3xl sm:text-4xl font-extrabold text-[#1b1c18] tracking-tight">
                 Infraestructura de Cómputo y Laboratorios de TI
             </h1>
-            
+
             <p class="text-base text-[#404944] max-w-2xl leading-relaxed">
                 Plataforma centralizada de monitoreo y acceso técnico para la comunidad universitaria de la UPTex. Soporte de alta disponibilidad orientado a la docencia especializada, investigación aplicada, certámenes tecnológicos y prácticas de ingeniería.
             </p>
-            
+
             <div class="flex flex-wrap items-center gap-3 pt-2">
                 <a href="{{ url('/salas') }}"
                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2f664f] hover:bg-[#497f67] text-white rounded-lg font-medium text-sm transition-colors shadow-sm">
                     <span class="material-symbols-outlined text-[18px]">sensors</span>
                     Consultar Salas Disponibles
                 </a>
-                
+
                 <a href="{{ url('/reglamento') }}"
                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#ffffff] hover:bg-[#efeee7] border border-[#e4e3db] text-[#1b1c18] rounded-lg font-medium text-sm transition-colors">
                     <span class="material-symbols-outlined text-[18px] text-[#707973]">gavel</span>
@@ -44,7 +44,7 @@
                     En Línea
                 </span>
             </div>
-            
+
             <div class="space-y-2 text-xs font-mono">
                 <div class="flex justify-between items-center">
                     <span class="text-[#404944]">Latencia Gateway:</span>

@@ -2,167 +2,299 @@
 
 namespace App\Services;
 
-use App\Models\Horario;
+use App\Exceptions\BusinessRuleException;
 use App\Models\Laboratorio;
-use App\Models\Practica;
 use App\Models\ReservaLaboratorio;
-use DomainException;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ReservaService
 {
+    // Horas mínimas de anticipación requeridas por política institucional
+    protected int $horasAnticipacionMinima = 24;
+
+    // Duración máxima permitida en horas por reserva individual
+    protected int $maximoHorasPorReserva = 4;
+
     public function __construct(
         protected BitacoraService $bitacoraService
     ) {}
 
     /**
-     * Valida y crea una nueva reserva de laboratorio, verificando conflictos de horario.
+     * Solicitar una nueva reserva de laboratorio.
      */
-    public function crearReserva(array $datos, ?int $userId = null): ReservaLaboratorio
+    public function solicitar(array $datos, User $usuario): ReservaLaboratorio
     {
-        return DB::transaction(function () use ($datos, $userId) {
-            $laboratorioId = (int) $datos['laboratorio_id'];
-            $inicio = Carbon::parse($datos['inicio']);
-            $fin = Carbon::parse($datos['fin']);
-
-            if ($fin->lessThanOrEqualTo($inicio)) {
-                throw new DomainException('La fecha y hora de fin debe ser posterior al inicio de la reserva.');
-            }
-
-            $laboratorio = Laboratorio::findOrFail($laboratorioId);
-            if (!$laboratorio->activo) {
-                throw new DomainException("El laboratorio '{$laboratorio->nombre}' está inactivo y no admite reservas.");
-            }
-
-            // Verificar si el horario no se traslapa con otra reserva confirmada
-            if (!$this->verificarDisponibilidad($laboratorioId, $inicio, $fin)) {
-                throw new DomainException("El intervalo solicitado ({$inicio->format('H:i')} - {$fin->format('H:i')}) presenta conflicto con otra reserva existente en este laboratorio.");
-            }
-
-            $reserva = ReservaLaboratorio::create([
-                'laboratorio_id' => $laboratorioId,
-                'user_id'        => $userId ?? Auth::id(),
-                'practica_id'    => $datos['practica_id'] ?? null,
-                'inicio'         => $inicio,
-                'fin'            => $fin,
-                'estado'         => $datos['estado'] ?? 'confirmada',
-                'motivo'         => $datos['motivo'] ?? 'Práctica académica o investigación',
-            ]);
-
-            $this->bitacoraService->registrar(
-                accion: "Nueva reserva #{$reserva->id} en {$laboratorio->nombre}",
-                modulo: 'Horarios y Prácticas',
-                detalle: [
-                    'reserva_id'     => $reserva->id,
-                    'laboratorio_id' => $laboratorioId,
-                    'inicio'         => $inicio->toDateTimeString(),
-                    'fin'            => $fin->toDateTimeString(),
-                    'motivo'         => $reserva->motivo,
-                ],
-                userId: $userId ?? Auth::id()
+        // 1. Validar estado activo del usuario
+        if (!$usuario->isActive()) {
+            throw new BusinessRuleException(
+                "El usuario solicitante se encuentra inactivo y no puede generar reservas.",
+                'USUARIO_INACTIVO'
             );
-
-            return $reserva;
-        });
-    }
-
-    /**
-     * Comprueba si el laboratorio se encuentra desocupado y libre en el rango especificado.
-     */
-    public function verificarDisponibilidad(
-        int $laboratorioId,
-        Carbon|string $inicio,
-        Carbon|string $fin,
-        ?int $excluirReservaId = null
-    ): bool {
-        $fechaInicio = Carbon::parse($inicio);
-        $fechaFin = Carbon::parse($fin);
-
-        $query = ReservaLaboratorio::where('laboratorio_id', $laboratorioId)
-            ->whereIn('estado', ['confirmada', 'en_curso', 'pendiente'])
-            ->where(function ($q) use ($fechaInicio, $fechaFin) {
-                // Condición de solapamiento de intervalos: (A_inicio < B_fin) AND (A_fin > B_inicio)
-                $q->where('inicio', '<', $fechaFin)
-                  ->where('fin', '>', $fechaInicio);
-            });
-
-        if ($excluirReservaId !== null) {
-            $query->where('id', '!=', $excluirReservaId);
         }
 
-        return !$query->exists();
-    }
+        $laboratorioId = (int) $datos['laboratorio_id'];
+        $laboratorio = Laboratorio::findOrFail($laboratorioId);
 
-    /**
-     * Cancela una reserva existente y libera el espacio.
-     */
-    public function cancelarReserva(int $reservaId, ?string $motivo = null, ?int $operadorId = null): ReservaLaboratorio
-    {
-        $reserva = ReservaLaboratorio::with('laboratorio')->findOrFail($reservaId);
+        // 2. Validar que el laboratorio esté activo
+        if (!$laboratorio->activo) {
+            throw new BusinessRuleException(
+                "El laboratorio '{$laboratorio->nombre}' se encuentra inactivo y no admite reservas.",
+                'LABORATORIO_INACTIVO'
+            );
+        }
 
-        $reserva->update([
-            'estado' => 'cancelada',
-            'motivo' => $motivo ? "{$reserva->motivo} | Cancelación: {$motivo}" : $reserva->motivo,
+        $inicio = Carbon::parse($datos['inicio']);
+        $fin = Carbon::parse($datos['fin']);
+        $ahora = Carbon::now();
+
+        // 3. Validar coherencia temporal
+        if ($inicio->greaterThanOrEqualTo($fin)) {
+            throw new BusinessRuleException(
+                "La fecha y hora de inicio debe ser anterior a la hora de fin.",
+                'HORARIO_INCOHERENTE'
+            );
+        }
+
+        if ($inicio->lessThan($ahora)) {
+            throw new BusinessRuleException(
+                "No se pueden realizar reservas para fechas u horarios pasados.",
+                'FECHA_PASADA'
+            );
+        }
+
+        // 4. Regla de negocio: Anticipación mínima de 24 horas (Admin puede omitir esta restricción si se indica 'ignorar_anticipacion')
+        $ignorarAnticipacion = !empty($datos['ignorar_anticipacion']) && $usuario->isAdmin();
+        if (!$ignorarAnticipacion) {
+            $horasDiferencia = $ahora->diffInHours($inicio, false);
+            if ($horasDiferencia < $this->horasAnticipacionMinima) {
+                throw new BusinessRuleException(
+                    "Las reservas deben solicitarse con una anticipación mínima de {$this->horasAnticipacionMinima} horas. (Tiempo actual: {$horasDiferencia} horas de anticipación).",
+                    'ANTICIPACION_INSUFICIENTE',
+                    ['horas_anticipacion' => $horasDiferencia, 'minimo_requerido' => $this->horasAnticipacionMinima]
+                );
+            }
+        }
+
+        // 5. Regla de negocio: Límite máximo de duración por reserva
+        $duracionHoras = $inicio->diffInHours($fin);
+        if ($duracionHoras > $this->maximoHorasPorReserva && !$usuario->isAdmin() && !$usuario->isDocente()) {
+            throw new BusinessRuleException(
+                "La duración de la reserva excede el límite máximo permitido de {$this->maximoHorasPorReserva} horas.",
+                'DURACION_EXCEDIDA',
+                ['duracion_horas' => $duracionHoras, 'limite' => $this->maximoHorasPorReserva]
+            );
+        }
+
+        // 6. Regla de negocio: No colisiones simultáneas en el mismo laboratorio
+        $existeConflicto = ReservaLaboratorio::where('laboratorio_id', $laboratorioId)
+            ->whereIn('estado', ['pendiente', 'aprobada', 'en_curso'])
+            ->where(function ($query) use ($inicio, $fin) {
+                $query->where('inicio', '<', $fin)
+                      ->where('fin', '>', $inicio);
+            })
+            ->exists();
+
+        if ($existeConflicto) {
+            throw new BusinessRuleException(
+                "El laboratorio '{$laboratorio->nombre}' ya cuenta con una reserva programada o en revisión en ese horario.",
+                'CONFLICTO_RESERVA_SIMULTANEA'
+            );
+        }
+
+        // Docentes y Administradores pueden aprobar automáticamente según rol o quedar en pendiente
+        $estadoInicial = ($usuario->isAdmin()) ? 'aprobada' : 'pendiente';
+
+        $reserva = ReservaLaboratorio::create([
+            'laboratorio_id' => $laboratorioId,
+            'user_id' => $usuario->id,
+            'practica_id' => $datos['practica_id'] ?? null,
+            'inicio' => $inicio,
+            'fin' => $fin,
+            'estado' => $estadoInicial,
+            'motivo' => $datos['motivo'] ?? null,
         ]);
 
         $this->bitacoraService->registrar(
-            accion: "Cancelación de reserva #{$reserva->id} en {$reserva->laboratorio?->nombre}",
-            modulo: 'Horarios y Prácticas',
-            detalle: [
-                'reserva_id' => $reserva->id,
-                'motivo'     => $motivo,
-            ],
-            userId: $operadorId ?? Auth::id()
+            accion: 'Solicitud de Reserva',
+            modulo: 'Reservas',
+            detalle: "Reserva ID {$reserva->id} solicitada por {$usuario->name} para laboratorio '{$laboratorio->nombre}' [{$inicio->format('d/m/Y H:i')} - {$fin->format('H:i')}]. Estado: {$estadoInicial}",
+            userId: $usuario->id
         );
 
         return $reserva;
     }
 
     /**
-     * Registra una práctica curricular o libre para un docente o grupo.
+     * Aprobar una reserva pendiente.
      */
-    public function crearPractica(array $datos, ?int $docenteId = null): Practica
+    public function aprobar(ReservaLaboratorio $reserva, int $aprobadoPor): ReservaLaboratorio
     {
-        return DB::transaction(function () use ($datos, $docenteId) {
-            $practica = Practica::create([
-                'laboratorio_id' => $datos['laboratorio_id'],
-                'user_id'        => $docenteId ?? Auth::id(),
-                'nombre'         => $datos['nombre'],
-                'descripcion'    => $datos['descripcion'] ?? null,
-                'fecha_inicio'   => $datos['fecha_inicio'] ?? now(),
-                'fecha_fin'      => $datos['fecha_fin'] ?? null,
-                'estado'         => $datos['estado'] ?? 'programada',
-            ]);
-
-            $this->bitacoraService->registrar(
-                accion: "Alta de práctica: {$practica->nombre}",
-                modulo: 'Horarios y Prácticas',
-                detalle: [
-                    'practica_id'    => $practica->id,
-                    'laboratorio_id' => $practica->laboratorio_id,
-                ],
-                userId: $docenteId ?? Auth::id()
+        if ($reserva->estado !== 'pendiente') {
+            throw new BusinessRuleException(
+                "Solo se pueden aprobar reservas en estado pendiente (Estado actual: {$reserva->estado}).",
+                'ESTADO_RESERVA_INVALIDO'
             );
+        }
 
-            return $practica;
-        });
+        // Re-verificar que no haya conflicto surgido mientras estaba pendiente
+        $conflicto = ReservaLaboratorio::where('laboratorio_id', $reserva->laboratorio_id)
+            ->where('id', '!=', $reserva->id)
+            ->whereIn('estado', ['aprobada', 'en_curso'])
+            ->where(function ($query) use ($reserva) {
+                $query->where('inicio', '<', $reserva->fin)
+                      ->where('fin', '>', $reserva->inicio);
+            })
+            ->exists();
+
+        if ($conflicto) {
+            throw new BusinessRuleException(
+                "No se puede aprobar la reserva porque existe un horario en conflicto ya aprobado previamente.",
+                'CONFLICTO_RESERVA_SIMULTANEA'
+            );
+        }
+
+        $reserva->estado = 'aprobada';
+        $reserva->save();
+
+        $this->bitacoraService->registrar(
+            accion: 'Aprobar Reserva',
+            modulo: 'Reservas',
+            detalle: "Reserva ID {$reserva->id} aprobada por el usuario ID {$aprobadoPor}.",
+            userId: $aprobadoPor
+        );
+
+        return $reserva;
     }
 
     /**
-     * Obtiene el itinerario del día para un laboratorio.
+     * Rechazar una reserva pendiente con motivo obligatorio.
      */
-    public function obtenerAgendaDiaria(int $laboratorioId, Carbon|string $fecha): Collection
+    public function rechazar(ReservaLaboratorio $reserva, string $motivo, int $rechazadoPor): ReservaLaboratorio
     {
-        $dia = Carbon::parse($fecha)->toDateString();
+        if ($reserva->estado !== 'pendiente') {
+            throw new BusinessRuleException(
+                "Solo se pueden rechazar reservas que estén pendientes.",
+                'ESTADO_RESERVA_INVALIDO'
+            );
+        }
 
-        return ReservaLaboratorio::with(['usuario', 'practica'])
-            ->where('laboratorio_id', $laboratorioId)
-            ->whereDate('inicio', $dia)
-            ->where('estado', '!=', 'cancelada')
-            ->orderBy('inicio')
-            ->get();
+        $reserva->estado = 'rechazada';
+        $reserva->motivo = trim(($reserva->motivo ? $reserva->motivo . " | " : "") . "[RECHAZADA] " . $motivo);
+        $reserva->save();
+
+        $this->bitacoraService->registrar(
+            accion: 'Rechazar Reserva',
+            modulo: 'Reservas',
+            detalle: "Reserva ID {$reserva->id} rechazada por usuario ID {$rechazadoPor}. Motivo: {$motivo}",
+            userId: $rechazadoPor
+        );
+
+        return $reserva;
+    }
+
+    /**
+     * Cancelar una reserva existente.
+     */
+    public function cancelar(ReservaLaboratorio $reserva, string $motivo, int $canceladoPor): ReservaLaboratorio
+    {
+        if (in_array($reserva->estado, ['cancelada', 'completada', 'rechazada'], true)) {
+            throw new BusinessRuleException(
+                "No se puede cancelar una reserva que ya se encuentra en estado '{$reserva->estado}'.",
+                'ESTADO_RESERVA_FINALIZADO'
+            );
+        }
+
+        $reserva->estado = 'cancelada';
+        $reserva->motivo = trim(($reserva->motivo ? $reserva->motivo . " | " : "") . "[CANCELADA] " . $motivo);
+        $reserva->save();
+
+        $this->bitacoraService->registrar(
+            accion: 'Cancelar Reserva',
+            modulo: 'Reservas',
+            detalle: "Reserva ID {$reserva->id} cancelada. Motivo: {$motivo}",
+            userId: $canceladoPor
+        );
+
+        return $reserva;
+    }
+
+    /**
+     * Cancelar automáticamente una reserva por inasistencia / tolerancia de llegada excedida.
+     */
+    public function cancelarPorInasistencia(ReservaLaboratorio $reserva): ReservaLaboratorio
+    {
+        return $this->cancelar(
+            $reserva,
+            'Cancelación automática por inasistencia dentro del tiempo de tolerancia institucional.',
+            $reserva->user_id
+        );
+    }
+
+    /**
+     * Marcar una reserva como completada al finalizar la sesión.
+     */
+    public function completar(ReservaLaboratorio $reserva): ReservaLaboratorio
+    {
+        $reserva->estado = 'completada';
+        $reserva->save();
+
+        $this->bitacoraService->registrar(
+            accion: 'Completar Reserva',
+            modulo: 'Reservas',
+            detalle: "Reserva ID {$reserva->id} marcada como completada con éxito."
+        );
+
+        return $reserva;
+    }
+
+    /**
+     * Listar reservas con filtros y paginación.
+     */
+    public function listar(array $filtros = [], int $perPage = 15): LengthAwarePaginator
+    {
+        $query = ReservaLaboratorio::with(['laboratorio', 'usuario', 'practica'])
+            ->orderByDesc('inicio');
+
+        if (!empty($filtros['estado'])) {
+            $query->where('estado', $filtros['estado']);
+        }
+
+        if (!empty($filtros['laboratorio_id'])) {
+            $query->where('laboratorio_id', $filtros['laboratorio_id']);
+        }
+
+        if (!empty($filtros['user_id'])) {
+            $query->where('user_id', $filtros['user_id']);
+        }
+
+        if (!empty($filtros['fecha_desde'])) {
+            $query->where('inicio', '>=', Carbon::parse($filtros['fecha_desde'])->startOfDay());
+        }
+
+        if (!empty($filtros['fecha_hasta'])) {
+            $query->where('fin', '<=', Carbon::parse($filtros['fecha_hasta'])->endOfDay());
+        }
+
+        return $query->paginate($perPage);
+    }
+
+    /**
+     * Obtener reservas en formato de calendario para un rango dado.
+     */
+    public function obtenerCalendario(?int $laboratorioId, Carbon $inicio, Carbon $fin): Collection
+    {
+        $query = ReservaLaboratorio::with(['laboratorio', 'usuario', 'practica'])
+            ->whereIn('estado', ['aprobada', 'en_curso', 'pendiente'])
+            ->where('inicio', '<', $fin)
+            ->where('fin', '>', $inicio);
+
+        if ($laboratorioId) {
+            $query->where('laboratorio_id', $laboratorioId);
+        }
+
+        return $query->orderBy('inicio')->get();
     }
 }
