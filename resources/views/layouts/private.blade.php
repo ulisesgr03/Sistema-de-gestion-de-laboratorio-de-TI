@@ -129,7 +129,7 @@
     <header class="fixed top-0 left-0 right-0 z-50 bg-[#ffffff] border-b border-[#e4e3db]">
         <!-- NIVEL 1: Institutional Master Bar (64px) -->
         <div class="h-16 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto flex items-center justify-between gap-4 border-b border-[#e4e3db]">
-            
+
             <!-- Identidad Institucional + Terminal Activa -->
             <div class="flex items-center gap-3 shrink-0">
                 <a href="{{ url('/panel-operativo') }}" class="flex items-center gap-3 group">
