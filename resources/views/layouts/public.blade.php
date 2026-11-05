@@ -360,7 +360,7 @@
                     <span>·</span>
                     <span>Términos de Conectividad</span>
                     <span>·</span>
-                    <a href="{{ url('/login') }}" class="text-[#2f664f] hover:underline font-medium">Acceso para Personal</a>
+                    <a href="{{ url('/login') }}" class="text-[#2f664f] hover:underline font-medium">Acceso Institucional</a>
                 </div>
             </div>
         </div>
