@@ -133,7 +133,7 @@
             <div class="flex items-center gap-3 shrink-0">
                 <a href="{{ url('/') }}" class="flex items-center gap-3 group">
                     <div class="w-10 h-10 rounded bg-[#efeee7] border border-[#e4e3db] flex items-center justify-center text-[#2f664f] group-hover:bg-[#2f664f] group-hover:text-white transition-colors">
-                        <span class="material-symbols-outlined text-[24px]">terminal</span>
+                        <span class="material-symbols-outlined text-[24px] notranslate" translate="no">terminal</span>
                     </div>
                     <div class="flex flex-col">
                         <span class="text-[17px] font-extrabold tracking-tight text-[#1b1c18] leading-tight">UPTex · TI</span>
@@ -145,7 +145,7 @@
             <!-- Buscador Rápido del Portal -->
             <div class="hidden md:flex flex-1 max-w-xl">
                 <div class="relative flex items-center w-full">
-                    <span class="material-symbols-outlined absolute left-3 text-[#707973] pointer-events-none text-[18px]">search</span>
+                    <span class="material-symbols-outlined absolute left-3 text-[#707973] pointer-events-none text-[18px] notranslate" translate="no">search</span>
                     <input type="text"
                            id="global-search"
                            placeholder="Buscar salas, software, reglamentos o prácticas... [Ctrl + K]"
@@ -168,20 +168,20 @@
                     @auth
                         <a href="{{ url('/panel-operativo') }}"
                            class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-[#2f664f] hover:bg-[#497f67] text-white font-medium text-sm transition-colors shadow-sm">
-                            <span class="material-symbols-outlined text-[18px]">dashboard</span>
+                            <span class="material-symbols-outlined text-[18px] notranslate" translate="no">dashboard</span>
                             <span class="hidden sm:inline">Consola Operativa</span>
                         </a>
                     @else
                         <a href="{{ route('login') }}"
                            class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-[#2f664f] hover:bg-[#497f67] text-white font-medium text-sm transition-colors shadow-sm">
-                            <span class="material-symbols-outlined text-[18px]">login</span>
+                            <span class="material-symbols-outlined text-[18px] notranslate" translate="no">login</span>
                             <span>Acceso Institucional</span>
                         </a>
                     @endauth
                 @else
                     <a href="{{ url('/login') }}"
                        class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-[#2f664f] hover:bg-[#497f67] text-white font-medium text-sm transition-colors shadow-sm">
-                        <span class="material-symbols-outlined text-[18px]">login</span>
+                        <span class="material-symbols-outlined text-[18px] notranslate" translate="no">login</span>
                         <span>Acceso Institucional</span>
                     </a>
                 @endif
@@ -198,42 +198,42 @@
                 <!-- Inicio y Servicios -->
                 <a href="{{ url('/') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('/') || $isRoute('inicio*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
-                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('/') ? 'text-[#2f664f]' : 'text-[#707973]' }}">home</span>
+                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('/') ? 'text-[#2f664f]' : 'text-[#707973]' }} notranslate" translate="no">home</span>
                     Inicio y Servicios
                 </a>
 
                 <!-- Salas y Disponibilidad -->
                 <a href="{{ url('/salas') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('salas*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
-                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('salas*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">meeting_room</span>
+                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('salas*') ? 'text-[#2f664f]' : 'text-[#707973]' }} notranslate" translate="no">meeting_room</span>
                     Salas y Disponibilidad
                 </a>
 
                 <!-- Horarios y Prácticas -->
                 <a href="{{ url('/horarios') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('horarios*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
-                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('horarios*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">calendar_month</span>
+                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('horarios*') ? 'text-[#2f664f]' : 'text-[#707973]' }} notranslate" translate="no">calendar_month</span>
                     Horarios y Prácticas
                 </a>
 
                 <!-- Catálogo de Software -->
                 <a href="{{ url('/software') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('software*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
-                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('software*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">apps</span>
+                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('software*') ? 'text-[#2f664f]' : 'text-[#707973]' }} notranslate" translate="no">apps</span>
                     Catálogo de Software
                 </a>
 
                 <!-- Préstamos en Ventanilla -->
                 <a href="{{ url('/prestamos') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('prestamos*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
-                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('prestamos*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">inventory_2</span>
+                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('prestamos*') ? 'text-[#2f664f]' : 'text-[#707973]' }} notranslate" translate="no">inventory_2</span>
                     Préstamos en Ventanilla
                 </a>
 
                 <!-- Reglamento Oficial -->
                 <a href="{{ url('/reglamento') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('reglamento*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
-                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('reglamento*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">gavel</span>
+                    <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('reglamento*') ? 'text-[#2f664f]' : 'text-[#707973]' }} notranslate" translate="no">gavel</span>
                     Reglamento Oficial
                 </a>
 
@@ -242,7 +242,7 @@
                 <!-- Reportar Avería (Acción destacada para alumnos y docentes) -->
                 <a href="{{ url('/reportar-averia') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('reportar-averia*') ? 'border-[#ba1a1a] text-[#ba1a1a] font-bold bg-[#ffdad6]' : 'border-transparent text-[#ba1a1a] hover:bg-[#ffdad6]/40' }}">
-                    <span class="material-symbols-outlined text-[18px] mr-1.5 text-[#ba1a1a]">report_problem</span>
+                    <span class="material-symbols-outlined text-[18px] mr-1.5 text-[#ba1a1a] notranslate" translate="no">report_problem</span>
                     Reportar Avería
                 </a>
             </nav>
@@ -258,21 +258,21 @@
             <!-- Mensajes Flash Institucionales -->
             @if(session('success'))
                 <div class="mb-6 p-4 rounded-xl bg-[#b3f1be]/30 border border-[#316a42] text-[#16512c] flex items-start gap-3" role="alert">
-                    <span class="material-symbols-outlined text-[20px] text-[#316a42] mt-0.5 shrink-0">check_circle</span>
+                    <span class="material-symbols-outlined text-[20px] text-[#316a42] mt-0.5 shrink-0 notranslate" translate="no">check_circle</span>
                     <div class="text-sm font-medium leading-relaxed">{{ session('success') }}</div>
                 </div>
             @endif
 
             @if(session('error'))
                 <div class="mb-6 p-4 rounded-xl bg-[#ffdad6] border border-[#ba1a1a] text-[#93000a] flex items-start gap-3" role="alert">
-                    <span class="material-symbols-outlined text-[20px] text-[#ba1a1a] mt-0.5 shrink-0">error</span>
+                    <span class="material-symbols-outlined text-[20px] text-[#ba1a1a] mt-0.5 shrink-0 notranslate" translate="no">error</span>
                     <div class="text-sm font-medium leading-relaxed">{{ session('error') }}</div>
                 </div>
             @endif
 
             @if(session('info'))
                 <div class="mb-6 p-4 rounded-xl bg-[#efeee7] border border-[#707973] text-[#1b1c18] flex items-start gap-3" role="alert">
-                    <span class="material-symbols-outlined text-[20px] text-[#2f664f] mt-0.5 shrink-0">info</span>
+                    <span class="material-symbols-outlined text-[20px] text-[#2f664f] mt-0.5 shrink-0 notranslate" translate="no">info</span>
                     <div class="text-sm font-medium leading-relaxed">{{ session('info') }}</div>
                 </div>
             @endif
@@ -298,14 +298,14 @@
                 <!-- Columna 1: Identidad -->
                 <div class="flex flex-col gap-3">
                     <div class="flex items-center gap-2 text-[#2f664f]">
-                        <span class="material-symbols-outlined text-[22px]">terminal</span>
+                        <span class="material-symbols-outlined text-[22px] notranslate" translate="no">terminal</span>
                         <span class="font-extrabold text-base tracking-tight text-[#1b1c18]">UPTex · Laboratorios de TI</span>
                     </div>
                     <p class="text-xs text-[#404944] leading-relaxed">
                         División de Tecnologías de la Información. Infraestructura computacional certificada para la formación en ingeniería de software, redes, ciberseguridad e inteligencia artificial.
                     </p>
                     <div class="flex items-center gap-2 text-xs text-[#316a42] font-semibold mt-1">
-                        <span class="material-symbols-outlined text-[16px]">verified</span>
+                        <span class="material-symbols-outlined text-[16px] notranslate" translate="no">verified</span>
                         <span>Procesos alineados con ISO/IEC 27001</span>
                     </div>
                 </div>

@@ -8,7 +8,7 @@
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div class="max-w-3xl flex flex-col gap-3">
             <div class="inline-flex items-center gap-1.5 self-start px-3 py-1 bg-[#efeee7] rounded text-xs font-bold uppercase tracking-wider text-[#675a4e]">
-                <span class="material-symbols-outlined text-[16px] text-[#2f664f]">lan</span>
+                <span class="material-symbols-outlined text-[16px] text-[#2f664f] notranslate" translate="no">lan</span>
                 División de Tecnologías de la Información · Universidad Politécnica de Texcoco
             </div>
 
@@ -23,13 +23,13 @@
             <div class="flex flex-wrap items-center gap-3 pt-2">
                 <a href="{{ url('/salas') }}"
                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2f664f] hover:bg-[#497f67] text-white rounded-lg font-medium text-sm transition-colors shadow-sm">
-                    <span class="material-symbols-outlined text-[18px]">sensors</span>
+                    <span class="material-symbols-outlined text-[18px] notranslate" translate="no">sensors</span>
                     <span>Consultar salas disponibles</span>
                 </a>
 
                 <a href="{{ url('/reglamento') }}"
                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#ffffff] hover:bg-[#efeee7] border border-[#e4e3db] text-[#1b1c18] rounded-lg font-medium text-sm transition-colors">
-                    <span class="material-symbols-outlined text-[18px] text-[#707973]">gavel</span>
+                    <span class="material-symbols-outlined text-[18px] text-[#707973] notranslate" translate="no">gavel</span>
                     <span>Ver reglamento oficial</span>
                 </a>
             </div>
@@ -62,7 +62,7 @@
 
             <div class="pt-2 border-t border-[#e4e3db]">
                 <div class="flex items-center gap-1.5 text-[#404944] text-[11px]">
-                    <span class="material-symbols-outlined text-[16px] text-[#316a42]">verified</span>
+                    <span class="material-symbols-outlined text-[16px] text-[#316a42] notranslate" translate="no">verified</span>
                     <span>Sistemas validados bajo norma ISO/IEC 27001</span>
                 </div>
             </div>
@@ -77,7 +77,7 @@
         <div>
             <div class="flex items-center justify-between">
                 <span class="text-[11px] uppercase tracking-wider text-[#675a4e] font-bold">Infraestructura física</span>
-                <span class="material-symbols-outlined text-[#2f664f] text-[22px]">domain</span>
+                <span class="material-symbols-outlined text-[#2f664f] text-[22px] notranslate" translate="no">domain</span>
             </div>
             <div class="text-2xl font-extrabold text-[#1b1c18] mt-1">{{ count($laboratorios) }} salas activas</div>
             <p class="text-xs text-[#404944] mt-1 leading-relaxed">
@@ -95,7 +95,7 @@
         <div>
             <div class="flex items-center justify-between">
                 <span class="text-[11px] uppercase tracking-wider text-[#675a4e] font-bold">Nodos computacionales</span>
-                <span class="material-symbols-outlined text-[#2f664f] text-[22px]">desktop_windows</span>
+                <span class="material-symbols-outlined text-[#2f664f] text-[22px] notranslate" translate="no">desktop_windows</span>
             </div>
             <div class="text-2xl font-extrabold text-[#1b1c18] mt-1">{{ $totalEstaciones > 0 ? $totalEstaciones : 180 }} estaciones</div>
             <p class="text-xs text-[#404944] mt-1 leading-relaxed">
@@ -113,7 +113,7 @@
         <div>
             <div class="flex items-center justify-between">
                 <span class="text-[11px] uppercase tracking-wider text-[#675a4e] font-bold">Capacidad inmediata</span>
-                <span class="material-symbols-outlined text-[#316a42] text-[22px]">event_seat</span>
+                <span class="material-symbols-outlined text-[#316a42] text-[22px] notranslate" translate="no">event_seat</span>
             </div>
             <div class="flex items-baseline gap-2 mt-1">
                 <div class="text-2xl font-extrabold text-[#1b1c18]">42</div>
@@ -135,7 +135,7 @@
         <div>
             <div class="flex items-center justify-between">
                 <span class="text-[11px] uppercase tracking-wider text-[#675a4e] font-bold">Régimen de operación</span>
-                <span class="material-symbols-outlined text-[#2f664f] text-[22px]">schedule</span>
+                <span class="material-symbols-outlined text-[#2f664f] text-[22px] notranslate" translate="no">schedule</span>
             </div>
             <div class="text-2xl font-extrabold text-[#1b1c18] mt-1">07:00 – 20:00</div>
             <p class="text-xs text-[#404944] mt-1 leading-relaxed">
@@ -224,15 +224,15 @@
                     <details class="mt-3 group" open>
                         <summary class="flex items-center justify-between cursor-pointer text-xs font-bold text-[#2f664f] uppercase tracking-wider select-none py-1">
                             <span>Especificación de hardware y software base</span>
-                            <span class="material-symbols-outlined text-[18px] group-open:rotate-180 transition-transform">expand_more</span>
+                            <span class="material-symbols-outlined text-[18px] group-open:rotate-180 transition-transform notranslate" translate="no">expand_more</span>
                         </summary>
                         <div class="mt-2 p-3 bg-[#f5f4ec] rounded-lg text-xs text-[#404944] space-y-1.5 border border-[#e4e3db]">
                             <div class="flex items-start gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-[#675a4e] shrink-0 mt-0.5">memory</span>
+                                <span class="material-symbols-outlined text-[16px] text-[#675a4e] shrink-0 mt-0.5 notranslate" translate="no">memory</span>
                                 <span><strong class="text-[#1b1c18]">Hardware:</strong> {{ $lab['hardware'] }}</span>
                             </div>
                             <div class="flex items-start gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-[#675a4e] shrink-0 mt-0.5">terminal</span>
+                                <span class="material-symbols-outlined text-[16px] text-[#675a4e] shrink-0 mt-0.5 notranslate" translate="no">terminal</span>
                                 <span><strong class="text-[#1b1c18]">Software:</strong> {{ $lab['software'] }}</span>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                     <span class="text-[#707973]">{{ $lab['proximo_cambio'] }}</span>
                     <a href="{{ url('/salas') }}"
                        class="px-3.5 py-1.5 bg-[#efeee7] hover:bg-[#e4e3db] text-[#1b1c18] rounded-lg font-semibold transition-colors flex items-center gap-1.5">
-                        <span class="material-symbols-outlined text-[16px]">visibility</span>
+                        <span class="material-symbols-outlined text-[16px] notranslate" translate="no">visibility</span>
                         <span>Ver detalles de la sala</span>
                     </a>
                 </div>
@@ -258,7 +258,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#e4e3db] gap-3">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-[#efeee7] border border-[#e4e3db] flex items-center justify-center text-[#2f664f] shrink-0">
-                <span class="material-symbols-outlined text-[24px]">campaign</span>
+                <span class="material-symbols-outlined text-[24px] notranslate" translate="no">campaign</span>
             </div>
             <div>
                 <h3 class="text-lg font-bold text-[#1b1c18]">Tablón técnico de avisos oficiales</h3>
@@ -276,7 +276,7 @@
             <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
                     <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-[#e4e3db] text-[#1b1c18] rounded text-xs font-bold">
-                        <span class="material-symbols-outlined text-[14px] text-[#675a4e]">build</span>
+                        <span class="material-symbols-outlined text-[14px] text-[#675a4e] notranslate" translate="no">build</span>
                         Mantenimiento programado
                     </span>
                     <span class="text-xs font-mono text-[#707973]">Sábado · 14:00 a 18:00 h</span>
@@ -290,7 +290,7 @@
                 <span class="text-[#675a4e] font-medium">Impacto estimado: Bajo</span>
                 <a href="{{ url('/salas') }}" class="text-[#2f664f] hover:underline font-bold inline-flex items-center gap-0.5">
                     <span>Ver reasignación de salas</span>
-                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    <span class="material-symbols-outlined text-[14px] notranslate" translate="no">arrow_forward</span>
                 </a>
             </div>
         </div>
@@ -300,7 +300,7 @@
             <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
                     <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-[#b3f1be]/50 text-[#16512c] rounded text-xs font-bold">
-                        <span class="material-symbols-outlined text-[14px] text-[#316a42]">verified_user</span>
+                        <span class="material-symbols-outlined text-[14px] text-[#316a42] notranslate" translate="no">verified_user</span>
                         Licenciamiento institucional
                     </span>
                     <span class="text-xs font-mono text-[#707973]">Vigencia 2026</span>
@@ -314,7 +314,7 @@
                 <span class="text-[#316a42] font-semibold">Disponible de inmediato</span>
                 <a href="{{ url('/software') }}" class="text-[#2f664f] hover:underline font-bold inline-flex items-center gap-0.5">
                     <span>Catálogo de software</span>
-                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    <span class="material-symbols-outlined text-[14px] notranslate" translate="no">arrow_forward</span>
                 </a>
             </div>
         </div>
