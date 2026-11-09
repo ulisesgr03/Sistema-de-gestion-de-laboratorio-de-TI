@@ -1,36 +1,148 @@
-\chapter{Marco de Referencia}
 
- Desde finales del siglo pasado, los avances tecnológicos en la miniaturización de la electrónica y los componentes mecánicos han allanado el camino para la creación y desarrollo de objetos voladores de pequeñas dimensiones, tales como aviones y helicópteros, los cuales están adquiriendo cada vez más habilidades para realizar vuelos de forma autónoma. Estos dispositivos son popularmente conocidos como drones, un término derivado del inglés \say{abejorros}, y se consideran máquinas voladoras autónomas o semi-autónomas capaces de llevar a cabo misiones de vuelo. En el ámbito internacional, se les conoce como UAVs del ingles \say{Unmanned Aerial Vehicles}, y representan una tecnología compleja cuyo control presenta desafíos, dado que sus características aerodinámicas son similares a las de las aeronaves convencionales \cite{eisenbeiss2004mini}.
+\chapter{Planteamiento del Proyecto}
 
-El estudio de estos dispositivos despierta un gran interés debido a su versatilidad y capacidad de maniobra, lo que les permite llevar a cabo una amplia gama de tareas en diversas aplicaciones, tales como el uso civil, militar y aeroespacial \cite{nawaz2019applications, shakhatreh2019unmanned, xiaoning2020analysis}. En la figura \ref{fig1_aplicacion_UAV}, se presenta una clasificación detallada de las aplicaciones más importantes de los UAVs.
+\section{Introducción}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=16cm, height=7.5cm]{imagenes/Aplicaciones_UAV.png}
-    \caption{Áreas de aplicación UAVS.}
-    \label{fig1_aplicacion_UAV}
-\end{figure}
+Actualmente, los laboratorios de tecnologías de la información desempeñan un papel fundamental en la formación académica de los estudiantes de Ingeniería en Sistemas, ya que en estos espacios se desarrollan actividades prácticas relacionadas con la programación, administración de bases de datos, configuración de redes, gestión de servidores y desarrollo de proyectos tecnológicos.
 
-\section{Antecedentes.}
+Sin embargo, la administración de estos espacios implica mantener un control adecuado de los usuarios, equipos de cómputo, software, licencias, horarios y actividades académicas. Cuando esta información se gestiona mediante registros manuales, documentos independientes o herramientas que no se encuentran centralizadas, pueden surgir problemas de organización, duplicidad de información y dificultades para consultar la disponibilidad de los recursos.
 
-Los drones han atraído la atención de la comunidad investigadora que trabaja tanto en el campo militar como en el civil, con una gran cantidad de usos que han sido propuestos por los grupos de investigación, debido a sus características como capacidad y configuraciones, donde el helicóptero de cuatro rotores tiene el mayor número de citas en la literatura de control y ha sido ampliamente investigado para pruebas tanto en interiores como en exteriores . 
+Ante esta situación, se propone desarrollar un Sistema de Gestión de Laboratorio de TI utilizando el framework Laravel y una base de datos relacional. El sistema permitirá centralizar la información y facilitar la administración de los recursos tecnológicos, así como el control de usuarios, roles, laboratorios, estaciones de trabajo, reservas, asignaciones, incidencias y mantenimientos.
+
+Con esta solución se busca mejorar la organización de los laboratorios, optimizar el aprovechamiento de los recursos disponibles y proporcionar un entorno de administración más seguro, eficiente y accesible para los responsables de la institución.
+
+\section{Antecedentes}
+
+Los laboratorios de cómputo y redes de la institución constituyen espacios esenciales para el desarrollo de las competencias prácticas de los estudiantes de Ingeniería en Sistemas. En ellos se realizan actividades académicas que requieren el uso de equipos de cómputo, herramientas de programación, sistemas de administración de bases de datos, dispositivos de red y diferentes aplicaciones de software.
+
+No obstante, la administración de estos espacios puede presentar dificultades cuando no se cuenta con una herramienta centralizada para gestionar sus recursos. Tradicionalmente, algunas de estas actividades se realizan mediante listas físicas, hojas de cálculo independientes y solicitudes comunicadas verbalmente o a través de diferentes medios digitales.
+
+Esta forma de organización puede ocasionar diversas problemáticas, entre las que destacan:
+
+\begin{itemize}[leftmargin=*]
+
+    \item \textbf{Conflictos de horarios:}
+    La ausencia de un calendario centralizado puede provocar que diferentes grupos soliciten utilizar el mismo laboratorio en horarios coincidentes, generando dificultades en la organización de las actividades académicas.
+
+    \item \textbf{Falta de control del inventario:}
+    La información relacionada con los equipos, sus características, estado de funcionamiento y software instalado puede encontrarse dispersa. Esto dificulta identificar los recursos disponibles y conocer sus condiciones actuales.
+
+    \item \textbf{Seguimiento inadecuado de incidencias:}
+    Los reportes de fallas o problemas técnicos pueden perderse cuando se realizan de manera verbal o mediante mensajes dispersos. Como consecuencia, se dificulta dar seguimiento a las reparaciones y conocer el historial de mantenimiento de cada equipo.
+
+    \item \textbf{Control limitado de accesos:}
+    La falta de mecanismos de autenticación y asignación de permisos puede dificultar la diferenciación de las actividades que pueden realizar los administradores, encargados de laboratorio, docentes y alumnos dentro de los espacios y del sistema.
+
+\end{itemize}
+
+A partir de estas necesidades surge la propuesta de desarrollar el \textbf{Sistema de Gestión de Laboratorio de TI}, una herramienta que permita centralizar y organizar los procesos administrativos relacionados con los laboratorios.
+
+El sistema se desarrollará utilizando tecnologías como Laravel y PHP, junto con una base de datos relacional, con la finalidad de proporcionar una solución que facilite la administración de los espacios, el control del inventario tecnológico, la gestión de reservas y el seguimiento de las actividades e incidencias.
 
 \section{Objetivo General}
-\textbf{}
-\section{Objetivos Especificos}
+
+Desarrollar un sistema de gestión de laboratorio de TI utilizando el framework Laravel y una base de datos relacional, que permita administrar usuarios, laboratorios, estaciones de trabajo, equipos, software, horarios, reservas y asignaciones de equipo, con el propósito de mejorar la organización, seguridad y disponibilidad de los recursos tecnológicos de la institución.
+
+\section{Objetivos Específicos}
+
 \begin{enumerate}
-\item Recolectar y organizar conjuntos de datos públicos internacionales sobre calidad del aire, variables meteorológicas y factores geoespaciales. 
-\item Explorar y analizar las principales tendencias, correlaciones y patrones de comportamiento entre los contaminantes atmosféricos y las variables ambientales, utilizando técnicas de análisis exploratorio de datos.
+
+    \item Administrar los usuarios y roles mediante la implementación de un control de acceso para administradores, encargados de laboratorio, docentes y alumnos, asignando permisos según sus funciones y garantizando el uso adecuado del sistema.
+
+    \item Gestionar los laboratorios, estaciones de trabajo y equipos registrando y actualizando su información, facilitando su identificación, organización y control.
+
+    \item Controlar los horarios y las reservas mediante el desarrollo de un módulo de consulta de disponibilidad de laboratorios y gestión de reservas, evitando conflictos de horarios y asignaciones simultáneas del mismo espacio o equipo.
+
+    \item Administrar el software y las licencias registrando los programas instalados en los equipos y sus respectivas licencias, facilitando el control y uso adecuado del software disponible.
+
+    \item Controlar las prácticas y asignaciones de equipo registrando las actividades realizadas, los responsables y los recursos tecnológicos asignados, manteniendo un seguimiento de las actividades académicas.
+
+    \item Gestionar las incidencias y los mantenimientos registrando fallas, reportes y servicios realizados a los equipos, conservando un historial y actualizando su disponibilidad según su estado.
+
+    \item Mejorar la seguridad y el seguimiento mediante la implementación de una bitácora de accesos y operaciones importantes, manteniendo un registro de las actividades realizadas por los usuarios dentro del sistema.
 
 \end{enumerate}
 
 \section{Alcance}
 
+El proyecto contempla el desarrollo de un sistema web para la gestión y administración de los laboratorios de tecnologías de la información de la institución. Su funcionamiento estará orientado a centralizar la información y facilitar el control de los recursos tecnológicos y las actividades relacionadas con su utilización.
 
-\section{Limitación}
+El sistema incluirá los siguientes módulos:
+
+\begin{itemize}[leftmargin=*]
+
+    \item \textbf{Gestión de usuarios y roles:}
+    Registro, consulta, modificación y administración de usuarios, así como la asignación de permisos de acuerdo con sus funciones.
+
+    \item \textbf{Gestión de laboratorios y equipos:}
+    Registro y actualización de la información de los laboratorios, estaciones de trabajo y equipos tecnológicos.
+
+    \item \textbf{Gestión de horarios y reservas:}
+    Consulta de disponibilidad y administración de solicitudes de reserva para evitar conflictos en la utilización de los espacios.
+
+    \item \textbf{Administración de software y licencias:}
+    Registro de los programas instalados en los equipos y control de la información correspondiente a sus licencias.
+
+    \item \textbf{Control de prácticas y asignaciones:}
+    Registro de las actividades académicas, responsables y recursos tecnológicos utilizados durante las prácticas.
+
+    \item \textbf{Gestión de incidencias y mantenimientos:}
+    Registro de fallas, reportes técnicos, mantenimientos realizados y actualización del estado de disponibilidad de los equipos.
+
+    \item \textbf{Bitácora de actividades:}
+    Registro de los accesos y operaciones importantes realizadas por los usuarios dentro del sistema.
+
+\end{itemize}
+
+El sistema estará destinado principalmente a los administradores, encargados de laboratorio, docentes y alumnos, quienes tendrán acceso a las funciones correspondientes según los permisos asignados a sus respectivos roles.
+
+\section{Limitaciones}
+
+El desarrollo y funcionamiento del sistema estarán sujetos a determinadas condiciones que pueden limitar su implementación y utilización:
+
+\begin{itemize}[leftmargin=*]
+
+    \item El sistema requerirá una conexión a la red y acceso al servidor donde se encuentre alojada la aplicación.
+
+    \item Las funciones disponibles para cada usuario dependerán de los permisos establecidos de acuerdo con su rol.
+
+    \item La información registrada sobre los equipos, programas y licencias dependerá de los datos proporcionados y actualizados por los responsables de los laboratorios.
+
+    \item El sistema no realizará automáticamente reparaciones físicas ni diagnósticos especializados de los equipos; únicamente permitirá registrar y dar seguimiento a las incidencias y mantenimientos.
+
+    \item La administración de las reservas dependerá de la disponibilidad y actualización de los horarios y espacios registrados en el sistema.
+
+    \item La implementación estará limitada a los laboratorios y recursos tecnológicos contemplados dentro del proyecto.
+
+\end{itemize}
 
 \section{Problemática}
 
+En los laboratorios de tecnologías de la información se requiere administrar diferentes recursos y actividades para garantizar su correcto funcionamiento. Entre estos se encuentran los equipos de cómputo, estaciones de trabajo, programas, licencias, horarios de utilización y asignaciones para las prácticas académicas.
+
+Cuando no existe un sistema centralizado para gestionar estos elementos, la información puede mantenerse dispersa en diferentes documentos o registros, dificultando su consulta, actualización y seguimiento.
+
+Esta situación puede generar conflictos al momento de reservar laboratorios, desconocimiento del estado de los equipos, dificultades para identificar los programas instalados y sus respectivas licencias, así como retrasos en la atención de fallas técnicas.
+
+De igual manera, la falta de un control de acceso organizado puede ocasionar dificultades para administrar las funciones de cada usuario y supervisar las operaciones realizadas dentro de los laboratorios.
+
+Por lo tanto, se identifica la necesidad de desarrollar una herramienta informática que permita centralizar la administración de los laboratorios, controlar los recursos tecnológicos y mejorar la organización de las actividades académicas y administrativas.
+
+A partir de lo anterior, se plantea la siguiente pregunta:
+
+\begin{quote}
+¿Cómo desarrollar un sistema web que permita gestionar de manera organizada, segura y eficiente los laboratorios de TI, sus recursos tecnológicos, horarios, reservas e incidencias?
+\end{quote}
 
 \section{Justificación}
 
+El desarrollo del Sistema de Gestión de Laboratorio de TI surge de la necesidad de mejorar la administración y organización de los recursos tecnológicos utilizados en las actividades académicas de la institución.
+
+La implementación de esta herramienta permitirá centralizar la información de los laboratorios, facilitando el registro y consulta de usuarios, equipos, estaciones de trabajo, programas, licencias y horarios. Asimismo, permitirá gestionar las reservas de los espacios disponibles, reduciendo la posibilidad de conflictos en la asignación de laboratorios.
+
+Desde el punto de vista administrativo, el sistema facilitará el seguimiento de las incidencias y los mantenimientos realizados a los equipos, conservando un historial que permita consultar su estado y disponibilidad.
+
+En cuanto a la seguridad, la implementación de roles y permisos permitirá controlar las funciones disponibles para cada tipo de usuario, mientras que la bitácora proporcionará un registro de las operaciones importantes realizadas dentro de la aplicación.
+
+Finalmente, el uso de Laravel, PHP y una base de datos relacional permitirá desarrollar una aplicación web estructurada y organizada, que facilite la gestión de los procesos y contribuya al aprovechamiento de los recursos tecnológicos de la institución.
+</itemize>

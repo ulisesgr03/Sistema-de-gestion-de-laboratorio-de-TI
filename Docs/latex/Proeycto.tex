@@ -8,6 +8,7 @@
 \usepackage{algorithm}
 \usepackage{fancyhdr}
 \usepackage{setspace}
+\usepackage{enumitem} % <--- ¡AQUÍ ESTÁ EL PAQUETE FALTANTE QUE CAUSABA EL ERROR!
 \usepackage{pdfpages}
 \usepackage{multirow}
 \usepackage{listings}
@@ -28,15 +29,14 @@
 \usepackage[backend=biber,style=ieee, sorting=none, style=numeric]{biblatex}
 \bibliography{Referencias}
 
-    
 \lstdefinestyle{mystyle}{
   keywordstyle=\color{blue},
   basicstyle=\ttfamily\footnotesize,
-  breakatwhitespace=false,         
-  breaklines=true,                 
+  breakatwhitespace=false,        
+  breaklines=true,                
   captionpos=b,                    
-  keepspaces=true,                                 
-  showspaces=false,                
+  keepspaces=true,                                     
+  showspaces=false,               
   showstringspaces=false,
   showtabs=false,                  
   tabsize=1
@@ -59,9 +59,6 @@
 \newenvironment{_abstract1}
   {\cleardoublepage\thispagestyle{plain}\vspace*{\stretch{1}}\begin{center}\bfseries Abstract1\end{center}}
   {\vspace*{\stretch{2}}}
-% \makeatletter
-
-% \makeatother
 
 \begin{document}
 
@@ -114,32 +111,20 @@ TEXCOCO, EDO. MÉX. \hspace{3cm}ENERO 2025 \\
 \input{capitulos/_resumen2}\addcontentsline{toc}{chapter}{Abstract}
 \newpage 
 
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables    
+\newpage
 
-%\begin{spacing}{1.5}
-    \tableofcontents
-    \newpage
-    \listoffigures
-    \newpage
-    \listoftables    
-    \newpage
-    %\input{acronimos.tex}
-%\end{spacing}
-
-
-\pagenumbering{arabic} \setcounter{page}{1} % Números arábigos para el contenido principal
-
+\pagenumbering{arabic} \setcounter{page}{1}
 
 \include{capitulos/capitulo1}
 \include{capitulos/capitulo2}
 \include{capitulos/capitulo3}
 \include{capitulos/capitulo4}
 
-
-
-%\bibliographystyle{IEEEtran}
-%\addcontentsline{toc}{chapter}{Referencias}
-
 \printbibliography[title = {Referencias}]
 
 \end{document}
-

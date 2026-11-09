@@ -1,67 +1,280 @@
-\chapter{Marco Teórico.}
 
-En el desarrollo de sistemas de control para vehículos aéreos no tripulados (UAVs), los Vehículos de Despegue y Aterrizaje Vertical (VTOL, por sus siglas en inglés) y sus variantes Planas (PVTOL) han captado una atención significativa debido a sus aplicaciones en diversas áreas como la vigilancia \cite{johnson1997arti}, entrega de paquetes \cite{9129495} y exploración \cite{5278262}. Este capítulo aborda los principios teóricos que respaldan el diseño y control de estos vehículos, incluyendo modelos matemáticos y técnicas avanzadas de control.
-En primer lugar, se describen los enfoques de modelado matemático utilizados para representar el comportamiento dinámico de los VTOL y PVTOL. Estos modelos son esenciales para comprender y predecir las respuestas del sistema ante diferentes estímulos. Particularmente, se emplea el formalismo de Euler-Lagrange, un método robusto y ampliamente aceptado en la dinámica de sistemas mecánicos.
+\chapter{Marco Teórico}
 
-\section{Sección}
+El desarrollo de un sistema de gestión de laboratorios de Tecnologías de la Información (TI) requiere comprender diferentes conceptos relacionados con los sistemas de información, la administración de recursos tecnológicos, la gestión de usuarios, la seguridad informática y el desarrollo de aplicaciones web. Estos fundamentos permiten establecer las bases necesarias para diseñar e implementar una herramienta que facilite la organización, administración y control de los laboratorios de cómputo de una institución educativa.
 
-La capacidad de despegue y aterrizaje vertical (VTOL) es muy apreciada en los vehículos aéreos no tripulados (UAV) y tripulados (MAV), siempre que se alcance un rendimiento de vuelo comparable. La tecnología VTOL no solo resulta muy adecuada para los UAV debido a los requisitos de misión y la necesidad de ocultación, sino que también es de gran importancia para los MAV, tanto en aplicaciones militares como civiles, debido a las ventajas que ofrece, como una menor o incluso nula dependencia de aeropuertos o campos de aviación.
+En este capítulo se presentan los principales conceptos y fundamentos tecnológicos que respaldan el desarrollo del Sistema de Gestión de Laboratorios de TI. Asimismo, se describen las herramientas y tecnologías que se utilizarán para su construcción, considerando aspectos relacionados con la administración de usuarios, el inventario de equipos, la gestión de horarios, el control de software, las incidencias y el mantenimiento de los recursos tecnológicos.
 
-\section{Sección 2}
+\section{Sistemas de Información}
 
-El modelo PVTOL (Plataforma Vertical Despegue y Aterrizaje) describe el movimiento vertical de un objeto en un plano, caracterizado por tres grados de libertad $(x, y, \phi)$ que corresponden a la posición y la orientación del objeto en dicho plano. Este sistema incluye dos propulsores independientes que generan fuerzas y momentos en la máquina voladora, como se muestra en la figura \ref{fig1:PVTOL}. Es importante destacar que el PVTOL es un sistema subactuado, ya que aunque tiene tres grados de libertad, solo cuenta con dos entradas para su control. Debido a esta característica, el PVTOL constituye un desafío significativo en el ámbito del control no lineal \cite{lin1999robust}.
+Un sistema de información es un conjunto de componentes relacionados entre sí que permiten recopilar, procesar, almacenar y distribuir información para facilitar las actividades y la toma de decisiones dentro de una organización.
 
+Estos sistemas integran recursos humanos, tecnológicos y procedimientos que trabajan de manera conjunta para transformar datos en información útil. Su utilización permite mejorar la organización de las actividades, reducir errores en el manejo de información y facilitar el acceso a los datos necesarios para realizar diferentes tareas.
 
-\subsection{Subsección}
-El modelado y diseño de control para plataformas UAV es un trabajo difícil debido a su complicada estructura no lineal y subactuada, donde su comportamiento es función de efectos aerodinámicos, estructura mecánica, perturbaciones, incertidumbre, etc. 
+En el ámbito educativo, los sistemas de información pueden utilizarse para administrar estudiantes, docentes, recursos académicos, instalaciones y equipos tecnológicos. En el caso de los laboratorios de TI, permiten centralizar la información relacionada con los espacios de trabajo, equipos disponibles, usuarios y actividades realizadas.
 
-\section{Modelos matemáticos.}
+\section{Sistemas de Gestión}
 
-Para entender los sistemas, es esencial desarrollar modelos matemáticos que los representen con exactitud. Un modelo de un sistema se describe como una representación de sus características relevantes, y el proceso de abstracción necesario para crear esta representación se conoce como modelado. El modelo es una versión simplificada de una realidad compleja; el término \say{modelar}se refiere a crear una descripción que capture de manera precisa un sistema y sus actividades. Los modelos científicos se desarrollan para realizar inferencias sobre ciertos aspectos de sistemas reales previamente observados. Este proceso de creación y utilización de un modelo se ilustra en la figura \ref{fig: tipos de modelo} a). Estos modelos se pueden clasificar de acuerdo al conocimiento previo sobre el proceso ilustrados en la figura \ref{fig: tipos de modelo} b).
+Un sistema de gestión es una herramienta que permite organizar, controlar y administrar los recursos, procesos y actividades de una organización mediante procedimientos establecidos.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth, height=8cm]{imagenes/esquema_modelado.png}
-    \caption{Sistema de modelado.}
-    \label{fig: tipos de modelo}
-\end{figure}
+Su principal finalidad es facilitar la administración de la información, optimizar los procesos internos y mantener un control adecuado sobre los recursos disponibles.
 
-Otra forma de modelar un sistema es mediante modelos matemáticos, los cuales replican las relaciones de entrada(s) - salida(s) utilizando expresiones matemáticas. Cuando existe una relación lineal entre la entrada y la salida, el modelo matemático se expresa como:
-\begin{equation}
-     y(t) = u(t)k_{p}
-     \label{eq_modelo}
-\end{equation}
+Dentro de una institución educativa, un sistema de gestión puede utilizarse para administrar diferentes áreas, como laboratorios, bibliotecas, aulas y recursos tecnológicos.
 
-Donde $y(t)$ es la salida, $u(t)$ es la entrada del sistema, y $k_{p}$ es la constante de proporcionalidad. No obstante, la ecuación (\ref{eq_modelo}) implica que cualquier cambio en la entrada se reflejará instantáneamente en la salida, lo cual no es cierto en sistemas reales, ya que la salida requiere tiempo para ajustarse. Esta relación se cumple únicamente cuando se ha alcanzado un tiempo suficiente para estabilizarse, conocido como la condición de estado estable, y puede representarse como:\\
-\textit{El Valor en estado estable de $u(t)$ = $y(t)$ por el Valor en estado estable de $k_{p}$}
-\begin{equation}
-    k_{p} = \frac{y(t)}{u(t)}
-\end{equation}
+Para el presente proyecto, el sistema de gestión permitirá centralizar las operaciones relacionadas con los laboratorios de TI, proporcionando módulos que faciliten el registro, consulta, actualización y seguimiento de la información.
 
-Donde $k_{p}$ se refiere a la ganancia del sistema o función de transferencia. Así, una función de transferencia se define como la relación entre la salida en estado estable y la entrada en estado estable de un sistema.
+\section{Gestión de Laboratorios de TI}
 
- 
-\subsection{Formalismo de Euler-Lagrange.}
+La gestión de laboratorios de Tecnologías de la Información comprende el conjunto de actividades destinadas a organizar, administrar y supervisar los espacios tecnológicos utilizados para realizar prácticas académicas y actividades relacionadas con la informática.
 
-La formulación Lagrangiana proporciona una forma de modelar la dinámica de un robot al analizar el balance de energía. En este enfoque, el robot se conceptualiza como una entidad cerrada, y las ecuaciones derivadas se centran únicamente en la energía almacenada, representada a través de las energías cinética y potencial. Para un robot dado, los resultados obtenidos mediante esta formulación son idénticos a los obtenidos mediante la formulación de Newton-Euler.
-El Lagrangiano es una función escalar definida como la diferencia entre las energías cinética y potencial de un sistema mecánico, en función de las llamadas coordenadas generalizadas \cite{torres2002robots}. En la figura \ref{fig 2_2: Esquema de Euler_lagrange} se desarrolla en detalle la formulación Lagrangiana.
+Estos espacios cuentan con diferentes recursos, como computadoras, servidores, dispositivos de red, periféricos y programas especializados, los cuales deben mantenerse organizados y disponibles para los usuarios.
 
+Una administración adecuada permite identificar los recursos existentes, conocer su estado, controlar su utilización y establecer mecanismos para organizar las actividades que se desarrollan dentro de los laboratorios.
 
-\begin{equation}
-J_{i}=
-    \begin{bmatrix}
-        \lambda_{i} & 1           & 0      &...  & 0  \\
-        0           & \lambda_{i} & 1      & ...& 0 \\
-        \vdots      & \vdots      & \ddots & \ddots & \vdots \\
-             0   &    0    &  ... & \lambda_{i} & 1   \\
-           0 &   0   &  ...       &  0   & \lambda_{i} \\
-    \end{bmatrix}_{m \times m}
-\end{equation}
+En este proyecto, la gestión de laboratorios se realizará mediante un sistema centralizado que permitirá registrar los espacios disponibles, sus características, los equipos que contienen y las actividades relacionadas con su utilización.
 
-Donde $J_{i}$ es el bloque de Jordan asociado al eigenvalor $\lambda_{i}$  en $A$ y $m$ es el orden del bloque de Jordan. Esta representación es útil porque simplifica el análisis de la dinámica de sistemas lineales, especialmente cuando $A$ no es diagonalizable. La solución del sistema en términos de la forma de Jordan es:
+\section{Administración de Usuarios y Roles}
 
-\begin{equation}
-     exp(at) = P exp(Jt) P^{-1} = \sum_{i=1}^{r}\sum_{k=1}^{m_{i}}t^{k-1}exp(\lambda_{i}t)R_{ik}
-\end{equation}
+La administración de usuarios consiste en controlar las cuentas que tienen acceso a un sistema informático, permitiendo identificar a cada persona y establecer las funciones que puede realizar dentro de la aplicación.
 
-Donde $m_{i}$ es el orden del bloque de  Jordan asociado al eigenvalor $A$. El siguiente teorema caracteriza las propiedades de estabilidad del origen.
+Los roles representan un conjunto de permisos asignados a los usuarios de acuerdo con sus responsabilidades. Este mecanismo facilita la organización del acceso a las diferentes funcionalidades de un sistema.
+
+En el Sistema de Gestión de Laboratorios de TI se consideran los siguientes roles:
+
+\begin{itemize}
+
+    \item \textbf{Administrador:} Cuenta con permisos para administrar los usuarios, configurar el sistema, gestionar los catálogos y supervisar las operaciones generales.
+
+    \item \textbf{Encargado de laboratorio:} Puede administrar los laboratorios, registrar equipos, actualizar inventarios, gestionar incidencias y supervisar el estado de los recursos tecnológicos.
+
+    \item \textbf{Docente:} Puede consultar la disponibilidad de los laboratorios, realizar solicitudes de reserva y gestionar las prácticas académicas relacionadas con sus grupos.
+
+    \item \textbf{Alumno:} Puede consultar la información y disponibilidad de los recursos, así como acceder a las funciones que le correspondan de acuerdo con los permisos establecidos.
+
+\end{itemize}
+
+La implementación de roles y permisos permite establecer un control organizado sobre las operaciones disponibles para cada usuario, evitando accesos no autorizados a funciones administrativas.
+
+\section{Gestión de Inventarios Tecnológicos}
+
+Un inventario tecnológico es un registro organizado de los recursos informáticos que pertenecen a una institución. Su finalidad es mantener información actualizada sobre los equipos disponibles, sus características y su estado operativo.
+
+Dentro de un laboratorio de TI, el inventario puede incluir computadoras, monitores, teclados, ratones, servidores, impresoras y dispositivos de red.
+
+Para llevar un control adecuado, es importante registrar información como:
+
+\begin{itemize}
+
+    \item Identificador o número de inventario.
+    \item Nombre y descripción del equipo.
+    \item Marca y modelo.
+    \item Características técnicas.
+    \item Laboratorio al que pertenece.
+    \item Estado y disponibilidad.
+    \item Fecha de registro.
+
+\end{itemize}
+
+El control del inventario permite identificar los recursos existentes, conocer su ubicación y facilitar la actualización de sus características cuando se realizan modificaciones o sustituciones.
+
+En el proyecto, este módulo permitirá administrar los laboratorios, las estaciones de trabajo y los equipos tecnológicos registrados en cada espacio.
+
+\section{Gestión de Horarios y Reservas}
+
+La gestión de horarios y reservas consiste en organizar la utilización de espacios y recursos durante determinados periodos de tiempo, estableciendo fechas y horarios para su disponibilidad.
+
+En las instituciones educativas, este proceso es importante para evitar conflictos entre grupos, docentes y actividades académicas que requieren utilizar los mismos espacios.
+
+Un sistema de reservas debe considerar diferentes elementos, como:
+
+\begin{itemize}
+
+    \item Laboratorio o espacio solicitado.
+    \item Usuario responsable de la reserva.
+    \item Fecha de utilización.
+    \item Hora de inicio y finalización.
+    \item Motivo o actividad programada.
+    \item Estado de la solicitud.
+
+\end{itemize}
+
+La disponibilidad de los espacios debe verificarse antes de registrar una reserva, evitando que dos usuarios soliciten el mismo laboratorio durante un periodo coincidente.
+
+En el Sistema de Gestión de Laboratorios de TI, este módulo permitirá consultar los horarios disponibles y administrar las solicitudes de reserva, facilitando la organización de las actividades académicas.
+
+\section{Administración de Software y Licencias}
+
+El software comprende los programas y aplicaciones utilizados por los equipos informáticos para realizar diferentes actividades. En los laboratorios educativos pueden encontrarse herramientas de programación, sistemas gestores de bases de datos, aplicaciones de diseño, programas de administración de redes y sistemas operativos.
+
+Por otra parte, las licencias de software representan las condiciones legales que establecen los derechos y restricciones para utilizar un determinado programa.
+
+La administración de software y licencias permite conocer qué aplicaciones se encuentran instaladas en los equipos, identificar las versiones disponibles y mantener un registro de las licencias correspondientes.
+
+Entre los datos que pueden registrarse se encuentran:
+
+\begin{itemize}
+
+    \item Nombre del programa.
+    \item Versión del software.
+    \item Equipo en el que se encuentra instalado.
+    \item Tipo de licencia.
+    \item Fecha de adquisición o activación.
+    \item Fecha de vencimiento, cuando corresponda.
+
+\end{itemize}
+
+Este control facilita la administración de los programas disponibles en los laboratorios y contribuye a mantener organizada la información relacionada con su utilización.
+
+\section{Gestión de Prácticas y Asignaciones de Equipo}
+
+Las prácticas académicas son actividades que permiten a los estudiantes aplicar los conocimientos adquiridos durante su formación mediante la utilización de recursos tecnológicos.
+
+En los laboratorios de TI, estas actividades pueden incluir ejercicios de programación, configuración de redes, administración de servidores, desarrollo de bases de datos y pruebas de aplicaciones.
+
+La asignación de equipos consiste en relacionar los recursos tecnológicos con los usuarios o actividades que los requieren durante un periodo determinado.
+
+Para mantener un seguimiento adecuado, es necesario registrar información como:
+
+\begin{itemize}
+
+    \item Nombre o descripción de la práctica.
+    \item Docente responsable.
+    \item Grupo o participantes.
+    \item Laboratorio asignado.
+    \item Equipos y recursos utilizados.
+    \item Fecha de realización.
+
+\end{itemize}
+
+La incorporación de este módulo permitirá mantener un registro de las actividades realizadas y de los recursos tecnológicos utilizados durante las prácticas académicas.
+
+\section{Gestión de Incidencias y Mantenimiento}
+
+Una incidencia es cualquier problema o falla que afecta el funcionamiento normal de un equipo, programa o recurso tecnológico.
+
+En los laboratorios de TI pueden presentarse diferentes incidencias, como fallas de hardware, problemas de conexión a la red, errores de software y dificultades relacionadas con el funcionamiento de los equipos.
+
+El mantenimiento informático comprende las actividades realizadas para conservar o recuperar el funcionamiento adecuado de los recursos tecnológicos.
+
+Generalmente, se identifican dos tipos principales:
+
+\begin{itemize}
+
+    \item \textbf{Mantenimiento preventivo:} Consiste en realizar revisiones y actividades periódicas para reducir la posibilidad de fallas y conservar los equipos en condiciones adecuadas de funcionamiento.
+
+    \item \textbf{Mantenimiento correctivo:} Comprende las acciones realizadas para solucionar problemas o fallas que ya se han presentado en un equipo o recurso tecnológico.
+
+\end{itemize}
+
+La gestión de incidencias permite registrar los problemas detectados, identificar a los responsables de atenderlos y mantener un historial de los servicios realizados.
+
+Dentro del proyecto, este módulo facilitará el registro de reportes, el seguimiento de las reparaciones y la actualización del estado de disponibilidad de los equipos.
+
+\section{Seguridad Informática y Control de Acceso}
+
+La seguridad informática comprende las medidas y mecanismos utilizados para proteger los sistemas, la información y los recursos tecnológicos frente a accesos no autorizados, modificaciones indebidas y otras amenazas.
+
+Uno de los principios fundamentales de la seguridad de la información es la protección de tres características:
+
+\begin{itemize}
+
+    \item \textbf{Confidencialidad:} Garantiza que la información solamente pueda ser consultada por usuarios autorizados.
+
+    \item \textbf{Integridad:} Busca asegurar que los datos se mantengan correctos y que no sean modificados de manera no autorizada.
+
+    \item \textbf{Disponibilidad:} Permite que la información y los servicios estén accesibles cuando los usuarios autorizados los necesiten.
+
+\end{itemize}
+
+El control de acceso es un mecanismo que permite determinar qué usuarios pueden ingresar al sistema y qué operaciones pueden realizar según sus permisos.
+
+Para el Sistema de Gestión de Laboratorios de TI, se establecerán mecanismos de autenticación y autorización que permitan diferenciar las funciones de administradores, encargados de laboratorio, docentes y alumnos.
+
+De esta manera, se busca proteger la información y evitar que los usuarios realicen operaciones que no correspondan con sus responsabilidades.
+
+\section{Bitácoras y Auditoría del Sistema}
+
+Una bitácora es un registro cronológico de los eventos y operaciones que se realizan dentro de un sistema informático.
+
+Su finalidad es mantener evidencia de las actividades efectuadas por los usuarios, facilitando la supervisión, el seguimiento de operaciones y la identificación de posibles irregularidades.
+
+En un sistema de gestión, las bitácoras pueden almacenar información como:
+
+\begin{itemize}
+
+    \item Usuario que realizó la operación.
+    \item Fecha y hora del evento.
+    \item Tipo de operación realizada.
+    \item Módulo o apartado utilizado.
+    \item Descripción de la actividad.
+
+\end{itemize}
+
+La auditoría consiste en revisar y analizar estos registros para verificar las actividades realizadas y comprobar que las operaciones se lleven a cabo de acuerdo con los procedimientos establecidos.
+
+En el proyecto, la implementación de una bitácora permitirá registrar los accesos y las operaciones importantes realizadas dentro del sistema, proporcionando un mecanismo de seguimiento y supervisión.
+
+\section{Tecnologías para el Desarrollo del Sistema}
+
+Para desarrollar el Sistema de Gestión de Laboratorios de TI se utilizarán diferentes tecnologías orientadas a la creación de aplicaciones web y la administración de información mediante bases de datos.
+
+\subsection{PHP}
+
+PHP es un lenguaje de programación utilizado principalmente para el desarrollo de aplicaciones web del lado del servidor. Permite procesar solicitudes, ejecutar operaciones, administrar sesiones y establecer comunicación con bases de datos.
+
+Su utilización facilita la creación de aplicaciones dinámicas capaces de generar contenido de acuerdo con las solicitudes realizadas por los usuarios.
+
+En este proyecto, PHP será el lenguaje de programación principal para desarrollar la lógica y el funcionamiento del sistema.
+
+\subsection{Laravel}
+
+Laravel es un framework de código abierto desarrollado para el lenguaje PHP, diseñado para facilitar la creación de aplicaciones web mediante una estructura organizada y herramientas que simplifican tareas comunes del desarrollo.
+
+Entre sus principales características se encuentran el enrutamiento, la administración de solicitudes HTTP, el sistema de autenticación, las migraciones de bases de datos, el acceso a datos mediante Eloquent ORM y la organización del código mediante el patrón Modelo-Vista-Controlador (MVC).
+
+En el proyecto, Laravel será utilizado como framework principal para desarrollar los diferentes módulos del sistema, organizar las operaciones y establecer la comunicación entre la interfaz de usuario y la base de datos.
+
+\subsection{Modelo Vista Controlador (MVC)}
+
+El patrón Modelo-Vista-Controlador (MVC) es una arquitectura de software que organiza una aplicación en tres componentes principales, permitiendo separar las responsabilidades y facilitar el mantenimiento del código.
+
+Sus componentes son:
+
+\begin{itemize}
+
+    \item \textbf{Modelo:} Se encarga de representar y administrar los datos, así como las operaciones relacionadas con la información almacenada en la base de datos.
+
+    \item \textbf{Vista:} Representa la interfaz gráfica mediante la cual los usuarios interactúan con el sistema.
+
+    \item \textbf{Controlador:} Recibe las solicitudes de los usuarios, procesa las operaciones correspondientes y coordina la comunicación entre los modelos y las vistas.
+
+\end{itemize}
+
+La utilización de MVC permite mantener una estructura organizada, separar las funciones de cada componente y facilitar futuras modificaciones o ampliaciones del sistema.
+
+\subsection{Base de Datos Relacional}
+
+Una base de datos relacional es un sistema de almacenamiento de información que organiza los datos mediante tablas compuestas por filas y columnas.
+
+Las tablas pueden relacionarse entre sí mediante claves primarias y claves foráneas, lo que permite establecer conexiones entre diferentes conjuntos de información.
+
+En el Sistema de Gestión de Laboratorios de TI, la base de datos permitirá almacenar información relacionada con usuarios, roles, laboratorios, equipos, reservas, software, licencias, prácticas, incidencias y mantenimientos.
+
+La utilización de una base de datos relacional facilitará la consulta, actualización y organización de la información, manteniendo relaciones entre los diferentes módulos del sistema.
+
+\subsection{Sistema Gestor de Bases de Datos}
+
+Un Sistema Gestor de Bases de Datos (SGBD) es un software que permite crear, administrar, consultar y modificar bases de datos.
+
+Su función principal consiste en proporcionar mecanismos para almacenar información de manera organizada y controlar las operaciones realizadas sobre ella.
+
+Para el desarrollo del proyecto se utilizará un SGBD relacional compatible con Laravel, encargado de almacenar y administrar la información generada por los diferentes módulos del sistema.
+
+\subsection{SQL}
+
+SQL (Structured Query Language) es un lenguaje utilizado para administrar y consultar información almacenada en bases de datos relacionales.
+
+Permite realizar operaciones para crear tablas, insertar registros, consultar información, actualizar datos y eliminar registros.
+
+Dentro del proyecto, SQL será utilizado mediante las herramientas de acceso a datos proporcionadas por Laravel y el sistema gestor de bases de datos seleccionado.
+

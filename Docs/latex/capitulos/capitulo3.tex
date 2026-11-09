@@ -1,2 +1,93 @@
+
 \chapter{Desarrollo}
-Desarrollo del proyecto, identifica la metodología  Agiles (sea SCRUM, KABAN, etc. )describe cada una de las fases del proceso de desarrollo de su proyecto. 
+
+En este capítulo se describe el proceso que se seguirá para desarrollar el Sistema de Gestión de Laboratorios de TI. Se explican las actividades necesarias para construir el sistema, desde la identificación de las necesidades hasta las pruebas y su implementación.
+
+Para organizar el trabajo se utilizará una metodología ágil que permita desarrollar el proyecto por etapas, revisar los avances y realizar cambios cuando sea necesario.
+
+\section{Metodología de Desarrollo}
+
+Para el desarrollo del proyecto se utilizará la metodología SCRUM, la cual permite organizar el trabajo mediante periodos cortos llamados Sprints. Cada uno tiene como propósito desarrollar y revisar determinadas funcionalidades del sistema.
+
+Se eligió esta metodología porque el proyecto está dividido en diferentes módulos, lo que permite trabajar en ellos de manera organizada y comprobar su funcionamiento antes de continuar con los siguientes.
+
+\section{Fases del Desarrollo}
+
+El desarrollo del sistema estará dividido en las siguientes fases:
+
+\subsection{Análisis de Requisitos}
+
+En esta primera fase se identificarán las necesidades de los laboratorios de TI y las funciones que deberá tener el sistema. También se definirán los tipos de usuarios que tendrán acceso, como administradores, encargados de laboratorio, docentes y alumnos.
+
+\subsection{Planificación}
+
+Se organizarán las actividades que se realizarán durante el desarrollo del proyecto, estableciendo prioridades y definiendo los módulos que se trabajarán en cada Sprint.
+
+\subsection{Diseño del Sistema}
+
+Se realizará el diseño de las interfaces y la estructura de la base de datos. También se definirán las relaciones entre las diferentes tablas y la organización de los módulos para facilitar el funcionamiento del sistema.
+
+\subsection{Desarrollo del Sistema}
+
+En esta fase se llevará a cabo la programación utilizando PHP y el framework Laravel. Se desarrollarán los módulos principales del sistema:
+
+\begin{itemize}
+    \item Usuarios y roles.
+    \item Laboratorios y equipos.
+    \item Horarios y reservas.
+    \item Software y licencias.
+    \item Prácticas y asignaciones de equipo.
+    \item Incidencias y mantenimientos.
+    \item Bitácora de actividades.
+\end{itemize}
+
+Cada módulo se desarrollará de manera progresiva, verificando que sus funciones trabajen correctamente.
+
+\subsection{Pruebas del Sistema}
+
+Una vez desarrolladas las funcionalidades, se realizarán pruebas para comprobar que el sistema funcione correctamente. Se revisará el inicio de sesión, los permisos de los usuarios, el registro de información y la gestión de las reservas, además de corregir los errores que puedan presentarse.
+
+\subsection{Implementación}
+
+En esta fase se preparará el sistema para su utilización, configurando el entorno de trabajo, la base de datos y los elementos necesarios para ejecutar la aplicación. También se comprobará que los usuarios puedan acceder correctamente a las funciones que les corresponden.
+
+\subsection{Mantenimiento}
+
+Finalmente, se realizarán revisiones para corregir posibles errores y mejorar el funcionamiento del sistema. También se podrán realizar modificaciones o agregar nuevas funciones de acuerdo con las necesidades que surjan durante su utilización.
+
+\section{Organización del Trabajo mediante SCRUM}
+
+Para mantener una buena organización, el proyecto se dividirá en diferentes Sprints, en los cuales se trabajarán las funcionalidades de manera progresiva.
+
+La siguiente tabla muestra una propuesta de distribución del trabajo:
+
+\begin{table}[htbp]
+\centering
+\caption{Organización de los Sprints}
+\label{tab:sprints}
+\begin{tabular}{|c|p{5cm}|p{6cm}|}
+\hline
+\textbf{Sprint} & \textbf{Actividad} & \textbf{Resultado esperado} \\ \hline
+
+1 & Análisis y planificación & Identificación de requisitos y organización del proyecto. \\ \hline
+
+2 & Diseño del sistema & Diseño de interfaces y base de datos. \\ \hline
+
+3 & Usuarios y roles & Administración de usuarios y permisos. \\ \hline
+
+4 & Laboratorios y equipos & Registro y control de recursos tecnológicos. \\ \hline
+
+5 & Horarios y reservas & Administración de disponibilidad y reservas. \\ \hline
+
+6 & Software y licencias & Registro de programas y licencias. \\ \hline
+
+7 & Prácticas y asignaciones & Control de actividades y equipos utilizados. \\ \hline
+
+8 & Incidencias y bitácoras & Registro de fallas, mantenimientos y actividades. \\ \hline
+
+9 & Pruebas e implementación & Revisión y puesta en funcionamiento del sistema. \\ \hline
+
+\end{tabular}
+\end{table}
+
+La organización de los Sprints podrá modificarse dependiendo de los avances y las necesidades que se presenten durante el desarrollo del proyecto.
