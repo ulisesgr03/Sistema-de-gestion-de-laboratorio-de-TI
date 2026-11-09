@@ -13,14 +13,14 @@
             Catálogo Institucional de Software y Licenciamiento
         </h1>
         <p class="text-xs sm:text-sm text-[#404944] mt-1">
-            Herramientas oficiales, IDEs de desarrollo, simuladores de redes, suites científicas y convenios de licenciamiento campus vigentes.
+            Herramientas oficiales, entornos de desarrollo (IDE), simuladores de redes, suites científicas y convenios de licenciamiento campus vigentes.
         </p>
     </div>
 
     <!-- Badge de Licenciamiento Activo -->
     <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#ffffff] border border-[#e4e3db] text-xs font-mono">
         <span class="w-2 h-2 rounded-full bg-[#316a42]"></span>
-        <span class="text-[#1b1c18] font-bold">100% Homologado 2026</span>
+        <span class="text-[#1b1c18] font-bold">100% homologado 2026</span>
     </div>
 </div>
 @endsection
@@ -96,15 +96,15 @@
                 <!-- Metadatos de Licenciamiento y Compatibilidad -->
                 <div class="mt-4 p-3 bg-[#f5f4ec] rounded-xl border border-[#e4e3db] text-xs space-y-1">
                     <div class="flex justify-between items-center text-[11px]">
-                        <span class="text-[#707973]">Licencias Disponibles:</span>
-                        <span class="font-bold text-[#1b1c18] font-mono">{{ $licencia ? $licencia->cantidad_licencias . ' puestos' : 'Campus Ilimitada' }}</span>
+                        <span class="text-[#707973]">Licencias disponibles:</span>
+                        <span class="font-bold text-[#1b1c18] font-mono">{{ $licencia ? $licencia->cantidad_licencias . ' puestos' : 'Campus ilimitada' }}</span>
                     </div>
                     <div class="flex justify-between items-center text-[11px]">
-                        <span class="text-[#707973]">Vigencia Institucional:</span>
-                        <span class="font-semibold text-[#316a42] font-mono">{{ $licencia && $licencia->fecha_vencimiento ? $licencia->fecha_vencimiento->format('d/m/Y') : 'Permanente / Anual' }}</span>
+                        <span class="text-[#707973]">Vigencia institucional:</span>
+                        <span class="font-semibold text-[#316a42] font-mono">{{ $licencia && $licencia->fecha_vencimiento ? $licencia->fecha_vencimiento->format('d/m/Y') : 'Permanente o anual' }}</span>
                     </div>
                     <div class="flex justify-between items-center text-[11px]">
-                        <span class="text-[#707973]">Entorno de Ejecución:</span>
+                        <span class="text-[#707973]">Entorno de ejecución:</span>
                         <span class="font-semibold text-[#1b1c18]">Ubuntu 22.04 / Win 11</span>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
 
                 <a href="mailto:soporte.laboratorios@uptex.edu.mx?subject=Solicitud de Licencia {{ urlencode($sw->nombre) }}"
                    class="inline-flex items-center gap-1 font-bold text-[#2f664f] hover:underline text-xs">
-                    <span>Solicitar Activación</span>
+                    <span>Solicitar activación</span>
                     <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                 </a>
             </div>
@@ -144,7 +144,7 @@
                 <span class="material-symbols-outlined text-[24px]">school</span>
             </div>
             <div>
-                <h3 class="text-base font-bold text-[#1b1c18]">Licencias Educativas para Equipos Personales de Alumnos y Docentes</h3>
+                <h3 class="text-base font-bold text-[#1b1c18]">Licencias educativas para equipos personales de alumnos y docentes</h3>
                 <span class="text-xs text-[#404944]">Convenios oficiales de la Universidad Politécnica de Texcoco</span>
             </div>
         </div>
@@ -153,7 +153,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 text-xs text-[#404944] leading-relaxed">
         <div class="p-4 bg-[#f5f4ec] rounded-xl border border-[#e4e3db]">
             <strong class="font-bold text-[#1b1c18] block text-sm mb-1">MathWorks MATLAB Campus</strong>
-            <p>Acceso ilimitado a MATLAB, Simulink y más de 100 toolboxes para instalación en laptops personales usando tu correo institucional @uptex.edu.mx.</p>
+            <p>Acceso ilimitado a MATLAB, Simulink y más de 100 toolboxes para instalación en laptops personales utilizando el correo institucional @uptex.edu.mx.</p>
         </div>
         <div class="p-4 bg-[#f5f4ec] rounded-xl border border-[#e4e3db]">
             <strong class="font-bold text-[#1b1c18] block text-sm mb-1">JetBrains Educational Pack</strong>

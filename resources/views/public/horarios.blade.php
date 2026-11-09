@@ -7,10 +7,10 @@
     <div>
         <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#675a4e]">
             <span class="material-symbols-outlined text-[16px] text-[#2f664f]">calendar_month</span>
-            <span>Programación Curricular Cuatrimestral · 2026-1</span>
+            <span>Programación curricular cuatrimestral · 2026-1</span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-[#1b1c18] mt-1 tracking-tight">
-            Horarios Oficiales y Prácticas Académicas
+            Horarios oficiales y prácticas académicas
         </h1>
         <p class="text-xs sm:text-sm text-[#404944] mt-1">
             Distribución horaria por sala, asignaturas curriculares, docentes titulares y espacios asignados para práctica libre.
@@ -20,7 +20,7 @@
     <!-- Indicador de Jornada Continua -->
     <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#ffffff] border border-[#e4e3db] text-xs font-mono">
         <span class="w-2 h-2 rounded-full bg-[#316a42]"></span>
-        <span class="text-[#1b1c18] font-bold">Jornada 07:00 a 20:00 hrs</span>
+        <span class="text-[#1b1c18] font-bold">Jornada: 07:00 a 20:00 h</span>
     </div>
 </div>
 @endsection
@@ -43,7 +43,7 @@
 <div class="bg-[#ffffff] border border-[#e4e3db] rounded-xl p-4 mb-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
     <div class="flex items-center gap-2">
         <span class="material-symbols-outlined text-[#707973] text-[20px]">filter_alt</span>
-        <span class="text-xs font-bold text-[#1b1c18]">Filtrar por Sala Específica:</span>
+        <span class="text-xs font-bold text-[#1b1c18]">Filtrar por sala específica:</span>
     </div>
 
     <form method="GET" action="{{ route('horarios.index') }}" class="flex items-center gap-2 flex-1 max-w-md">
@@ -52,7 +52,7 @@
             <select name="laboratorio_id"
                     onchange="this.form.submit()"
                     class="w-full h-10 pl-3 pr-8 bg-[#efeee7] rounded-lg border border-[#c0c9c2] text-xs text-[#1b1c18] appearance-none focus:outline-none focus:border-[#2f664f] focus:bg-[#ffffff] cursor-pointer">
-                <option value="">Todos los Laboratorios (L-01 a L-06)</option>
+                <option value="">Todos los laboratorios (L-01 a L-06)</option>
                 @foreach($laboratorios as $lab)
                     <option value="{{ $lab->id }}" {{ $labSeleccionado == $lab->id ? 'selected' : '' }}>
                         {{ $lab->nombre }}
@@ -92,7 +92,7 @@
                             <span class="w-2.5 h-2.5 rounded-full bg-[#2f664f]"></span>
                             <span class="font-extrabold text-[#1b1c18] text-sm">{{ $lab->nombre }}</span>
                         </div>
-                        <span class="text-[11px] text-[#707973]">{{ $lab->ubicacion }} · Capacidad {{ $lab->capacidad }} estaciones</span>
+                        <span class="text-[11px] text-[#707973]">{{ $lab->ubicacion }} · Capacidad: {{ $lab->capacidad }} estaciones</span>
                     </div>
                     <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#ffffff] border border-[#e4e3db] text-xs font-bold text-[#2f664f]">
                         <span class="material-symbols-outlined text-[16px]">event_available</span>
@@ -105,10 +105,10 @@
                     <table class="w-full text-left text-xs">
                         <thead class="bg-[#efeee7] text-[#1b1c18] uppercase tracking-wider font-bold h-9 border-b border-[#e4e3db]">
                             <tr>
-                                <th class="px-5 w-40">Bloque Horario</th>
-                                <th class="px-4">Asignatura / Actividad</th>
-                                <th class="px-4">Docente Titular</th>
-                                <th class="px-4">Grupo / Matrícula</th>
+                                <th class="px-5 w-40">Bloque horario</th>
+                                <th class="px-4">Asignatura / actividad</th>
+                                <th class="px-4">Docente titular</th>
+                                <th class="px-4">Grupo / matrícula</th>
                                 <th class="px-5 text-right">Modalidad</th>
                             </tr>
                         </thead>
@@ -137,12 +137,12 @@
                                         @if($esLibre)
                                             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#b3f1be]/40 text-[#16512c] font-bold text-[11px]">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-[#316a42]"></span>
-                                                Acceso Libre
+                                                Acceso libre
                                             </span>
                                         @else
                                             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#efeee7] text-[#1b1c18] font-semibold text-[11px]">
                                                 <span class="material-symbols-outlined text-[13px] text-[#707973]">lock</span>
-                                                Clase Exclusiva
+                                                Clase exclusiva
                                             </span>
                                         @endif
                                     </td>
@@ -162,9 +162,9 @@
         <span class="material-symbols-outlined text-[24px]">info</span>
     </div>
     <div class="text-xs text-[#404944] space-y-1 leading-relaxed">
-        <h4 class="font-bold text-[#1b1c18] text-sm">Disposición Oficial sobre Tolerancia y Desalojo de Salas</h4>
+        <h4 class="font-bold text-[#1b1c18] text-sm">Disposición oficial sobre tolerancia y desalojo de salas</h4>
         <p>
-            Los docentes y alumnos cuentan con 10 minutos de tolerancia al inicio de la sesión. Es responsabilidad de los usuarios guardar sus avances en repositorios externos (GitHub, USB) y cerrar sesión en las terminales 5 minutos antes del término del bloque horario para permitir el ingreso puntual del siguiente grupo académico.
+            El personal docente y el alumnado disponen de una tolerancia de 10 minutos al comenzar el bloque. Es responsabilidad de cada usuario respaldar oportunamente sus avances en repositorios externos (como GitHub o almacenamiento USB) y salir de su cuenta en las terminales 5 minutos antes de concluir la clase, facilitando así el acceso puntual del siguiente grupo académico.
         </p>
     </div>
 </div>

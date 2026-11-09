@@ -20,7 +20,7 @@
     <!-- Indicador de Publicación -->
     <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#ffffff] border border-[#e4e3db] text-xs font-mono">
         <span class="material-symbols-outlined text-[16px] text-[#316a42]">verified</span>
-        <span class="text-[#1b1c18] font-bold">Aprobado por Consejo Académico</span>
+        <span class="text-[#1b1c18] font-bold">Aprobado por el Consejo Académico</span>
     </div>
 </div>
 @endsection
@@ -33,26 +33,26 @@
         <div class="bg-[#ffffff] border border-[#e4e3db] rounded-2xl p-5 sticky top-[130px] shadow-sm">
             <h3 class="text-xs font-bold uppercase tracking-wider text-[#675a4e] mb-3 flex items-center gap-1.5">
                 <span class="material-symbols-outlined text-[16px] text-[#2f664f]">menu_book</span>
-                <span>Índice del Reglamento</span>
+                <span>Índice del reglamento</span>
             </h3>
             <nav class="space-y-1 text-xs">
                 <a href="#cap1" class="block px-3 py-2 rounded-lg text-[#404944] hover:bg-[#efeee7] hover:text-[#1b1c18] font-medium transition-colors">
-                    Cap. I: Disposiciones Generales
+                    Cap. I: Disposiciones generales
                 </a>
                 <a href="#cap2" class="block px-3 py-2 rounded-lg text-[#404944] hover:bg-[#efeee7] hover:text-[#1b1c18] font-medium transition-colors">
-                    Cap. II: Derechos y Obligaciones
+                    Cap. II: Derechos y obligaciones
                 </a>
                 <a href="#cap3" class="block px-3 py-2 rounded-lg text-[#404944] hover:bg-[#efeee7] hover:text-[#1b1c18] font-medium transition-colors">
-                    Cap. III: Uso de Hardware y Software
+                    Cap. III: Uso de hardware y software
                 </a>
                 <a href="#cap4" class="block px-3 py-2 rounded-lg text-[#404944] hover:bg-[#efeee7] hover:text-[#1b1c18] font-medium transition-colors">
-                    Cap. IV: Prohibiciones Expresas
+                    Cap. IV: Prohibiciones expresas
                 </a>
                 <a href="#cap5" class="block px-3 py-2 rounded-lg text-[#404944] hover:bg-[#efeee7] hover:text-[#1b1c18] font-medium transition-colors">
-                    Cap. V: Préstamos en Ventanilla
+                    Cap. V: Préstamos en ventanilla
                 </a>
                 <a href="#cap6" class="block px-3 py-2 rounded-lg text-[#404944] hover:bg-[#efeee7] hover:text-[#1b1c18] font-medium transition-colors">
-                    Cap. VI: Régimen de Sanciones
+                    Cap. VI: Régimen de sanciones
                 </a>
             </nav>
 
@@ -61,7 +61,7 @@
                     <span class="material-symbols-outlined text-[16px] text-[#2f664f]">contact_support</span>
                     <span>¿Dudas de aplicación?</span>
                 </div>
-                <p>Acuda a la Jefatura de Laboratorios de TI en el Edificio E, Planta Baja.</p>
+                <p>Acuda a la Jefatura de Laboratorios de TI en el Edificio E, planta baja.</p>
             </div>
         </div>
     </div>
@@ -72,7 +72,7 @@
         <!-- Cap. I -->
         <article id="cap1" class="bg-[#ffffff] border border-[#e4e3db] rounded-2xl p-6 sm:p-8 shadow-sm">
             <span class="text-[11px] font-bold uppercase tracking-wider text-[#2f664f]">Capítulo I</span>
-            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Disposiciones Generales y Ámbito de Aplicación</h2>
+            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Disposiciones generales y ámbito de aplicación</h2>
             <div class="space-y-3 text-xs sm:text-sm text-[#404944] leading-relaxed">
                 <p>
                     <strong class="text-[#1b1c18]">Artículo 1.</strong> El presente reglamento es de observancia obligatoria para todos los alumnos, docentes, investigadores, personal administrativo y usuarios externos que hagan uso de las instalaciones, equipos, redes e instrumental de los laboratorios adscritos a la División de Tecnologías de la Información de la Universidad Politécnica de Texcoco.
@@ -86,7 +86,7 @@
         <!-- Cap. II -->
         <article id="cap2" class="bg-[#ffffff] border border-[#e4e3db] rounded-2xl p-6 sm:p-8 shadow-sm">
             <span class="text-[11px] font-bold uppercase tracking-wider text-[#2f664f]">Capítulo II</span>
-            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Derechos y Obligaciones de los Usuarios</h2>
+            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Derechos y obligaciones de los usuarios</h2>
             <div class="space-y-3 text-xs sm:text-sm text-[#404944] leading-relaxed">
                 <p>
                     <strong class="text-[#1b1c18]">Artículo 3.</strong> Son derechos de los usuarios:
@@ -110,10 +110,10 @@
         <!-- Cap. III -->
         <article id="cap3" class="bg-[#ffffff] border border-[#e4e3db] rounded-2xl p-6 sm:p-8 shadow-sm">
             <span class="text-[11px] font-bold uppercase tracking-wider text-[#2f664f]">Capítulo III</span>
-            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Uso de Hardware, Red LAN y Software Homologado</h2>
+            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Uso de hardware, red LAN y software homologado</h2>
             <div class="space-y-3 text-xs sm:text-sm text-[#404944] leading-relaxed">
                 <p>
-                    <strong class="text-[#1b1c18]">Artículo 5.</strong> Queda terminantemente prohibido desconectar, intercambiar, retirar o modificar componentes internos o externos de las computadoras (cables HDMI, fuentes, cables Ethernet, tarjetas de red o módulos RAM).
+                    <strong class="text-[#1b1c18]">Artículo 5.</strong> Queda terminantemente prohibido desconectar, intercambiar, retirar o modificar componentes internos o externos de las computadoras (cables HDMI o Ethernet, fuentes de alimentación, tarjetas de red o módulos de memoria RAM).
                 </p>
                 <p>
                     <strong class="text-[#1b1c18]">Artículo 6.</strong> La red inalámbrica y cableada de los laboratorios está sujeta a auditoría de tráfico conforme a la norma ISO/IEC 27001. Queda prohibido el escaneo de puertos no autorizado, ataques de denegación de servicio o navegación en sitios ajenos al propósito académico.
@@ -127,12 +127,12 @@
         <!-- Cap. IV -->
         <article id="cap4" class="bg-[#ffffff] border border-[#e4e3db] rounded-2xl p-6 sm:p-8 shadow-sm">
             <span class="text-[11px] font-bold uppercase tracking-wider text-[#ba1a1a]">Capítulo IV</span>
-            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Prohibiciones Expresas</h2>
+            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Prohibiciones expresas</h2>
             <div class="space-y-3 text-xs sm:text-sm text-[#404944] leading-relaxed">
                 <div class="p-4 bg-[#ffdad6] border border-[#ba1a1a] rounded-xl text-[#93000a] text-xs font-medium space-y-2">
                     <p class="font-bold flex items-center gap-1.5">
                         <span class="material-symbols-outlined text-[18px]">block</span>
-                        <span>Restricciones de Tolerancia Cero:</span>
+                        <span>Restricciones de tolerancia cero:</span>
                     </p>
                     <ul class="list-disc pl-5 space-y-1">
                         <li>Ingresar con cualquier tipo de alimento, golosina, botana, bebida o envase con líquido (incluso hermético o embotellado).</li>
@@ -147,7 +147,7 @@
         <!-- Cap. V -->
         <article id="cap5" class="bg-[#ffffff] border border-[#e4e3db] rounded-2xl p-6 sm:p-8 shadow-sm">
             <span class="text-[11px] font-bold uppercase tracking-wider text-[#2f664f]">Capítulo V</span>
-            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Préstamos en Ventanilla y Valija Técnica</h2>
+            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Préstamos en ventanilla y valija técnica</h2>
             <div class="space-y-3 text-xs sm:text-sm text-[#404944] leading-relaxed">
                 <p>
                     <strong class="text-[#1b1c18]">Artículo 8.</strong> Todo préstamo de osciloscopios, fuentes, kits IoT o laptops requiere la entrega de credencial original y firma del vale F-TI-04 en el pañol E-102.
@@ -161,22 +161,22 @@
         <!-- Cap. VI -->
         <article id="cap6" class="bg-[#ffffff] border border-[#e4e3db] rounded-2xl p-6 sm:p-8 shadow-sm">
             <span class="text-[11px] font-bold uppercase tracking-wider text-[#2f664f]">Capítulo VI</span>
-            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Régimen de Faltas y Sanciones Disciplinarias</h2>
+            <h2 class="text-xl font-bold text-[#1b1c18] mt-1 mb-4">Régimen de faltas y sanciones disciplinarias</h2>
             <div class="space-y-3 text-xs sm:text-sm text-[#404944] leading-relaxed">
                 <p>
                     <strong class="text-[#1b1c18]">Artículo 10.</strong> El incumplimiento a las disposiciones de este reglamento acarreará las siguientes sanciones acumulativas según la gravedad del incidente:
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs">
                     <div class="p-3 bg-[#f5f4ec] rounded-xl border border-[#e4e3db]">
-                        <span class="font-bold text-[#1b1c18] block mb-1">Amonestación Escrita</span>
+                        <span class="font-bold text-[#1b1c18] block mb-1">Amonestación escrita</span>
                         <p class="text-[#404944]">Por ingreso de líquidos o alimentos, o dejar desordenada la estación.</p>
                     </div>
                     <div class="p-3 bg-[#f5f4ec] rounded-xl border border-[#e4e3db]">
-                        <span class="font-bold text-[#ba1a1a] block mb-1">Suspensión de Servicio</span>
+                        <span class="font-bold text-[#ba1a1a] block mb-1">Suspensión de servicio</span>
                         <p class="text-[#404944]">De 1 a 4 semanas de acceso a laboratorios y préstamo de equipo por reincidencia o maltrato.</p>
                     </div>
                     <div class="p-3 bg-[#f5f4ec] rounded-xl border border-[#e4e3db]">
-                        <span class="font-bold text-[#ba1a1a] block mb-1">Reposición Patrimonial</span>
+                        <span class="font-bold text-[#ba1a1a] block mb-1">Reposición patrimonial</span>
                         <p class="text-[#404944]">Pago o sustitución de componentes dañados y canalización ante el Consejo de Honor y Justicia.</p>
                     </div>
                 </div>

@@ -21,7 +21,7 @@
         <a href="{{ url('/reportar-averia') }}"
            class="inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-[#ffffff] hover:bg-[#efeee7] border border-[#e4e3db] text-[#ba1a1a] font-semibold text-xs transition-colors">
             <span class="material-symbols-outlined text-[18px]">report_problem</span>
-            <span>Reportar Avería en Sala</span>
+            <span>Reportar avería en sala</span>
         </a>
     </div>
 </div>
@@ -93,7 +93,7 @@
 
                     <span class="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#b3f1be]/40 text-[#16512c] font-bold text-xs border border-[#316a42]/20">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#316a42]"></span>
-                        Sala Operativa
+                        Sala operativa
                     </span>
                 </div>
 
@@ -104,7 +104,7 @@
                 <!-- Métricas de Estaciones -->
                 <div class="grid grid-cols-3 gap-3 my-4 p-3 bg-[#f5f4ec] rounded-xl border border-[#e4e3db] text-center">
                     <div>
-                        <span class="block text-[10px] font-bold uppercase text-[#675a4e]">Capacidad Total</span>
+                        <span class="block text-[10px] font-bold uppercase text-[#675a4e]">Capacidad total</span>
                         <span class="text-base font-extrabold text-[#1b1c18] font-mono">{{ $lab->capacidad }} estaciones</span>
                     </div>
                     <div>
@@ -112,7 +112,7 @@
                         <span class="text-base font-extrabold text-[#316a42] font-mono">{{ $activas }} funcionales</span>
                     </div>
                     <div>
-                        <span class="block text-[10px] font-bold uppercase text-[#ba1a1a]">En Mantenimiento</span>
+                        <span class="block text-[10px] font-bold uppercase text-[#ba1a1a]">En mantenimiento</span>
                         <span class="text-base font-extrabold text-[#ba1a1a] font-mono">{{ $mantenimiento }}</span>
                     </div>
                 </div>
@@ -120,8 +120,8 @@
                 <!-- Mini Malla de Estaciones de la Sala -->
                 <div class="mb-4">
                     <div class="flex items-center justify-between text-[11px] text-[#675a4e] font-bold mb-2">
-                        <span>Disposición de Estaciones de Trabajo (PC-01 a PC-{{ sprintf('%02d', $estacionesTotal) }})</span>
-                        <span class="text-[#316a42]">{{ $porcentajeActivas }}% Disponibilidad</span>
+                        <span>Disposición de estaciones de trabajo (PC-01 a PC-{{ sprintf('%02d', $estacionesTotal) }})</span>
+                        <span class="text-[#316a42]">{{ $porcentajeActivas }}% de disponibilidad</span>
                     </div>
                     <div class="grid grid-cols-6 sm:grid-cols-10 gap-1.5 p-3 bg-[#efeee7] rounded-xl border border-[#e4e3db]">
                         @foreach($lab->estaciones as $est)
@@ -132,8 +132,8 @@
                         @endforeach
                     </div>
                     <div class="flex items-center gap-4 text-[10px] text-[#707973] mt-2">
-                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-[#ffffff] border border-[#c0c9c2]"></span> Estación Operativa</span>
-                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-[#ffdad6] border border-[#ba1a1a]"></span> En Mantenimiento</span>
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-[#ffffff] border border-[#c0c9c2]"></span> Estación operativa</span>
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-[#ffdad6] border border-[#ba1a1a]"></span> En mantenimiento</span>
                     </div>
                 </div>
 
@@ -144,13 +144,13 @@
                 <a href="{{ route('horarios.index', ['laboratorio_id' => $lab->id]) }}"
                    class="inline-flex items-center gap-1 text-xs text-[#2f664f] hover:underline font-bold">
                     <span class="material-symbols-outlined text-[16px]">calendar_month</span>
-                    <span>Ver Horarios de esta Sala</span>
+                    <span>Ver horarios de esta sala</span>
                 </a>
 
                 <a href="{{ route('averia.create', ['lab' => $lab->id]) }}"
                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#efeee7] hover:bg-[#e4e3db] text-[#1b1c18] text-xs font-semibold transition-colors">
                     <span class="material-symbols-outlined text-[15px] text-[#ba1a1a]">report_problem</span>
-                    <span>Reportar Fallo</span>
+                    <span>Reportar avería</span>
                 </a>
             </div>
         </article>

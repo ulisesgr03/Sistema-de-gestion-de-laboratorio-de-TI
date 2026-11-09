@@ -9,11 +9,11 @@
     <span class="text-[#c0c9c2]">/</span>
     <span>Turno Mixto</span>
     <span class="text-[#c0c9c2]">/</span>
-    <span>Edificio E, Planta Baja</span>
+    <span>Edificio E, planta baja</span>
     <span class="text-[#c0c9c2]">/</span>
     <span class="text-[#2f664f] font-medium flex items-center gap-1">
         <span class="material-symbols-outlined text-[16px]">sync</span>
-        Sincronizado 09:42 hrs
+        Sincronizado 09:42 h
     </span>
 @endsection
 
@@ -21,13 +21,13 @@
     <button type="button"
             class="h-10 px-4 rounded-lg bg-[#ffffff] text-[#1b1c18] font-medium text-sm hover:bg-[#efeee7] border border-[#e4e3db] transition-colors flex items-center gap-2">
         <span class="material-symbols-outlined text-[18px]">lock</span>
-        <span>Bloqueo Masivo</span>
+        <span>Bloqueo masivo</span>
     </button>
 
     <button type="button"
             class="h-10 px-4 rounded-lg bg-[#2f664f] hover:bg-[#497f67] text-white font-medium text-sm transition-colors flex items-center gap-2 shadow-sm">
         <span class="material-symbols-outlined text-[18px]">add_circle</span>
-        <span>Nueva Solicitud</span>
+        <span>Nueva solicitud</span>
     </button>
 @endsection
 
@@ -37,13 +37,13 @@
     <!-- KPI 1: Ocupación Global -->
     <div class="bg-[#ffffff] border border-[#e4e3db] rounded-xl p-5 flex flex-col justify-between">
         <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-[#707973]">Capacidad Operativa</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#707973]">Capacidad operativa</span>
             <span class="w-8 h-8 rounded-lg bg-[#efeee7] flex items-center justify-center text-[#2f664f]">
                 <span class="material-symbols-outlined text-[20px]">pie_chart</span>
             </span>
         </div>
         <div>
-            <span class="text-sm font-bold text-[#1b1c18] block mb-1">Ocupación Global</span>
+            <span class="text-sm font-bold text-[#1b1c18] block mb-1">Ocupación global</span>
             <div class="flex items-baseline gap-2">
                 <span class="text-3xl font-extrabold text-[#1b1c18] tracking-tight">82%</span>
                 <span class="text-xs font-semibold text-[#316a42]">+4.2% vs ayer</span>
@@ -60,14 +60,14 @@
     <!-- KPI 2: Parque Computacional -->
     <div class="bg-[#ffffff] border border-[#e4e3db] rounded-xl p-5 flex flex-col justify-between">
         <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-[#707973]">Parque Computacional</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#707973]">Parque computacional</span>
             <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-[#b3f1be]/40 text-[#16512c] flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-[#316a42]"></span>
                 96.6% DISP
             </span>
         </div>
         <div>
-            <span class="text-sm font-bold text-[#1b1c18] block mb-1">Equipos Operativos</span>
+            <span class="text-sm font-bold text-[#1b1c18] block mb-1">Equipos operativos</span>
             <div class="flex items-baseline gap-2">
                 <span class="text-3xl font-extrabold text-[#1b1c18] tracking-tight">142</span>
                 <span class="text-xs text-[#707973]">/ 180 activos</span>
@@ -84,13 +84,13 @@
     <!-- KPI 3: Ventanilla de Préstamos -->
     <div class="bg-[#ffffff] border border-[#e4e3db] rounded-xl p-5 flex flex-col justify-between">
         <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-[#707973]">Ventanilla de Préstamos</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#707973]">Ventanilla de préstamos</span>
             <span class="w-8 h-8 rounded-lg bg-[#efeee7] flex items-center justify-center text-[#2f664f]">
                 <span class="material-symbols-outlined text-[20px]">inventory_2</span>
             </span>
         </div>
         <div>
-            <span class="text-sm font-bold text-[#1b1c18] block mb-1">Hardware en Préstamo</span>
+            <span class="text-sm font-bold text-[#1b1c18] block mb-1">Hardware en préstamo</span>
             <div class="flex items-baseline gap-2">
                 <span class="text-3xl font-extrabold text-[#1b1c18] tracking-tight">12</span>
                 <span class="text-xs text-[#404944]">vales firmados</span>
@@ -99,7 +99,7 @@
         <div class="mt-4 pt-2 border-t border-[#e4e3db]">
             <span class="text-xs text-[#404944] flex items-center gap-1">
                 <span class="material-symbols-outlined text-[16px] text-[#2f664f]">schedule</span>
-                Próxima entrega: 11:30 hrs (Lab Redes 2)
+                Próxima entrega: 11:30 h (Lab Redes 2)
             </span>
         </div>
     </div>
@@ -107,13 +107,13 @@
     <!-- KPI 4: Mesa de Incidencias -->
     <div class="bg-[#ffffff] border border-[#e4e3db] rounded-xl p-5 flex flex-col justify-between">
         <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-[#707973]">Mesa de Soporte</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#707973]">Mesa de soporte</span>
             <span class="w-8 h-8 rounded-lg bg-[#ffdad6] flex items-center justify-center text-[#ba1a1a]">
                 <span class="material-symbols-outlined text-[20px]">confirmation_number</span>
             </span>
         </div>
         <div>
-            <span class="text-sm font-bold text-[#1b1c18] block mb-1">Tickets Pendientes</span>
+            <span class="text-sm font-bold text-[#1b1c18] block mb-1">Tickets pendientes</span>
             <div class="flex items-baseline gap-2">
                 <span class="text-3xl font-extrabold text-[#ba1a1a] tracking-tight">4</span>
                 <span class="text-xs text-[#707973]">1 crítico</span>
@@ -132,7 +132,7 @@
 <div class="bg-[#ffffff] border border-[#e4e3db] rounded-xl overflow-hidden mb-6">
     <div class="px-5 py-4 border-b border-[#e4e3db] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-            <h2 class="text-base font-bold text-[#1b1c18]">Estado en Tiempo Real por Sala / Laboratorio</h2>
+            <h2 class="text-base font-bold text-[#1b1c18]">Estado en tiempo real por sala o laboratorio</h2>
             <p class="text-xs text-[#707973]">Monitoreo de telemetría de red, asignaturas en curso y terminales concurrentes.</p>
         </div>
         <span class="text-xs font-mono text-[#404944] bg-[#f5f4ec] px-3 py-1.5 rounded-lg border border-[#e4e3db]">
@@ -144,12 +144,12 @@
         <table class="w-full text-left text-xs">
             <thead class="bg-[#f5f4ec] text-[#1b1c18] uppercase tracking-wider font-bold h-10 border-b border-[#e4e3db]">
                 <tr>
-                    <th class="px-5">Sala / Laboratorio</th>
-                    <th class="px-4">Asignatura / Docente</th>
+                    <th class="px-5">Sala / laboratorio</th>
+                    <th class="px-4">Asignatura / docente</th>
                     <th class="px-4">Capacidad</th>
                     <th class="px-4">Estado</th>
                     <th class="px-4">Switch de Borde</th>
-                    <th class="px-5 text-right">Acciones Rápidas</th>
+                    <th class="px-5 text-right">Acciones rápidas</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-[#e4e3db]">
@@ -168,13 +168,13 @@
                     <td class="px-4 font-mono font-medium text-[#1b1c18]">28 / 30 ocupadas</td>
                     <td class="px-4">
                         <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#efeee7] text-[#1b1c18] font-bold text-[10px]">
-                            <span class="material-symbols-outlined text-[13px]">lock</span> EN CLASE
+                            <span class="material-symbols-outlined text-[13px]">lock</span> En clase
                         </span>
                     </td>
                     <td class="px-4 font-mono text-[11px] text-[#707973]">SW-CISCO-L01A (Gigabit)</td>
                     <td class="px-5 text-right">
                         <a href="{{ url('/malla-topologica?lab=L01') }}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-[#efeee7] hover:bg-[#e4e3db] text-[#1b1c18] font-medium text-xs transition-colors">
-                            <span class="material-symbols-outlined text-[15px]">grid_view</span> Ver Malla
+                            <span class="material-symbols-outlined text-[15px]">grid_view</span> Ver malla
                         </a>
                     </td>
                 </tr>
@@ -194,7 +194,7 @@
                     <td class="px-4 font-mono font-medium text-[#1b1c18]">14 / 30 ocupadas</td>
                     <td class="px-4">
                         <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#b3f1be]/40 text-[#16512c] font-bold text-[10px]">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#316a42]"></span> LIBRE / PRÁCTICA
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#316a42]"></span> Libre / Práctica
                         </span>
                     </td>
                     <td class="px-4 font-mono text-[11px] text-[#707973]">SW-CISCO-L04-AI</td>
@@ -204,6 +204,10 @@
                         </a>
                     </td>
                 </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
             </tbody>
         </table>
     </div>

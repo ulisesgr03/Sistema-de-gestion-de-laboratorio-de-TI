@@ -306,17 +306,17 @@
                     </p>
                     <div class="flex items-center gap-2 text-xs text-[#316a42] font-semibold mt-1">
                         <span class="material-symbols-outlined text-[16px]">verified</span>
-                        <span>Procesos alineados a ISO/IEC 27001</span>
+                        <span>Procesos alineados con ISO/IEC 27001</span>
                     </div>
                 </div>
 
                 <!-- Columna 2: Ubicación y Horarios -->
                 <div class="flex flex-col gap-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-[#707973]">Ubicación y Atención</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#707973]">Ubicación y atención</span>
                     <p class="text-xs text-[#404944] leading-relaxed">
-                        <strong>Campus Central:</strong> Edificio E (Planta Baja y 1er Nivel).<br>
-                        <strong>Horario Operativo:</strong> Lunes a Viernes de 07:00 a 20:00 hrs.<br>
-                        Sábados de 08:00 a 14:00 hrs.
+                        <strong>Campus central:</strong> Edificio E (planta baja y 1.er nivel).<br>
+                        <strong>Horario operativo:</strong> Lunes a viernes de 07:00 a 20:00 h.<br>
+                        Sábados de 08:00 a 14:00 h.
                     </p>
                     <div class="text-xs text-[#675a4e] mt-1">
                         Ventanilla de Pañol y Préstamos: <strong>Cubículo E-102</strong>
@@ -325,29 +325,29 @@
 
                 <!-- Columna 3: Enlaces Técnicos -->
                 <div class="flex flex-col gap-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-[#707973]">Servicios Universitarios</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#707973]">Servicios universitarios</span>
                     <ul class="text-xs space-y-1.5 text-[#404944]">
-                        <li><a href="{{ url('/salas') }}" class="hover:text-[#2f664f] transition-colors">Disponibilidad en Tiempo Real</a></li>
-                        <li><a href="{{ url('/software') }}" class="hover:text-[#2f664f] transition-colors">Matriz de Licencias y Versiones</a></li>
-                        <li><a href="{{ url('/reglamento') }}" class="hover:text-[#2f664f] transition-colors">Normativa Oficial del Laboratorio</a></li>
-                        <li><a href="{{ url('/reportar-averia') }}" class="hover:text-[#ba1a1a] transition-colors">Mesa de Ayuda de Estudiantes</a></li>
+                        <li><a href="{{ url('/salas') }}" class="hover:text-[#2f664f] transition-colors">Disponibilidad en tiempo real</a></li>
+                        <li><a href="{{ url('/software') }}" class="hover:text-[#2f664f] transition-colors">Matriz de licencias y versiones</a></li>
+                        <li><a href="{{ url('/reglamento') }}" class="hover:text-[#2f664f] transition-colors">Normativa oficial del laboratorio</a></li>
+                        <li><a href="{{ url('/reportar-averia') }}" class="hover:text-[#ba1a1a] transition-colors">Mesa de ayuda estudiantil</a></li>
                     </ul>
                 </div>
 
                 <!-- Columna 4: Soporte y Contacto -->
                 <div class="flex flex-col gap-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-[#707973]">Soporte y Contacto</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#707973]">Soporte y contacto</span>
                     <p class="text-xs text-[#404944] leading-relaxed">
                         Para incidencias de red, solicitudes de instalación o reservas grupales:
                     </p>
                     <div class="flex flex-col gap-1 text-xs">
                         <span class="text-[#1b1c18] font-medium">laboratorios.ti@uptex.edu.mx</span>
-                        <span class="text-[#707973]">Extensión Interna: 1402 / 1405</span>
+                        <span class="text-[#707973]">Extensión interna: 1402 / 1405</span>
                     </div>
                     <div class="mt-2">
                         <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#efeee7] text-[11px] font-mono text-[#404944]">
                             <span class="w-1.5 h-1.5 rounded-full bg-[#316a42]"></span>
-                            Sincronizado NTP: Red LAN UPTex
+                            Sincronización NTP: Red LAN UPTex
                         </span>
                     </div>
                 </div>

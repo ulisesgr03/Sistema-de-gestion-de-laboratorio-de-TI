@@ -1,15 +1,32 @@
+
+/* ==========================================
+   FUENTES DEL SISTEMA
+========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,0..1,0..1,-50..200');
+
 @import 'tailwindcss';
+
+/* ==========================================
+   CONFIGURACIÓN DE TAILWIND
+========================================== */
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/* ==========================================
+   IDENTIDAD VISUAL UPTex TI
+========================================== */
+
 @theme {
     --font-sans: 'Work Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-headline: 'Work Sans', sans-serif;
 
-    /* Tokens de Color UPTex TI */
+    /* Colores principales */
     --color-primary: #2f664f;
     --color-primary-container: #497f67;
     --color-on-primary: #ffffff;
@@ -19,6 +36,7 @@
     --color-on-primary-fixed: #002115;
     --color-on-primary-fixed-variant: #16503b;
 
+    /* Colores secundarios */
     --color-secondary: #316a42;
     --color-secondary-container: #b3f1be;
     --color-on-secondary: #ffffff;
@@ -28,6 +46,7 @@
     --color-on-secondary-fixed: #00210c;
     --color-on-secondary-fixed-variant: #16512c;
 
+    /* Colores terciarios */
     --color-tertiary: #675a4e;
     --color-tertiary-container: #807265;
     --color-on-tertiary: #ffffff;
@@ -37,6 +56,7 @@
     --color-on-tertiary-fixed: #231a11;
     --color-on-tertiary-fixed-variant: #514539;
 
+    /* Superficies */
     --color-surface: #fbf9f2;
     --color-surface-dim: #dbdad3;
     --color-surface-bright: #fbf9f2;
@@ -54,9 +74,11 @@
     --color-inverse-on-surface: #f2f1e9;
     --color-inverse-primary: #9ad3b7;
 
+    /* Contornos */
     --color-outline: #707973;
     --color-outline-variant: #c0c9c2;
 
+    /* Estados */
     --color-error: #ba1a1a;
     --color-error-container: #ffdad6;
     --color-on-error: #ffffff;
@@ -65,7 +87,7 @@
     --color-background: #fbf9f2;
     --color-on-background: #1b1c18;
 
-    /* Escala de Espaciado */
+    /* Espaciados */
     --spacing-gutter: 1.5rem;
     --spacing-margin: 2rem;
     --spacing-space-xs: 0.25rem;
@@ -74,7 +96,7 @@
     --spacing-space-lg: 1.5rem;
     --spacing-space-xl: 2rem;
 
-    /* Radios */
+    /* Bordes */
     --radius-sm: 0.25rem;
     --radius-DEFAULT: 0.5rem;
     --radius-md: 0.75rem;
@@ -82,26 +104,160 @@
     --radius-xl: 1.5rem;
 }
 
+/* ==========================================
+   ESTILOS GENERALES
+========================================== */
+
 @layer base {
-    html, body {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
         margin: 0;
         padding: 0;
-        background-color: #fbf9f2;
-        color: #1b1c18;
-        font-family: 'Work Sans', system-ui, -apple-system, sans-serif;
+        width: 100%;
+        min-height: 100%;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        width: 100%;
+        overflow-x: hidden;
+        background-color: var(--color-background);
+        color: var(--color-on-background);
+        font-family: var(--font-sans);
+        font-weight: 400;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-headline);
+        color: var(--color-on-surface);
+        font-weight: 700;
+        line-height: 1.25;
+        overflow-wrap: break-word;
+    }
+
+    p,
+    span,
+    label,
+    a,
+    button,
+    input,
+    textarea,
+    select {
+        font-family: inherit;
+    }
+
+    img,
+    svg,
+    video {
+        max-width: 100%;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+        font-size: inherit;
+    }
+
+    a {
+        color: inherit;
     }
 }
 
+/* ==========================================
+   MATERIAL SYMBOLS
+========================================== */
+
 .material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
+    font-family: 'Material Symbols Outlined' !important;
     font-weight: normal;
     font-style: normal;
-    font-size: 20px;
+    font-size: 24px;
     line-height: 1;
-    display: inline-block;
-    text-transform: none;
     letter-spacing: normal;
-    word-wrap: normal;
+    text-transform: none;
     white-space: nowrap;
+    word-wrap: normal;
     direction: ltr;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-feature-settings: 'liga';
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* Iconos seleccionados */
+.material-symbols-outlined.filled {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 500,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* ==========================================
+   IMÁGENES Y CONTENEDORES
+========================================== */
+
+img {
+    height: auto;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================
+   NAVEGACIÓN RESPONSIVA
+========================================== */
+
+nav {
+    max-width: 100%;
+}
+
+nav a,
+nav button {
+    white-space: normal;
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .material-symbols-outlined {
+        font-size: 22px;
+    }
 }

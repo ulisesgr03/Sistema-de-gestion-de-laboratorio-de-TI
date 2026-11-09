@@ -208,12 +208,12 @@
 
                         <a href="{{ url('/') }}" target="_blank" class="flex items-center gap-2 px-4 py-2 text-xs text-[#404944] hover:bg-[#efeee7] hover:text-[#1b1c18]">
                             <span class="material-symbols-outlined text-[16px]">open_in_new</span>
-                            <span>Ver Portal Público</span>
+                            <span>Ver portal público</span>
                         </a>
 
                         <a href="{{ url('/perfil') }}" class="flex items-center gap-2 px-4 py-2 text-xs text-[#404944] hover:bg-[#efeee7] hover:text-[#1b1c18]">
                             <span class="material-symbols-outlined text-[16px]">manage_accounts</span>
-                            <span>Ajustes de Perfil</span>
+                            <span>Ajustes de perfil</span>
                         </a>
 
                         <div class="border-t border-[#e4e3db] my-1"></div>
@@ -222,7 +222,7 @@
                             @csrf
                             <button type="submit" class="w-full flex items-center gap-2 px-4 py-2 text-xs text-[#ba1a1a] hover:bg-[#ffdad6] text-left">
                                 <span class="material-symbols-outlined text-[16px]">logout</span>
-                                <span>Cerrar Sesión</span>
+                                <span>Cerrar sesión</span>
                             </button>
                         </form>
                     </div>
@@ -241,42 +241,42 @@
                 <a href="{{ url('/panel-operativo') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('panel-operativo*') || $isRoute('admin/dashboard*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
                     <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('panel-operativo*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">dashboard</span>
-                    Panel Operativo
+                    Panel operativo
                 </a>
 
                 <!-- Malla Topológica -->
                 <a href="{{ url('/malla-topologica') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('malla-topologica*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
                     <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('malla-topologica*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">grid_view</span>
-                    Malla Topológica
+                    Malla topológica
                 </a>
 
                 <!-- Mesa de Incidencias -->
                 <a href="{{ url('/mesa-incidencias') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('mesa-incidencias*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
                     <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('mesa-incidencias*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">confirmation_number</span>
-                    Mesa de Incidencias
+                    Mesa de incidencias
                 </a>
 
                 <!-- Inventario y Auditoría -->
                 <a href="{{ url('/inventario') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('inventario*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
                     <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('inventario*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">qr_code_scanner</span>
-                    Inventario y Auditoría
+                    Inventario y auditoría
                 </a>
 
                 <!-- Horarios y Prácticas -->
                 <a href="{{ url('/admin/horarios') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('admin/horarios*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
                     <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('admin/horarios*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">calendar_today</span>
-                    Horarios y Prácticas
+                    Horarios y prácticas
                 </a>
 
                 <!-- Catálogo de Software -->
                 <a href="{{ url('/admin/software') }}"
                    class="h-full flex items-center px-4 font-medium transition-colors border-b-2 {{ $isRoute('admin/software*') ? 'border-[#2f664f] text-[#1b1c18] font-bold bg-[#efeee7]' : 'border-transparent text-[#404944] hover:bg-[#f5f4ec] hover:text-[#1b1c18]' }}">
                     <span class="material-symbols-outlined text-[18px] mr-1.5 {{ $isRoute('admin/software*') ? 'text-[#2f664f]' : 'text-[#707973]' }}">apps</span>
-                    Catálogo de Software
+                    Catálogo de software
                 </a>
             </nav>
 
@@ -284,7 +284,7 @@
             <div class="hidden lg:flex items-center gap-2 pl-4 shrink-0">
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#b3f1be]/30 text-[#16512c] font-bold text-[11px] uppercase tracking-wider">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#316a42]"></span>
-                    Guardia Activa
+                    Guardia activa
                 </span>
             </div>
         </div>

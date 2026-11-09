@@ -119,7 +119,7 @@
                 </div>
                 <a href="{{ url('/') }}" class="inline-flex items-center gap-1 text-[#2f664f] hover:text-[#1b1c18] transition-colors font-semibold">
                     <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-                    <span>Volver al Portal Público</span>
+                    <span>Volver al portal público</span>
                 </a>
             </div>
 
@@ -192,7 +192,7 @@
                     <!-- Identificador Institucional -->
                     <div class="flex flex-col gap-1.5">
                         <label for="identifier" class="text-xs font-bold text-[#675a4e] flex items-center justify-between">
-                            <span id="label-identifier">Matrícula Institucional</span>
+                            <span id="label-identifier">Matrícula institucional</span>
                             <span id="hint-format" class="text-[11px] font-normal text-[#707973]">10 dígitos numéricos</span>
                         </label>
                         <div class="relative flex items-center">
@@ -237,14 +237,14 @@
                     <!-- Sede / Laboratorio Concurrente (Opcional) -->
                     <div class="flex flex-col gap-1.5">
                         <label for="laboratory" class="text-xs font-bold text-[#675a4e]">
-                            Sede / Laboratorio Concurrente (Opcional)
+                            Sede o laboratorio concurrente (opcional)
                         </label>
                         <div class="relative flex items-center">
                             <span class="material-symbols-outlined absolute left-3 text-[#707973] pointer-events-none text-[20px]">dns</span>
                             <select id="laboratory"
                                     name="laboratory"
                                     class="w-full h-10 pl-10 pr-8 bg-[#ffffff] rounded-lg border border-[#c0c9c2] text-xs sm:text-sm text-[#1b1c18] appearance-none focus:outline-none focus:border-[#2f664f] focus:ring-1 focus:ring-[#2f664f] transition-colors cursor-pointer">
-                                <option value="all">Acceso General TI · Conexión Distribuida</option>
+                                <option value="all">Acceso general de TI · Conexión distribuida</option>
                                 @foreach($laboratorios ?? [] as $lab)
                                     <option value="{{ $lab->id }}" {{ old('laboratory') == $lab->id ? 'selected' : '' }}>
                                         {{ $lab->nombre }}
@@ -270,7 +270,7 @@
                     <button type="submit"
                             class="w-full h-11 mt-2 bg-[#2f664f] hover:bg-[#497f67] text-white font-bold text-sm rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.99] shadow-sm">
                         <span class="material-symbols-outlined text-[20px]">login</span>
-                        <span>Iniciar Sesión Institucional</span>
+                        <span>Iniciar sesión institucional</span>
                     </button>
                 </form>
 
@@ -280,10 +280,10 @@
                         <span class="material-symbols-outlined text-[#675a4e] text-[20px] shrink-0 mt-0.5">contact_support</span>
                         <div class="flex flex-col gap-0.5">
                             <p class="text-[11px] font-extrabold uppercase tracking-wider text-[#1b1c18]">
-                                Mesa de Ayuda Técnica y Credenciales
+                                Mesa de ayuda técnica y credenciales
                             </p>
                             <p class="text-xs text-[#404944] leading-relaxed">
-                                ¿Olvidaste tu contraseña o requieres el restablecimiento de tu cuenta en Active Directory? Acude a soporte técnico en el <strong class="text-[#1b1c18] font-bold">Edificio E, Planta Baja</strong>.
+                                ¿Olvidó su contraseña o requiere el restablecimiento de su cuenta en Active Directory? Acuda a soporte técnico en el <strong class="text-[#1b1c18] font-bold">Edificio E, planta baja</strong>.
                             </p>
                         </div>
                     </div>
@@ -323,25 +323,25 @@
 
             var roleConfig = {
                 student: {
-                    label: 'Matrícula Institucional',
+                    label: 'Matrícula institucional',
                     placeholder: 'Ejemplo: 2021134089',
                     hint: '10 dígitos numéricos',
                     desc: 'Registro oficial de matrícula expedido por Servicios Escolares.'
                 },
                 faculty: {
-                    label: 'Clave de Docente / Investigador',
+                    label: 'Clave de docente o investigador',
                     placeholder: 'Ejemplo: DOC-0892',
                     hint: 'Formato DOC-XXXX',
                     desc: 'Identificador del claustro docente asignado por la División de TI.'
                 },
                 staff: {
-                    label: 'Clave de Empleado / Personal Técnico',
+                    label: 'Clave de empleado o personal técnico',
                     placeholder: 'Ejemplo: ADM-041',
                     hint: 'Formato ADM-XXX',
                     desc: 'Número de nómina técnica asignado al personal encargado de laboratorio.'
                 },
                 admin: {
-                    label: 'Clave de Administrador / ID de Gestión',
+                    label: 'Clave de administrador o identificador de gestión',
                     placeholder: 'Ejemplo: ADMIN-001 o admin@uptex.edu.mx',
                     hint: 'Formato ADMIN-XXX o correo institucional',
                     desc: 'Acceso con privilegios de administración global, auditoría y control de sistema.'

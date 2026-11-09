@@ -43,7 +43,7 @@ class PublicController extends Controller
             [
                 'id' => 1,
                 'codigo' => 'L-01',
-                'nombre' => 'Laboratorio de Redes y Telecomunicaciones (Lab Redes 1)',
+                'nombre' => 'Laboratorio L-01 · Redes y Telecomunicaciones',
                 'ubicacion' => 'Edificio E · Planta Alta (E-201)',
                 'estado_badge' => 'Clase en Curso',
                 'badge_color' => 'bg-surface-container text-on-surface border border-surface-container-highest',
@@ -51,18 +51,18 @@ class PublicController extends Controller
                 'aforo_total' => 30,
                 'aforo_ocupado' => 24,
                 'porcentaje' => 80,
-                'reserva_info' => '6 estaciones en reserva · Switch CISCO Catalyst 3850 activo',
+                'reserva_info' => '6 estaciones en reserva · Switch Cisco Catalyst 3850 activo',
                 'asignatura' => 'Redes WAN y Ruteo',
                 'docente' => 'Mtro. Fernando Morales',
                 'grupo' => 'ITI-801 · Matutino',
                 'hardware' => 'Intel Core i7-12700, 32GB RAM DDR5, SSD NVMe 512GB, Display 24" IPS FHD.',
-                'software' => 'Cisco Packet Tracer 8.2, GNS3, Wireshark, Putty, Ubuntu 22.04 LTS & Windows 11 Pro Dual-Boot.',
-                'proximo_cambio' => '10:00 hrs',
+                'software' => 'Cisco Packet Tracer 8.2, GNS3, Wireshark, PuTTY, Ubuntu 22.04 LTS y Windows 11 Pro en arranque dual.',
+                'proximo_cambio' => 'Próximo cambio de clase: 10:00 h',
             ],
             [
                 'id' => 3,
                 'codigo' => 'L-03',
-                'nombre' => 'Laboratorio de Ingeniería de Software (Lab Software 2)',
+                'nombre' => 'Laboratorio L-03 · Ingeniería de Software',
                 'ubicacion' => 'Edificio E · Planta Baja (E-104)',
                 'estado_badge' => 'Práctica Libre Autorizada',
                 'badge_color' => 'bg-secondary-container text-on-secondary-container',
@@ -73,15 +73,15 @@ class PublicController extends Controller
                 'reserva_info' => '12 estaciones libres para ingreso · Acceso directo con credencial',
                 'asignatura' => 'Proyectos Terminales',
                 'docente' => 'Ing. Carlos Mendoza (Encargado)',
-                'grupo' => 'Cupo Abierto · Todas las ingenierías',
+                'grupo' => 'Cupo abierto · Todas las ingenierías',
                 'hardware' => 'AMD Ryzen 7 5700G, 32GB RAM DDR4 3200MHz, SSD NVMe 1TB, Monitores duales.',
                 'software' => 'VS Code, Docker Desktop, Node.js 20, IntelliJ IDEA Ultimate, PostgreSQL 16, Git.',
-                'proximo_cambio' => 'Sin clase asignada hasta 13:00 hrs',
+                'proximo_cambio' => 'Sin clase programada hasta las 13:00 h',
             ],
             [
                 'id' => 4,
                 'codigo' => 'L-04',
-                'nombre' => 'Laboratorio de Inteligencia Artificial y Datos (Lab IA)',
+                'nombre' => 'Laboratorio L-04 · Inteligencia Artificial y Datos',
                 'ubicacion' => 'Edificio F · Planta Alta (F-205)',
                 'estado_badge' => 'Taller Especializado',
                 'badge_color' => 'bg-surface-container text-on-surface border border-surface-container-highest',
@@ -89,18 +89,18 @@ class PublicController extends Controller
                 'aforo_total' => 30,
                 'aforo_ocupado' => 28,
                 'porcentaje' => 93,
-                'reserva_info' => '2 estaciones en cómputo batch · GPU Clusters con refrigeración activa',
-                'asignatura' => 'Deep Learning & Visión Artificial',
+                'reserva_info' => '2 estaciones en cómputo por lotes · Clústeres de GPU con refrigeración activa',
+                'asignatura' => 'Deep Learning y Visión Artificial',
                 'docente' => 'Dra. Elena Ramírez',
-                'grupo' => 'ITI-902 · Posgrado y Especialidad',
+                'grupo' => 'ITI-902 · Posgrado y especialidad',
                 'hardware' => 'Dell Precision 3660, NVIDIA RTX 4070 12GB VRAM, 64GB DDR5, SSD NVMe 2TB.',
                 'software' => 'CUDA Toolkit 12.2, PyTorch 2.2, TensorFlow, JupyterHub, Python 3.11, Anaconda.',
-                'proximo_cambio' => 'Cierre de sesión: 11:30 hrs',
+                'proximo_cambio' => 'Cierre de sesión: 11:30 h',
             ],
             [
                 'id' => 5,
                 'codigo' => 'L-05',
-                'nombre' => 'Laboratorio de Internet de las Cosas y Embebidos (Lab IoT)',
+                'nombre' => 'Laboratorio L-05 · Internet de las Cosas y Embebidos',
                 'ubicacion' => 'Edificio F · Planta Baja (F-102)',
                 'estado_badge' => 'Práctica Libre Disponible',
                 'badge_color' => 'bg-secondary-container text-on-secondary-container',
@@ -111,10 +111,10 @@ class PublicController extends Controller
                 'reserva_info' => '18 módulos libres con instrumental · Osciloscopios y fuentes en línea',
                 'asignatura' => 'Sistemas Embebidos',
                 'docente' => 'Dr. Arturo Vega',
-                'grupo' => 'Bancos Asignados Módulos A1 a B6',
+                'grupo' => 'Bancos asignados: módulos A1 a B6',
                 'hardware' => 'Intel Core i5-11400, 16GB RAM, Osciloscopios Rigol DS1054Z, Fuentes DC triples.',
                 'software' => 'STM32CubeIDE, Arduino IDE 2.3, Raspberry Pi 4 B, ESP32, Keil uVision, Wireshark IoT.',
-                'proximo_cambio' => 'Próxima práctica: 12:00 hrs',
+                'proximo_cambio' => 'Próxima práctica: 12:00 h',
             ],
         ];
 
@@ -375,7 +375,7 @@ class PublicController extends Controller
 
         return redirect()->route('averia.create')->with(
             'success',
-            "Reporte de incidencia registrado exitosamente con Folio Institucional {$ticket}. El personal técnico de turno acudirá a revisar la estación."
+            "Reporte de incidencia registrado exitosamente con folio institucional {$ticket}. El personal técnico de turno acudirá a revisar la estación."
         );
     }
 }
