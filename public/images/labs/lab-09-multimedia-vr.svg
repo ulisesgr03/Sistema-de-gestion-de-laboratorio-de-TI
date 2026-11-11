@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <defs>
+    <linearGradient id="l9-bg" x1="0" y1="0" x2="600" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#192825"/>
+      <stop offset="60%" stop-color="#283F3B"/>
+      <stop offset="100%" stop-color="#141E1C"/>
+    </linearGradient>
+    <pattern id="l9-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#556F44" stroke-width="0.75" stroke-opacity="0.25"/>
+    </pattern>
+  </defs>
+
+  <rect width="600" height="300" rx="16" fill="url(#l9-bg)"/>
+  <rect width="600" height="300" rx="16" fill="url(#l9-grid)"/>
+
+  <!-- Left: 3D Wireframe Mesh Cube & Shading Shaders in Perspective -->
+  <g transform="translate(60, 45)">
+    <!-- 3D Geometric Torus / Polyhedron Wireframe -->
+    <g transform="translate(40, 20)">
+      <!-- Isometric Wireframe Box -->
+      <polygon points="60,20 120,50 60,80 0,50" fill="#20332F" stroke="#99DDC8" stroke-width="2"/>
+      <polygon points="0,50 60,80 60,150 0,120" fill="#182724" stroke="#95BF74" stroke-width="2"/>
+      <polygon points="60,80 120,50 120,120 60,150" fill="#1C2E2A" stroke="#99DDC8" stroke-width="2"/>
+
+      <!-- Inner Shading Lines -->
+      <line x1="30" y1="35" x2="90" y2="65" stroke="#99DDC8" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <line x1="30" y1="65" x2="30" y2="135" stroke="#95BF74" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <line x1="90" y1="65" x2="90" y2="135" stroke="#99DDC8" stroke-width="1.2" stroke-dasharray="3 3"/>
+
+      <!-- Vertex Highlights -->
+      <circle cx="60" cy="20" r="4" fill="#99DDC8"/>
+      <circle cx="120" cy="50" r="4" fill="#99DDC8"/>
+      <circle cx="60" cy="80" r="4" fill="#95BF74"/>
+      <circle cx="0" cy="50" r="4" fill="#95BF74"/>
+      <circle cx="60" cy="150" r="4" fill="#99DDC8"/>
+      <circle cx="120" cy="120" r="4" fill="#95BF74"/>
+      <circle cx="0" cy="120" r="4" fill="#99DDC8"/>
+    </g>
+
+    <!-- Digital Stylus / Wacom Pen -->
+    <g transform="translate(170, 70) rotate(42)">
+      <rect x="0" y="0" width="10" height="110" rx="3" fill="#15201E" stroke="#659B5E" stroke-width="1.5"/>
+      <polygon points="0,110 10,110 5,124" fill="#99DDC8"/>
+      <rect x="2" y="24" width="6" height="18" rx="1.5" fill="#95BF74"/>
+    </g>
+  </g>
+
+  <!-- Right: Virtual Reality Headset (VR Link) & 3D Engine Display -->
+  <g transform="translate(300, 35)">
+    <rect x="0" y="0" width="240" height="230" rx="12" fill="#182522" stroke="#659B5E" stroke-width="2"/>
+    <rect x="12" y="12" width="216" height="30" rx="5" fill="#20332F"/>
+    <text x="22" y="30" fill="#99DDC8" font-family="sans-serif" font-size="10" font-weight="bold">Unity 6 &amp; Blender 4.2 · XR Engine</text>
+
+    <!-- VR Visor (Meta Quest 3 Style) -->
+    <g transform="translate(35, 55)">
+      <!-- Main Visor Body -->
+      <rect x="0" y="0" width="170" height="74" rx="20" fill="#141E1C" stroke="#99DDC8" stroke-width="2"/>
+      
+      <!-- Front Camera Passthrough Sensors -->
+      <circle cx="35" cy="37" r="10" fill="#20332F" stroke="#95BF74" stroke-width="1.5"/>
+      <circle cx="35" cy="37" r="4" fill="#99DDC8"/>
+
+      <circle cx="85" cy="37" r="8" fill="#1C2C28" stroke="#659B5E" stroke-width="1.2"/>
+      <circle cx="85" cy="37" r="3" fill="#95BF74"/>
+
+      <circle cx="135" cy="37" r="10" fill="#20332F" stroke="#95BF74" stroke-width="1.5"/>
+      <circle cx="135" cy="37" r="4" fill="#99DDC8"/>
+
+      <!-- Headband Straps -->
+      <path d="M 0 37 C -20 37 -20 20 -25 20" stroke="#556F44" stroke-width="4" fill="none"/>
+      <path d="M 170 37 C 190 37 190 20 195 20" stroke="#556F44" stroke-width="4" fill="none"/>
+    </g>
+
+    <!-- Ray Tracing Engine Metrics -->
+    <g transform="translate(20, 145)">
+      <rect x="0" y="0" width="200" height="60" rx="6" fill="#131C1A" stroke="#556F44" stroke-width="1"/>
+      <text x="12" y="18" fill="#99DDC8" font-family="monospace" font-size="9" font-weight="bold">RTX 4060 Ti · DLSS 3 Ray Tracing</text>
+      <text x="12" y="32" fill="#95BF74" font-family="monospace" font-size="8">Framerate: 144 FPS @ 2.5K XR</text>
+      <text x="12" y="46" fill="#C5D9C0" font-family="monospace" font-size="8">Render Farm Latency: 4.8ms</text>
+    </g>
+  </g>
+</svg>

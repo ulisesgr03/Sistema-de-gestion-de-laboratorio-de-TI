@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <defs>
+    <linearGradient id="l10-bg" x1="0" y1="0" x2="600" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#182623"/>
+      <stop offset="60%" stop-color="#283F3B"/>
+      <stop offset="100%" stop-color="#15211E"/>
+    </linearGradient>
+    <pattern id="l10-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#556F44" stroke-width="0.75" stroke-opacity="0.25"/>
+    </pattern>
+  </defs>
+
+  <rect width="600" height="300" rx="16" fill="url(#l10-bg)"/>
+  <rect width="600" height="300" rx="16" fill="url(#l10-grid)"/>
+
+  <!-- Left: Siemens SIMATIC S7-1200 PLC Industrial Automation Rack -->
+  <g transform="translate(60, 35)">
+    <rect x="0" y="0" width="220" height="225" rx="10" fill="#182421" stroke="#556F44" stroke-width="2"/>
+
+    <!-- PLC Module 1: CPU 1214C DC/DC/DC -->
+    <rect x="14" y="14" width="105" height="150" rx="5" fill="#22332F" stroke="#659B5E" stroke-width="1.5"/>
+    <rect x="22" y="22" width="89" height="24" rx="2" fill="#121D1B"/>
+    <text x="26" y="38" fill="#99DDC8" font-family="monospace" font-size="9" font-weight="bold">SIEMENS S7</text>
+
+    <!-- Run / Stop / Error Status LEDs -->
+    <g transform="translate(24, 54)">
+      <circle cx="6" cy="6" r="3" fill="#99DDC8"/>
+      <text x="14" y="9" fill="#99DDC8" font-family="monospace" font-size="7">RUN</text>
+      <circle cx="6" cy="18" r="3" fill="#F59E0B"/>
+      <text x="14" y="21" fill="#F59E0B" font-family="monospace" font-size="7">STOP</text>
+      <circle cx="6" cy="30" r="3" fill="#EF4444"/>
+      <text x="14" y="33" fill="#EF4444" font-family="monospace" font-size="7">ERROR</text>
+    </g>
+
+    <!-- PROFINET RJ45 Dual Ports -->
+    <rect x="24" y="96" width="34" height="26" rx="2" fill="#131B19" stroke="#95BF74" stroke-width="1"/>
+    <circle cx="41" cy="109" r="4" fill="#95BF74"/>
+    <text x="24" y="132" fill="#95BF74" font-family="monospace" font-size="6.5">PROFINET</text>
+
+    <!-- PLC Module 2: Signal Board Digital Input/Output Module -->
+    <rect x="125" y="14" width="80" height="150" rx="5" fill="#20302D" stroke="#556F44" stroke-width="1.2"/>
+    <rect x="133" y="22" width="64" height="20" rx="2" fill="#141E1C"/>
+    <text x="138" y="35" fill="#95BF74" font-family="monospace" font-size="8">SM 1223</text>
+
+    <!-- I/O Terminal Screws Matrix -->
+    <g fill="#99DDC8" transform="translate(136, 52)">
+      <circle cx="10" cy="10" r="2.5"/><circle cx="25" cy="10" r="2.5"/><circle cx="40" cy="10" r="2.5"/><circle cx="55" cy="10" r="2.5"/>
+      <circle cx="10" cy="26" r="2.5"/><circle cx="25" cy="26" r="2.5"/><circle cx="40" cy="26" r="2.5"/><circle cx="55" cy="26" r="2.5"/>
+      <circle cx="10" cy="42" r="2.5"/><circle cx="25" cy="42" r="2.5"/><circle cx="40" cy="42" r="2.5"/><circle cx="55" cy="42" r="2.5"/>
+      <circle cx="10" cy="58" r="2.5"/><circle cx="25" cy="58" r="2.5"/><circle cx="40" cy="58" r="2.5"/><circle cx="55" cy="58" r="2.5"/>
+    </g>
+
+    <!-- DIN Rail (Base) -->
+    <rect x="14" y="176" width="191" height="34" rx="4" fill="#121A18" stroke="#556F44" stroke-width="1"/>
+    <text x="30" y="197" fill="#99DDC8" font-family="monospace" font-size="9" font-weight="bold">TIAPortal V19 · TIA-L10</text>
+  </g>
+
+  <!-- Right: 6-DOF Industrial Robotic Manipulator Arm (ROS 2 Humble) -->
+  <g transform="translate(320, 35)">
+    <rect x="0" y="0" width="220" height="225" rx="12" fill="#172320" stroke="#659B5E" stroke-width="2"/>
+    <rect x="12" y="12" width="196" height="28" rx="5" fill="#20332F"/>
+    <text x="22" y="30" fill="#99DDC8" font-family="sans-serif" font-size="10" font-weight="bold">Brazo 6-DOF · Cinemática ROS 2</text>
+
+    <!-- Robot Arm Graphic -->
+    <g transform="translate(45, 60)">
+      <!-- Robot Heavy Base Table -->
+      <rect x="20" y="110" width="80" height="20" rx="3" fill="#1F2F2C" stroke="#99DDC8" stroke-width="1.8"/>
+
+      <!-- Joint 1: Base Turntable -->
+      <rect x="42" y="92" width="36" height="18" rx="2" fill="#283F3B" stroke="#659B5E" stroke-width="1.5"/>
+      <circle cx="60" cy="101" r="5" fill="#99DDC8"/>
+
+      <!-- Link 1: Shoulder Arm -->
+      <line x1="60" y1="92" x2="40" y2="40" stroke="#95BF74" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="40" cy="40" r="8" fill="#20302D" stroke="#99DDC8" stroke-width="2"/>
+
+      <!-- Link 2: Forearm -->
+      <line x1="40" y1="40" x2="95" y2="25" stroke="#99DDC8" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="95" cy="25" r="7" fill="#20302D" stroke="#95BF74" stroke-width="2"/>
+
+      <!-- Link 3: Wrist & End-Effector Gripper -->
+      <line x1="95" y1="25" x2="115" y2="55" stroke="#95BF74" stroke-width="4" stroke-linecap="round"/>
+      <!-- Parallel Gripper Fingers -->
+      <polygon points="115,55 125,50 120,68 112,65" fill="#99DDC8"/>
+      <polygon points="115,55 120,40 128,45 122,58" fill="#99DDC8"/>
+    </g>
+
+    <!-- Status Coordinates Pill -->
+    <rect x="14" y="180" width="192" height="30" rx="5" fill="#121B19" stroke="#556F44" stroke-width="1"/>
+    <text x="24" y="200" fill="#99DDC8" font-family="monospace" font-size="8.5">XYZ: [450, -120, 280] mm · PID OK</text>
+  </g>
+</svg>

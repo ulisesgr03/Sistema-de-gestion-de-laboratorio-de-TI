@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <defs>
+    <linearGradient id="l7-bg" x1="0" y1="0" x2="600" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#182623"/>
+      <stop offset="60%" stop-color="#283F3B"/>
+      <stop offset="100%" stop-color="#141E1C"/>
+    </linearGradient>
+    <pattern id="l7-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#556F44" stroke-width="0.75" stroke-opacity="0.25"/>
+    </pattern>
+  </defs>
+
+  <rect width="600" height="300" rx="16" fill="url(#l7-bg)"/>
+  <rect width="600" height="300" rx="16" fill="url(#l7-grid)"/>
+
+  <!-- Left: Hardened Kali Linux Terminal with Privacy Filter -->
+  <g transform="translate(60, 35)">
+    <rect x="0" y="0" width="240" height="175" rx="8" fill="#121B19" stroke="#99DDC8" stroke-width="2"/>
+    <!-- Terminal Header -->
+    <rect x="6" y="6" width="228" height="22" rx="4" fill="#1C2D29"/>
+    <circle cx="18" cy="17" r="3" fill="#EF4444"/>
+    <circle cx="28" cy="17" r="3" fill="#F59E0B"/>
+    <circle cx="38" cy="17" r="3" fill="#99DDC8"/>
+    <text x="50" y="20" fill="#99DDC8" font-family="monospace" font-size="9" font-weight="bold">root@kali-soc:~# nmap -sS -sV -O</text>
+
+    <!-- Terminal Prompt & Audit Output -->
+    <g font-family="monospace" font-size="8.5" fill="#95BF74">
+      <text x="14" y="44">Starting Nmap 7.94 ( https://nmap.org )</text>
+      <text x="14" y="58" fill="#99DDC8">Nmap scan report for 10.24.70.1 (FW-EDGE)</text>
+      <text x="14" y="72" fill="#C5D9C0">PORT     STATE SERVICE     VERSION</text>
+      <text x="14" y="86" fill="#99DDC8">22/tcp   open  ssh         OpenSSH 9.6p1</text>
+      <text x="14" y="100" fill="#99DDC8">443/tcp  open  ssl/https   NGINX Hardened</text>
+      <text x="14" y="114" fill="#F59E0B">8443/tcp open  vpn-ipsec   WireGuard VPN</text>
+      <text x="14" y="130" fill="#95BF74">[SOC-AUDIT] AES-256-GCM cipher suite verified</text>
+      <text x="14" y="146" fill="#99DDC8">Wireshark PCAP capture active on vlan70 █</text>
+    </g>
+
+    <!-- Stand -->
+    <rect x="105" y="175" width="30" height="25" fill="#20302D" stroke="#556F44" stroke-width="1.2"/>
+    <rect x="75" y="200" width="90" height="6" rx="3" fill="#283F3B" stroke="#659B5E" stroke-width="1.2"/>
+  </g>
+
+  <!-- Right: Cryptographic Security Shield & Threat Telemetry -->
+  <g transform="translate(335, 40)">
+    <rect x="0" y="0" width="205" height="220" rx="10" fill="#182421" stroke="#659B5E" stroke-width="2"/>
+    
+    <!-- Central Shield Symbol -->
+    <g transform="translate(70, 20)">
+      <path d="M 32 8 L 60 18 V 46 C 60 64 48 80 32 86 C 16 80 4 64 4 46 V 18 Z" fill="#20332F" stroke="#99DDC8" stroke-width="2.5"/>
+      <path d="M 32 20 L 50 28 V 46 C 50 58 42 68 32 74 C 22 68 14 58 14 46 V 28 Z" fill="#283F3B" stroke="#95BF74" stroke-width="1.5"/>
+      <!-- Keyhole -->
+      <circle cx="32" cy="40" r="5" fill="#99DDC8"/>
+      <polygon points="30,42 34,42 35,52 29,52" fill="#99DDC8"/>
+    </g>
+
+    <!-- Threat Telemetry Meters -->
+    <g transform="translate(18, 120)">
+      <text x="0" y="10" fill="#F3F7F5" font-family="sans-serif" font-size="9" font-weight="bold">Firewall Intrusion Status</text>
+      <rect x="0" y="16" width="168" height="6" rx="2" fill="#131D1B"/>
+      <rect x="0" y="16" width="168" height="6" rx="2" fill="#99DDC8"/>
+
+      <text x="0" y="38" fill="#F3F7F5" font-family="sans-serif" font-size="9" font-weight="bold">Zero-Trust Network Access</text>
+      <rect x="0" y="44" width="168" height="6" rx="2" fill="#131D1B"/>
+      <rect x="0" y="44" width="148" height="6" rx="2" fill="#95BF74"/>
+    </g>
+
+    <!-- Bottom Badge -->
+    <rect x="14" y="180" width="177" height="26" rx="5" fill="#141E1C" stroke="#95BF74" stroke-width="1"/>
+    <circle cx="28" cy="193" r="3.5" fill="#99DDC8"/>
+    <text x="38" y="196" fill="#99DDC8" font-family="monospace" font-size="8.5" font-weight="bold">RED AISLADA SANDBOX SOC</text>
+  </g>
+</svg>

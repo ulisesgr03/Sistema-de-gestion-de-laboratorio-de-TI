@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 48" fill="none">
+  <!-- Monitor Bezel -->
+  <rect x="4" y="4" width="38" height="26" rx="4" fill="#1C2B28" stroke="#EF4444" stroke-width="2"/>
+  <!-- Screen Fill (Red Unavailable) -->
+  <rect x="7" y="7" width="32" height="20" rx="2" fill="#283F3B"/>
+  <!-- Unavailable Cross / Alert Icon -->
+  <circle cx="23" cy="17" r="6.5" fill="#EF4444"/>
+  <path d="M20.3 14.3L25.7 19.7M25.7 14.3L20.3 19.7" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- Monitor Stand -->
+  <path d="M19 30H27L29 36H17L19 30Z" fill="#556F44"/>
+  <rect x="13" y="36" width="20" height="2.8" rx="1.4" fill="#1C2B28"/>
+  <!-- Keyboard -->
+  <rect x="6" y="41" width="34" height="4.5" rx="1.8" fill="#556F44" stroke="#EF4444" stroke-width="1"/>
+  <!-- Workstation Tower -->
+  <rect x="46" y="5" width="14" height="34" rx="3" fill="#283F3B" stroke="#EF4444" stroke-width="1.8"/>
+  <rect x="49" y="9" width="8" height="2.5" rx="1" fill="#F87171"/>
+  <rect x="49" y="14" width="8" height="2" rx="1" fill="#EF4444"/>
+  <circle cx="53" cy="31" r="2.8" fill="#EF4444"/>
+</svg>

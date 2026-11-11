@@ -1,42 +1,7 @@
 @import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-
 @theme {
-    --font-sans: 'Work Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-headline: 'Work Sans', sans-serif;
-
-    /* Tokens de Color UPTex TI */
-    --color-primary: #2f664f;
-    --color-primary-container: #497f67;
-    --color-on-primary: #ffffff;
-    --color-on-primary-container: #f5fff7;
-    --color-primary-fixed: #b5efd2;
-    --color-primary-fixed-dim: #9ad3b7;
-    --color-on-primary-fixed: #002115;
-    --color-on-primary-fixed-variant: #16503b;
-
-    --color-secondary: #316a42;
-    --color-secondary-container: #b3f1be;
-    --color-on-secondary: #ffffff;
-    --color-on-secondary-container: #377047;
-    --color-secondary-fixed: #b3f1be;
-    --color-secondary-fixed-dim: #98d4a4;
-    --color-on-secondary-fixed: #00210c;
-    --color-on-secondary-fixed-variant: #16512c;
-
-    --color-tertiary: #675a4e;
-    --color-tertiary-container: #807265;
-    --color-on-tertiary: #ffffff;
-    --color-on-tertiary-container: #fffbff;
-    --color-tertiary-fixed: #f2dfd0;
-    --color-tertiary-fixed-dim: #d5c3b5;
-    --color-on-tertiary-fixed: #231a11;
-    --color-on-tertiary-fixed-variant: #514539;
-
+    /* Paleta Oficial Stitch / UPTex TI Academic Operations */
     --color-surface: #fbf9f2;
     --color-surface-dim: #dbdad3;
     --color-surface-bright: #fbf9f2;
@@ -45,63 +10,151 @@
     --color-surface-container: #efeee7;
     --color-surface-container-high: #eae8e1;
     --color-surface-container-highest: #e4e3db;
-    --color-surface-variant: #e4e3db;
-    --color-surface-tint: #326852;
-
-    --color-on-surface: #1b1c18;
-    --color-on-surface-variant: #404944;
-    --color-inverse-surface: #30312c;
-    --color-inverse-on-surface: #f2f1e9;
-    --color-inverse-primary: #9ad3b7;
-
     --color-outline: #707973;
     --color-outline-variant: #c0c9c2;
-
+    --color-surface-tint: #326852;
+    --color-primary: #2f664f;
+    --color-on-primary: #ffffff;
+    --color-primary-container: #497f67;
+    --color-on-primary-container: #f5fff7;
+    --color-inverse-primary: #9ad3b7;
+    --color-secondary: #316a42;
+    --color-on-secondary: #ffffff;
+    --color-secondary-container: #b3f1be;
+    --color-on-secondary-container: #377047;
+    --color-tertiary: #675a4e;
+    --color-on-tertiary: #ffffff;
     --color-error: #ba1a1a;
     --color-error-container: #ffdad6;
     --color-on-error: #ffffff;
-    --color-on-error-container: #93000a;
+    --color-on-surface: #1b1c18;
+    --color-on-surface-variant: #404944;
 
-    --color-background: #fbf9f2;
-    --color-on-background: #1b1c18;
+    /* 3 Únicos Colores Semánticos de Estado (Verde / Amarillo / Rojo) */
+    --color-status-available: #2f664f;
+    --color-status-occupied: #f59e0b;
+    --color-status-unavailable: #ef4444;
 
-    /* Escala de Espaciado */
-    --spacing-gutter: 1.5rem;
-    --spacing-margin: 2rem;
-    --spacing-space-xs: 0.25rem;
-    --spacing-space-sm: 0.5rem;
-    --spacing-space-md: 1rem;
-    --spacing-space-lg: 1.5rem;
-    --spacing-space-xl: 2rem;
+    /* Jerarquía de Texto para Alto Contraste */
+    --color-text-main: #1b1c18;
+    --color-text-sub: #404944;
+    --color-text-muted: #707973;
 
-    /* Radios */
-    --radius-sm: 0.25rem;
-    --radius-DEFAULT: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.5rem;
+    /* Aliases para compatibilidad con código existente */
+    --color-dark-spruce: #ffffff;
+    --color-sea-green: #f5f4ec;
+    --color-muted-teal: #e4e3db;
+    --color-icy-blue: #2f664f;
+    --color-tea-green: #e8f5ec;
+
+    --color-dark-slate-grey: #ffffff;
+    --color-fern: #f5f4ec;
+    --color-sage-green: #e4e3db;
+    --color-willow-green: #2f664f;
+    --color-pearl-aqua: #2f664f;
+    --color-carbon-black: #ffffff;
+    --color-black-forest: #f5f4ec;
+    --color-hunter-green: #e4e3db;
+    --color-aquamarine: #2f664f;
+    --color-text-primary: #1b1c18;
+    --color-text-secondary: #404944;
+
+    /* Fuentes oficiales solicitadas */
+    --font-sans: 'Alegreya Sans', 'Work Sans', sans-serif;
+    --font-slab: 'Roboto Slab', serif;
+    --font-oswald: 'Oswald', sans-serif;
+    --font-serif: 'Lora', 'Noto Serif', serif;
+    --font-surfer: 'Original Surfer', cursive;
+    --font-mono: 'JetBrains Mono', monospace;
 }
 
-@layer base {
-    html, body {
-        margin: 0;
-        padding: 0;
-        background-color: #fbf9f2;
-        color: #1b1c18;
-        font-family: 'Work Sans', system-ui, -apple-system, sans-serif;
-    }
+:root {
+    /* Paleta Oficial Stitch */
+    --surface: #fbf9f2;
+    --surface-canvas: #fbf9f2;
+    --surface-dim: #dbdad3;
+    --surface-bright: #fbf9f2;
+    --surface-container-lowest: #ffffff;
+    --surface-container-low: #f5f4ec;
+    --surface-container: #efeee7;
+    --surface-container-high: #eae8e1;
+    --surface-container-highest: #e4e3db;
+    --on-surface: #1b1c18;
+    --on-surface-variant: #404944;
+    --inverse-surface: #30312c;
+    --inverse-on-surface: #f2f1e9;
+    --outline: #707973;
+    --outline-variant: #c0c9c2;
+    --surface-tint: #326852;
+    --primary: #2f664f;
+    --on-primary: #ffffff;
+    --primary-container: #497f67;
+    --on-primary-container: #f5fff7;
+    --inverse-primary: #9ad3b7;
+    --secondary: #316a42;
+    --on-secondary: #ffffff;
+    --secondary-container: #b3f1be;
+    --on-secondary-container: #377047;
+    --tertiary: #675a4e;
+    --on-tertiary: #ffffff;
+    --tertiary-container: #807265;
+    --on-tertiary-container: #fffbff;
+    --error: #ba1a1a;
+    --on-error: #ffffff;
+    --error-container: #ffdad6;
+    --on-error-container: #93000a;
+    --background: #fbf9f2;
+    --on-background: #1b1c18;
+    --surface-variant: #e4e3db;
+
+    /* 3 Únicos Colores Semánticos de Estado */
+    --status-available: #2f664f;
+    --status-occupied: #f59e0b;
+    --status-unavailable: #ef4444;
+
+    /* Estados para etiquetas, bordes y fondos */
+    --state-free: #2f664f;
+    --state-free-bg: #e8f5ec;
+    --state-free-border: #b3f1be;
+    --state-free-text: #16512c;
+
+    --state-busy: #d97706;
+    --state-busy-bg: #fef3c7;
+    --state-busy-border: #fde68a;
+    --state-busy-text: #92400e;
+
+    --state-down: #ba1a1a;
+    --state-down-bg: #ffdad6;
+    --state-down-border: #fca5a5;
+    --state-down-text: #991b1b;
+
+    /* Jerarquía de Texto para Alto Contraste */
+    --text-main: #1b1c18;
+    --text-sub: #404944;
+    --text-muted: #707973;
+
+    /* Mapeo de compatibilidad con clases y estilos existentes */
+    --dark-spruce: var(--surface-container-lowest);
+    --sea-green: var(--surface-container-low);
+    --muted-teal: var(--surface-container-highest);
+    --icy-blue: var(--primary);
+    --tea-green: var(--secondary-container);
+
+    --dark-slate-grey: var(--surface-container-lowest);
+    --fern: var(--surface-container-low);
+    --sage-green: var(--surface-container-highest);
+    --willow-green: var(--primary);
+    --pearl-aqua: var(--primary);
+    --carbon-black: var(--surface-container-lowest);
+    --black-forest: var(--surface-container-low);
+    --hunter-green: var(--surface-container-highest);
+    --aquamarine: var(--primary);
+    --text-primary: var(--text-main);
+    --text-secondary: var(--text-sub);
 }
 
-.material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 20px;
-    line-height: 1;
-    display: inline-block;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
+body {
+    background-color: var(--surface);
+    color: var(--on-surface);
+    font-family: 'Alegreya Sans', 'Work Sans', sans-serif;
 }

@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <defs>
+    <linearGradient id="l2-bg" x1="0" y1="0" x2="600" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1B2B28"/>
+      <stop offset="60%" stop-color="#283F3B"/>
+      <stop offset="100%" stop-color="#182422"/>
+    </linearGradient>
+    <linearGradient id="l2-glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#99DDC8" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#659B5E" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="l2-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#556F44" stroke-width="0.75" stroke-opacity="0.25"/>
+    </pattern>
+  </defs>
+
+  <rect width="600" height="300" rx="16" fill="url(#l2-bg)"/>
+  <rect width="600" height="300" rx="16" fill="url(#l2-grid)"/>
+  <circle cx="280" cy="140" r="180" fill="url(#l2-glow)" filter="blur(35px)"/>
+
+  <!-- Left: Multi-Blade Hypervisor Server Tower -->
+  <g transform="translate(60, 35)">
+    <rect x="0" y="0" width="180" height="230" rx="10" fill="#182321" stroke="#556F44" stroke-width="2"/>
+    
+    <!-- 4 Blade Server Units -->
+    <!-- Blade 1 -->
+    <rect x="14" y="16" width="152" height="42" rx="4" fill="#22332F" stroke="#659B5E" stroke-width="1.2"/>
+    <rect x="22" y="24" width="48" height="26" rx="2" fill="#131D1B"/>
+    <g fill="#99DDC8">
+      <circle cx="30" cy="37" r="2.5"/>
+      <circle cx="38" cy="37" r="2.5"/>
+      <circle cx="46" cy="37" r="2.5"/>
+      <circle cx="54" cy="37" r="2.5"/>
+    </g>
+    <!-- Disk bays -->
+    <rect x="76" y="24" width="16" height="26" rx="2" fill="#1A2825" stroke="#556F44" stroke-width="0.8"/>
+    <rect x="96" y="24" width="16" height="26" rx="2" fill="#1A2825" stroke="#556F44" stroke-width="0.8"/>
+    <rect x="116" y="24" width="16" height="26" rx="2" fill="#1A2825" stroke="#556F44" stroke-width="0.8"/>
+    <circle cx="150" cy="37" r="3" fill="#95BF74"/>
+
+    <!-- Blade 2 -->
+    <rect x="14" y="66" width="152" height="42" rx="4" fill="#22332F" stroke="#659B5E" stroke-width="1.2"/>
+    <rect x="22" y="74" width="48" height="26" rx="2" fill="#131D1B"/>
+    <g fill="#99DDC8">
+      <circle cx="30" cy="87" r="2.5"/>
+      <circle cx="38" cy="87" r="2.5"/>
+      <circle cx="46" cy="87" r="2.5"/>
+      <circle cx="54" cy="87" r="2.5"/>
+    </g>
+    <rect x="76" y="74" width="16" height="26" rx="2" fill="#1A2825" stroke="#556F44" stroke-width="0.8"/>
+    <rect x="96" y="74" width="16" height="26" rx="2" fill="#1A2825" stroke="#556F44" stroke-width="0.8"/>
+    <rect x="116" y="74" width="16" height="26" rx="2" fill="#1A2825" stroke="#556F44" stroke-width="0.8"/>
+    <circle cx="150" cy="87" r="3" fill="#95BF74"/>
+
+    <!-- Blade 3 -->
+    <rect x="14" y="116" width="152" height="42" rx="4" fill="#22332F" stroke="#659B5E" stroke-width="1.2"/>
+    <rect x="22" y="124" width="48" height="26" rx="2" fill="#131D1B"/>
+    <g fill="#99DDC8">
+      <circle cx="30" cy="137" r="2.5"/>
+      <circle cx="38" cy="137" r="2.5"/>
+      <circle cx="46" cy="137" r="2.5"/>
+      <circle cx="54" cy="137" r="2.5"/>
+    </g>
+    <rect x="76" y="124" width="16" height="26" rx="2" fill="#1A2825" stroke="#556F44" stroke-width="0.8"/>
+    <rect x="96" y="124" width="16" height="26" rx="2" fill="#1A2825" stroke="#556F44" stroke-width="0.8"/>
+    <rect x="116" y="124" width="16" height="26" rx="2" fill="#1A2825" stroke="#556F44" stroke-width="0.8"/>
+    <circle cx="150" cy="137" r="3" fill="#F59E0B"/>
+
+    <!-- Storage / Controller Bay 4 -->
+    <rect x="14" y="166" width="152" height="48" rx="4" fill="#1B2926" stroke="#556F44" stroke-width="1.2"/>
+    <rect x="24" y="176" width="80" height="28" rx="2" fill="#121D1B" stroke="#659B5E" stroke-width="1"/>
+    <text x="32" y="194" fill="#99DDC8" font-family="monospace" font-size="10" font-weight="bold">VT-x / EPT</text>
+    <circle cx="120" cy="190" r="4" fill="#95BF74"/>
+    <circle cx="136" cy="190" r="4" fill="#99DDC8"/>
+    <circle cx="152" cy="190" r="4" fill="#95BF74"/>
+  </g>
+
+  <!-- Right: Virtualization & Kernel Architecture Interface -->
+  <g transform="translate(280, 40)">
+    <!-- Main Virtual Machine Dashboard -->
+    <rect x="0" y="0" width="260" height="220" rx="12" fill="#192623" stroke="#659B5E" stroke-width="2"/>
+
+    <!-- Dashboard Title Bar -->
+    <rect x="12" y="12" width="236" height="30" rx="6" fill="#223531" stroke="#556F44" stroke-width="1"/>
+    <circle cx="26" cy="27" r="4" fill="#EF4444"/>
+    <circle cx="38" cy="27" r="4" fill="#F59E0B"/>
+    <circle cx="50" cy="27" r="4" fill="#99DDC8"/>
+    <text x="66" y="31" fill="#99DDC8" font-family="monospace" font-size="10" font-weight="bold">VMware ESXi · Debian Kernel 6.8</text>
+
+    <!-- 3 Virtual Machine Containers (VMs) -->
+    <!-- VM 1 (Ubuntu 24.04) -->
+    <rect x="14" y="52" width="110" height="68" rx="6" fill="#1F2F2C" stroke="#99DDC8" stroke-width="1.5"/>
+    <rect x="22" y="60" width="94" height="16" rx="3" fill="#283E3A"/>
+    <text x="26" y="72" fill="#99DDC8" font-family="monospace" font-size="8.5" font-weight="bold">VM-01: Ubuntu-Server</text>
+    <!-- CPU/RAM graphs -->
+    <rect x="22" y="82" width="60" height="6" rx="2" fill="#131C1A"/>
+    <rect x="22" y="82" width="42" height="6" rx="2" fill="#95BF74"/>
+    <rect x="22" y="94" width="60" height="6" rx="2" fill="#131C1A"/>
+    <rect x="22" y="94" width="50" height="6" rx="2" fill="#99DDC8"/>
+    <circle cx="106" cy="91" r="5" fill="#99DDC8"/>
+
+    <!-- VM 2 (Alpine Docker Host) -->
+    <rect x="136" y="52" width="110" height="68" rx="6" fill="#1F2F2C" stroke="#95BF74" stroke-width="1.5"/>
+    <rect x="144" y="60" width="94" height="16" rx="3" fill="#283E3A"/>
+    <text x="148" y="72" fill="#95BF74" font-family="monospace" font-size="8.5" font-weight="bold">VM-02: Docker-Host</text>
+    <rect x="144" y="82" width="60" height="6" rx="2" fill="#131C1A"/>
+    <rect x="144" y="82" width="28" height="6" rx="2" fill="#95BF74"/>
+    <rect x="144" y="94" width="60" height="6" rx="2" fill="#131C1A"/>
+    <rect x="144" y="94" width="38" height="6" rx="2" fill="#99DDC8"/>
+    <circle cx="228" cy="91" r="5" fill="#95BF74"/>
+
+    <!-- Terminal Output / Kernel Tracing Window -->
+    <rect x="14" y="130" width="232" height="78" rx="6" fill="#121B19" stroke="#556F44" stroke-width="1.2"/>
+    <text x="24" y="146" fill="#95BF74" font-family="monospace" font-size="9">$ dmesg | grep -i kvm</text>
+    <text x="24" y="159" fill="#99DDC8" font-family="monospace" font-size="8">[ 0.124] kvm: Nested Virtualization enabled</text>
+    <text x="24" y="171" fill="#C5D9C0" font-family="monospace" font-size="8">[ 0.158] kvm-intel: EPT 4-level page walks active</text>
+    <text x="24" y="183" fill="#95BF74" font-family="monospace" font-size="8">[ 0.201] vhost-net: 10000 Mbps tap0 assigned</text>
+    <text x="24" y="196" fill="#99DDC8" font-family="monospace" font-size="9">root@metalnet-node2:~# █</text>
+  </g>
+</svg>

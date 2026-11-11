@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#0D1714" stroke="#F59E0B" stroke-width="2"/>
+  <!-- MATLAB L-shaped Membrane Surface -->
+  <path d="M12 42 L24 32 L32 36 L44 16 L52 38 L38 50 L26 42 L12 42 Z" fill="#F59E0B" fill-opacity="0.28" stroke="#F59E0B" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M24 32 L38 50 M32 36 L44 16" stroke="#34D399" stroke-width="1.6"/>
+</svg>

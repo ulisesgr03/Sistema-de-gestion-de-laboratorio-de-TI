@@ -132,14 +132,29 @@ class User extends Authenticatable
     {
         $roleList = is_array($roles) ? $roles : func_get_args();
 
+        $aliases = [
+            'admin' => ['admin', 'administrador', 'encargado', 'encargado de laboratorio', 'lab_manager'],
+            'administrador' => ['admin', 'administrador', 'encargado', 'encargado de laboratorio', 'lab_manager'],
+            'encargado' => ['admin', 'administrador', 'encargado', 'encargado de laboratorio', 'lab_manager'],
+            'docente' => ['docente', 'maestro', 'profesor', 'teacher'],
+            'maestro' => ['docente', 'maestro', 'profesor', 'teacher'],
+            'alumno' => ['alumno', 'estudiante', 'student'],
+            'estudiante' => ['alumno', 'estudiante', 'student'],
+        ];
+
         $userRoles = $this->roles->map(function ($r) {
             return strtolower(trim($r->nombre));
         })->toArray();
 
         foreach ($roleList as $role) {
-            $normalized = strtolower(trim((string) $role));
-            if (in_array($normalized, $userRoles, true)) {
-                return true;
+            foreach (explode(',', (string) $role) as $part) {
+                $normalized = strtolower(trim($part));
+                $acceptable = $aliases[$normalized] ?? [$normalized];
+                foreach ($acceptable as $candidate) {
+                    if (in_array($candidate, $userRoles, true)) {
+                        return true;
+                    }
+                }
             }
         }
 
@@ -149,7 +164,18 @@ class User extends Authenticatable
     public function assignRole(string|Rol $role): void
     {
         if (is_string($role)) {
-            $roleModel = Rol::whereRaw('LOWER(nombre) = ?', [strtolower(trim($role))])->first();
+            $normalized = strtolower(trim($role));
+            if ($normalized === 'encargado' || $normalized === 'encargado de laboratorio') {
+                $normalized = 'admin';
+            }
+            $map = [
+                'admin' => ['admin', 'administrador'],
+                'administrador' => ['admin', 'administrador'],
+                'docente' => ['docente'],
+                'alumno' => ['alumno'],
+            ];
+            $candidates = $map[$normalized] ?? [$normalized];
+            $roleModel = Rol::all()->first(fn (Rol $r) => in_array(strtolower(trim($r->nombre)), $candidates, true));
             if ($roleModel) {
                 $this->roles()->syncWithoutDetaching([$roleModel->id]);
             }
@@ -172,22 +198,51 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->hasRole('administrador', 'admin');
+        return $this->hasRole('admin');
     }
 
     public function isEncargado(): bool
     {
-        return $this->hasRole('encargado', 'encargado de laboratorio');
+        return $this->isAdmin();
     }
 
     public function isDocente(): bool
     {
-        return $this->hasRole('docente', 'profesor');
+        return $this->hasRole('docente');
     }
 
     public function isAlumno(): bool
     {
-        return $this->hasRole('alumno', 'estudiante');
+        return $this->hasRole('alumno');
+    }
+
+    public function primaryRoleSlug(): string
+    {
+        if ($this->isAdmin()) {
+            return 'admin';
+        }
+        if ($this->isDocente()) {
+            return 'docente';
+        }
+        return 'alumno';
+    }
+
+    public function primaryRoleLabel(): string
+    {
+        return match ($this->primaryRoleSlug()) {
+            'admin' => 'Administrador de Laboratorios',
+            'docente' => 'Docente',
+            default => 'Alumno',
+        };
+    }
+
+    public function dashboardRoute(): string
+    {
+        return match ($this->primaryRoleSlug()) {
+            'admin' => route('panel.admin'),
+            'docente' => route('panel.docente'),
+            default => route('panel.alumno'),
+        };
     }
 
     public function isActive(): bool

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#0D1714" stroke="#00BCEB" stroke-width="2"/>
+  <!-- Cisco Bridge Bars -->
+  <path d="M12 28 V34 M18 22 V34 M24 16 V34 M32 22 V34 M40 16 V34 M46 22 V34 M52 28 V34" stroke="#00BCEB" stroke-width="3.2" stroke-linecap="round"/>
+  <!-- Packet Tracer Envelope & Node -->
+  <rect x="18" y="39" width="28" height="15" rx="3" fill="#172822" stroke="#34D399" stroke-width="2"/>
+  <path d="M19 40 L32 48 L45 40" stroke="#34D399" stroke-width="2" stroke-linecap="round"/>
+</svg>

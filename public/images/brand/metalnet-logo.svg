@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+  <rect x="4" y="4" width="88" height="88" rx="22" fill="#2F664F"/>
+  <rect x="8" y="8" width="80" height="80" rx="18" fill="#1E4736" stroke="#8FCB9B" stroke-width="2"/>
+  <!-- Hexagonal Network Core -->
+  <polygon points="48,16 74,31 74,61 48,76 22,61 22,31" fill="#2F664F" stroke="#B5EFD2" stroke-width="2.5"/>
+  <!-- "M" & "N" Interlinked Circuit -->
+  <path d="M29 58V34L40 48L51 34V58" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M51 58V36L67 58V34" stroke="#8FCB9B" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Node Dots -->
+  <circle cx="48" cy="16" r="3.5" fill="#B3F1BE"/>
+  <circle cx="74" cy="31" r="3" fill="#8FCB9B"/>
+  <circle cx="22" cy="31" r="3" fill="#8FCB9B"/>
+  <circle cx="48" cy="76" r="3.5" fill="#B3F1BE"/>
+</svg>

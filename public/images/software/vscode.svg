@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#0D1714" stroke="#007ACC" stroke-width="2"/>
+  <!-- VS Code Ribbon -->
+  <path d="M44 12 L52 16 V48 L44 52 L22 33 L14 40 L10 37 V27 L14 24 L22 31 L44 12 Z" fill="#007ACC" fill-opacity="0.25" stroke="#38BDF8" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M44 12 V52" stroke="#38BDF8" stroke-width="2.2"/>
+</svg>

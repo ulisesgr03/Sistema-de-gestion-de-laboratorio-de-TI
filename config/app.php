@@ -13,7 +13,11 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'MetalNet'),
+
+    'institution_name' => env('APP_INSTITUTION_NAME', 'MetalNet'),
+
+    'institution_full' => env('APP_INSTITUTION_FULL', 'MetalNet · Laboratorios de Ingeniería en Sistemas'),
 
     /*
     |--------------------------------------------------------------------------

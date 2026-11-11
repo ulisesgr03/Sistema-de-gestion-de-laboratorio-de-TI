@@ -1,171 +1,553 @@
 @extends('layouts.public')
 
-@section('title', 'Horarios y Prácticas Académicas')
-
-@section('header')
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#e4e3db]">
-    <div>
-        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#675a4e]">
-            <span class="material-symbols-outlined text-[16px] text-[#2f664f]">calendar_month</span>
-            <span>Programación Curricular Cuatrimestral · 2026-1</span>
-        </div>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#1b1c18] mt-1 tracking-tight">
-            Horarios Oficiales y Prácticas Académicas
-        </h1>
-        <p class="text-xs sm:text-sm text-[#404944] mt-1">
-            Distribución horaria por sala, asignaturas curriculares, docentes titulares y espacios asignados para práctica libre.
-        </p>
-    </div>
-
-    <!-- Indicador de Jornada Continua -->
-    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#ffffff] border border-[#e4e3db] text-xs font-mono">
-        <span class="w-2 h-2 rounded-full bg-[#316a42]"></span>
-        <span class="text-[#1b1c18] font-bold">Jornada 07:00 a 20:00 hrs</span>
-    </div>
-</div>
-@endsection
+@section('title', 'Horarios y Disponibilidad de Salas · ' . config('app.institution_name', 'MetalNet'))
 
 @section('content')
-<!-- Barra de Selector de Día de la Semana -->
-<div class="bg-[#ffffff] border border-[#e4e3db] rounded-xl p-2 mb-6 shadow-sm overflow-x-auto">
-    <div class="flex items-center gap-1.5 min-w-max">
-        @foreach($diasSemana as $dia)
-            <a href="{{ route('horarios.index', ['dia' => $dia, 'laboratorio_id' => $labSeleccionado]) }}"
-               class="px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 {{ $diaSeleccionado === $dia ? 'bg-[#2f664f] text-white shadow-sm' : 'text-[#404944] hover:bg-[#efeee7] hover:text-[#1b1c18]' }}">
-                <span class="material-symbols-outlined text-[16px]">{{ $diaSeleccionado === $dia ? 'today' : 'calendar_today' }}</span>
-                <span>{{ $dia }}</span>
-            </a>
-        @endforeach
-    </div>
-</div>
+@php
+    $labs = $laboratorios ?? $bmLabs ?? [];
+    $dias = $diasSemana ?? ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    $diaActual = $diaSeleccionado ?? 'Lunes';
+    $labFiltro = $labSeleccionado ?? request('sala') ?? null;
+    $totalHorasLibres = collect($labs)->sum('horas_libres');
+    $totalHorasOcupadas = collect($labs)->sum('horas_ocupadas');
+    $userRole = Auth::check() ? Auth::user()->primaryRoleSlug() : null;
+@endphp
 
-<!-- Filtro por Laboratorio Específico -->
-<div class="bg-[#ffffff] border border-[#e4e3db] rounded-xl p-4 mb-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-    <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-[#707973] text-[20px]">filter_alt</span>
-        <span class="text-xs font-bold text-[#1b1c18]">Filtrar por Sala Específica:</span>
-    </div>
-
-    <form method="GET" action="{{ route('horarios.index') }}" class="flex items-center gap-2 flex-1 max-w-md">
-        <input type="hidden" name="dia" value="{{ $diaSeleccionado }}">
-        <div class="relative w-full">
-            <select name="laboratorio_id"
-                    onchange="this.form.submit()"
-                    class="w-full h-10 pl-3 pr-8 bg-[#efeee7] rounded-lg border border-[#c0c9c2] text-xs text-[#1b1c18] appearance-none focus:outline-none focus:border-[#2f664f] focus:bg-[#ffffff] cursor-pointer">
-                <option value="">Todos los Laboratorios (L-01 a L-06)</option>
-                @foreach($laboratorios as $lab)
-                    <option value="{{ $lab->id }}" {{ $labSeleccionado == $lab->id ? 'selected' : '' }}>
-                        {{ $lab->nombre }}
-                    </option>
-                @endforeach
-            </select>
-            <span class="material-symbols-outlined absolute right-2.5 top-2.5 text-[#707973] pointer-events-none text-[18px]">expand_more</span>
-        </div>
-        @if(!empty($labSeleccionado))
-            <a href="{{ route('horarios.index', ['dia' => $diaSeleccionado]) }}"
-               class="h-10 px-3 bg-[#efeee7] hover:bg-[#e4e3db] text-[#1b1c18] rounded-lg text-xs font-semibold flex items-center justify-center">
-                Todos
-            </a>
-        @endif
-    </form>
-</div>
-
-<!-- Matriz de Horarios por Laboratorio -->
-<div class="space-y-6">
-    @foreach($laboratorios as $lab)
-        @if(empty($labSeleccionado) || $labSeleccionado == $lab->id)
-            @php
-                $codigo = substr($lab->nombre, strpos($lab->nombre, 'L-'), 4);
-                $sesiones = $programacionAcademica[$codigo] ?? [
-                    ['hora' => '07:00 - 11:00', 'materia' => 'Práctica Curricular Tutelada', 'docente' => 'Claustro Docente TI', 'grupo' => 'ITI Matutino'],
-                    ['hora' => '11:00 - 14:00', 'materia' => 'Práctica Libre Asistida', 'docente' => 'Encargado de Sala', 'grupo' => 'Alumnos'],
-                    ['hora' => '14:00 - 18:00', 'materia' => 'Desarrollo de Proyectos Integradores', 'docente' => 'Docente Asesor', 'grupo' => 'ITI Vespertino'],
-                    ['hora' => '18:00 - 20:00', 'materia' => 'Mantenimiento y Respaldo de Imágenes', 'docente' => 'Técnico de Turno', 'grupo' => 'Mantenimiento'],
-                ];
-            @endphp
-
-            <div class="bg-[#ffffff] border border-[#e4e3db] rounded-2xl overflow-hidden shadow-sm">
-                <!-- Barra de Título del Laboratorio -->
-                <div class="px-5 py-4 bg-[#f5f4ec] border-b border-[#e4e3db] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#2f664f]"></span>
-                            <span class="font-extrabold text-[#1b1c18] text-sm">{{ $lab->nombre }}</span>
-                        </div>
-                        <span class="text-[11px] text-[#707973]">{{ $lab->ubicacion }} · Capacidad {{ $lab->capacidad }} estaciones</span>
-                    </div>
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#ffffff] border border-[#e4e3db] text-xs font-bold text-[#2f664f]">
-                        <span class="material-symbols-outlined text-[16px]">event_available</span>
-                        <span>Día: {{ $diaSeleccionado }}</span>
+{{-- ── ENCABEZADO EDITORIAL METALNET (PALETA OFICIAL STITCH) ─────────────────── --}}
+<div class="border border-surface-container-highest bg-surface-container-lowest rounded-2xl mb-6 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border border-[#b3f1be] bg-[#e8f5ec] text-[#16512c]">
+                        Planificador Académico
+                    </span>
+                    <span class="text-[11px] font-semibold uppercase tracking-widest text-outline">
+                        {{ config('app.institution_full', 'MetalNet · Laboratorios de Ingeniería en Sistemas') }}
                     </span>
                 </div>
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-on-surface">
+                    Horarios y Reserva de Bloques ({{ $diaActual }})
+                </h1>
+                <p class="text-xs sm:text-sm mt-1 max-w-2xl text-on-surface-variant">
+                    Consulta la programación por franja horaria (07:00 a 19:00), identifica bloques disponibles en verde o sesiones ocupadas en amarillo y reserva salas al instante.
+                </p>
+            </div>
 
-                <!-- Tabla de Bloques Horarios -->
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-[#efeee7] text-[#1b1c18] uppercase tracking-wider font-bold h-9 border-b border-[#e4e3db]">
-                            <tr>
-                                <th class="px-5 w-40">Bloque Horario</th>
-                                <th class="px-4">Asignatura / Actividad</th>
-                                <th class="px-4">Docente Titular</th>
-                                <th class="px-4">Grupo / Matrícula</th>
-                                <th class="px-5 text-right">Modalidad</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-[#e4e3db]">
-                            @foreach($sesiones as $s)
-                                @php
-                                    $esLibre = str_contains(strtolower($s['materia']), 'libre') || str_contains(strtolower($s['grupo']), 'abierto');
-                                @endphp
-                                <tr class="h-12 hover:bg-[#fbf9f2] transition-colors {{ $esLibre ? 'bg-[#b3f1be]/10' : '' }}">
-                                    <td class="px-5 font-mono font-bold text-[#1b1c18] whitespace-nowrap">
-                                        <div class="flex items-center gap-2">
-                                            <span class="material-symbols-outlined text-[16px] {{ $esLibre ? 'text-[#316a42]' : 'text-[#707973]' }}">schedule</span>
-                                            <span>{{ $s['hora'] }}</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 font-semibold text-[#1b1c18]">
-                                        {{ $s['materia'] }}
-                                    </td>
-                                    <td class="px-4 text-[#404944]">
-                                        {{ $s['docente'] }}
-                                    </td>
-                                    <td class="px-4 font-mono text-[#675a4e]">
-                                        {{ $s['grupo'] }}
-                                    </td>
-                                    <td class="px-5 text-right">
-                                        @if($esLibre)
-                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#b3f1be]/40 text-[#16512c] font-bold text-[11px]">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-[#316a42]"></span>
-                                                Acceso Libre
-                                            </span>
-                                        @else
-                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#efeee7] text-[#1b1c18] font-semibold text-[11px]">
-                                                <span class="material-symbols-outlined text-[13px] text-[#707973]">lock</span>
-                                                Clase Exclusiva
-                                            </span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+            {{-- Indicadores Globales de Horas Libres (Verde) vs Ocupadas (Amarillo) --}}
+            <div class="flex flex-wrap items-center gap-3">
+                <div class="px-4 py-2.5 rounded-xl border border-[#b3f1be] bg-[#e8f5ec] flex items-center gap-2.5 shadow-xs">
+                    <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                    <div>
+                        <span class="text-xl font-black font-mono leading-none block text-[#16512c]">{{ $totalHorasLibres }}h</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#16512c]">Horas Disponibles</span>
+                    </div>
+                </div>
+                <div class="px-4 py-2.5 rounded-xl border border-[#fde68a] bg-[#fef3c7] flex items-center gap-2.5 shadow-xs">
+                    <span class="w-2.5 h-2.5 rounded-full bg-status-occupied"></span>
+                    <div>
+                        <span class="text-xl font-black font-mono leading-none block text-[#92400e]">{{ $totalHorasOcupadas }}h</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#92400e]">Horas Ocupadas</span>
+                    </div>
                 </div>
             </div>
-        @endif
-    @endforeach
+        </div>
+    </div>
 </div>
 
-<!-- Normativa sobre Cumplimiento de Horarios -->
-<div class="mt-8 bg-[#f5f4ec] border border-[#e4e3db] rounded-2xl p-6 flex items-start gap-4 shadow-sm">
-    <div class="w-10 h-10 rounded-xl bg-[#efeee7] border border-[#e4e3db] flex items-center justify-center text-[#2f664f] shrink-0 mt-0.5">
-        <span class="material-symbols-outlined text-[24px]">info</span>
+<section class="max-w-7xl mx-auto pb-12">
+
+    {{-- ── BARRA SUPERIOR DE FILTROS (DÍAS, SALAS Y LEYENDA DE 3 COLORES) ── --}}
+    <div class="rounded-2xl border border-surface-container-highest p-4 sm:p-5 mb-6 bg-surface-container-lowest shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+            {{-- Selector de Día (Lunes a Sábado) --}}
+            <div class="flex flex-wrap items-center gap-1.5">
+                <span class="text-[11px] font-bold uppercase tracking-wider mr-1 text-outline">Día:</span>
+                @foreach($dias as $dia)
+                    <a href="{{ route('public.horarios', array_filter(['dia' => $dia, 'laboratorio_id' => $labFiltro])) }}"
+                       class="px-3.5 py-1.5 rounded-lg text-xs font-bold border transition {{ $diaActual === $dia ? 'bg-primary text-white border-primary shadow-xs font-black' : 'bg-surface-container-low text-on-surface-variant border-surface-container-highest hover:bg-surface-container hover:text-on-surface' }}">
+                        {{ $dia }}
+                    </a>
+                @endforeach
+            </div>
+
+            {{-- Leyenda Contextual Compacta (Verde, Amarillo, Rojo) --}}
+            <div class="mn-legend-capsule" aria-label="Simbología de bloques horarios">
+                <span class="text-[10px] font-bold uppercase tracking-wider mr-1 text-outline">Estado:</span>
+                <span class="mn-legend-item">
+                    <span class="mn-legend-dot mn-legend-dot--free"></span>
+                    Disponible
+                </span>
+                <span class="mn-legend-item">
+                    <span class="mn-legend-dot mn-legend-dot--busy"></span>
+                    Ocupado
+                </span>
+                <span class="mn-legend-item">
+                    <span class="mn-legend-dot mn-legend-dot--down"></span>
+                    No disponible
+                </span>
+            </div>
+        </div>
+
+        {{-- Filtros Rápidos de Salas: Todas, L-01 a L-10 --}}
+        <div class="mt-3.5 pt-3.5 border-t border-surface-container-highest flex flex-wrap items-center gap-1.5">
+            <span class="text-[11px] font-bold uppercase tracking-wider mr-1 text-outline">Sala:</span>
+            <a href="{{ route('public.horarios', ['dia' => $diaActual]) }}"
+               class="px-3 py-1 rounded-lg text-xs font-bold border transition {{ !$labFiltro ? 'bg-primary text-white border-primary shadow-xs font-black' : 'bg-surface-container-low text-on-surface-variant border-surface-container-highest hover:bg-surface-container hover:text-on-surface' }}">
+                Todas ({{ count($labs) }})
+            </a>
+            @foreach($labs as $l)
+                @php
+                    $isCurrentLab = (string)$labFiltro === (string)$l['id'] || (string)$labFiltro === (string)$l['codigo'];
+                @endphp
+                <a href="{{ route('public.horarios', ['dia' => $diaActual, 'laboratorio_id' => $l['id']]) }}"
+                   class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border transition {{ $isCurrentLab ? 'bg-primary text-white border-primary shadow-xs font-black' : 'bg-surface-container-low text-on-surface-variant border-surface-container-highest hover:bg-surface-container hover:text-on-surface' }}">
+                    {{ $l['codigo'] }}
+                </a>
+            @endforeach
+        </div>
     </div>
-    <div class="text-xs text-[#404944] space-y-1 leading-relaxed">
-        <h4 class="font-bold text-[#1b1c18] text-sm">Disposición Oficial sobre Tolerancia y Desalojo de Salas</h4>
-        <p>
-            Los docentes y alumnos cuentan con 10 minutos de tolerancia al inicio de la sesión. Es responsabilidad de los usuarios guardar sus avances en repositorios externos (GitHub, USB) y cerrar sesión en las terminales 5 minutos antes del término del bloque horario para permitir el ingreso puntual del siguiente grupo académico.
-        </p>
+
+    {{-- ── LÍNEA DE TIEMPO INTERACTIVA POR LABORATORIO ─────────────────────── --}}
+    <div class="space-y-5">
+        @foreach($labs as $lab)
+            @if(!$labFiltro || (string)$labFiltro === (string)$lab['id'] || (string)$labFiltro === (string)$lab['codigo'])
+                <article class="rounded-2xl border border-surface-container-highest p-4 sm:p-5 bg-surface-container-lowest shadow-sm">
+                    {{-- Cabecera del Laboratorio --}}
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-3.5 mb-4 border-b border-surface-container-highest">
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <span class="px-3 py-1 rounded-lg font-mono text-xs font-bold border border-surface-container-highest bg-surface-container text-primary">
+                                {{ $lab['etiqueta_mapa'] }} · {{ $lab['codigo'] }}
+                            </span>
+                            <div>
+                                <h2 class="text-base font-extrabold leading-tight text-on-surface">{{ $lab['nombre'] }}</h2>
+                                <p class="text-xs text-on-surface-variant mt-0.5">
+                                    {{ $lab['planta'] }} · {{ $lab['hardware'] }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border {{ $lab['canon'] ? 'border-[#b3f1be] bg-[#e8f5ec] text-[#16512c]' : 'border-surface-container-highest bg-surface-container text-outline' }}">
+                                {{ $lab['canon'] ? 'Cañón Activo' : 'Sin Cañón' }}
+                            </span>
+                            <a href="{{ route('public.salas') }}" class="text-xs font-bold text-primary hover:underline">
+                                Ver plano de 20 PCs
+                            </a>
+                        </div>
+                    </div>
+
+                    {{-- Bloques Horarios (07:00 a 19:00) --}}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+                        @foreach(($lab['horarios_horas'] ?? []) as $slot)
+                            @php
+                                $isFree = ($slot['estado'] ?? 'ocupado') === 'libre';
+                            @endphp
+
+                            @if($isFree)
+                                {{-- Bloque DISPONIBLE / LIBRE (Verde Stitch) --}}
+                                <div class="rounded-xl border border-[#b3f1be] p-3 flex flex-col justify-between transition hover:border-primary bg-[#f5fbf7] shadow-xs">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 pb-1.5 border-b border-[#b3f1be]">
+                                            <span class="font-mono text-xs font-extrabold text-[#16512c]">
+                                                {{ $slot['rango'] ?? $slot['hora'] }}
+                                            </span>
+                                            <span class="px-2 py-0.5 rounded text-[10px] font-bold border border-[#b3f1be] bg-[#e8f5ec] text-[#16512c]">
+                                                Disponible
+                                            </span>
+                                        </div>
+                                        <div class="mt-2.5 space-y-1">
+                                            <p class="text-xs font-extrabold leading-snug text-on-surface">
+                                                {{ $slot['titulo'] ?? 'Práctica Libre Abierta' }}
+                                            </p>
+                                            <p class="text-[11px] text-outline truncate">
+                                                Guardia Técnica · Sin Clase
+                                            </p>
+                                            <p class="text-[10px] font-mono text-primary pt-1">
+                                                20 PCs listas para práctica
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {{-- Botón de Acción en Bloque Libre --}}
+                                    <div class="mt-3 pt-2 border-t border-[#b3f1be]">
+                                        <button type="button"
+                                                onclick="window.HorariosDecision.abrirReservaAhora({{ $lab['id'] }}, '{{ $slot['hora'] }}', '{{ $slot['rango'] ?? $slot['hora'] }}', '{{ $diaActual }}')"
+                                                class="w-full py-1.5 px-2.5 rounded-lg text-white font-black text-xs flex items-center justify-center gap-1.5 cursor-pointer transition hover:bg-primary-container bg-primary shadow-xs">
+                                            <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                            <span>Reservar ahora</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            @else
+                                {{-- Bloque OCUPADO / EN CLASE O EXAMEN (Amarillo) --}}
+                                <div class="rounded-xl border border-[#fde68a] p-3 flex flex-col justify-between transition bg-[#fffdf5] shadow-xs">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-1 pb-1.5 border-b border-[#fde68a]">
+                                            <span class="font-mono text-xs font-extrabold text-[#92400e]">
+                                                {{ $slot['rango'] ?? $slot['hora'] }}
+                                            </span>
+                                            <span class="px-2 py-0.5 rounded text-[10px] font-bold border border-[#fde68a] bg-[#fef3c7] text-[#92400e]">
+                                                {{ $slot['modalidad'] ?? 'En Clase' }}
+                                            </span>
+                                        </div>
+
+                                        <div class="mt-2.5 space-y-1">
+                                            <p class="text-xs font-extrabold leading-snug line-clamp-2 text-on-surface" title="{{ $slot['titulo'] }}">
+                                                {{ $slot['titulo'] }}
+                                            </p>
+                                            <p class="text-[11px] font-semibold flex items-center gap-1 truncate text-[#92400e]" title="{{ $slot['docente'] ?? $lab['docente'] }}">
+                                                <svg class="w-3 h-3 shrink-0 text-[#92400e]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                                <span class="truncate">{{ $slot['docente'] ?? $lab['docente'] }}</span>
+                                            </p>
+                                            <div class="flex items-center justify-between pt-1 text-[10px] font-mono">
+                                                <span class="px-1.5 py-0.5 rounded border border-[#fde68a] bg-[#fef3c7] text-[#92400e] font-bold">
+                                                    Grupo {{ $slot['grupo'] ?? $lab['grupo'] }}
+                                                </span>
+                                                <span class="font-bold text-[#92400e]">
+                                                    <strong>{{ $slot['pcs_uso'] ?? 20 }}</strong>/20 PCs
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Acciones Rápidas en Bloque Ocupado --}}
+                                    <div class="mt-3 pt-2 border-t border-[#fde68a] space-y-1.5">
+                                        <button type="button"
+                                                onclick="window.HorariosDecision.verOtroLabLibre('{{ $slot['hora'] }}', '{{ $slot['rango'] ?? $slot['hora'] }}', {{ $lab['id'] }})"
+                                                class="w-full py-1.5 px-2.5 rounded-lg border border-surface-container-highest text-[10.5px] font-bold flex items-center justify-center gap-1 cursor-pointer transition hover:bg-surface-container bg-surface-container-low text-primary">
+                                            <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                                            Ver otro lab libre
+                                        </button>
+                                        <button type="button"
+                                                onclick="window.HorariosDecision.abrirOtroDiaHorario({{ $lab['id'] }})"
+                                                class="w-full py-1.5 px-2.5 rounded-lg border border-surface-container-highest text-[10.5px] font-semibold flex items-center justify-center gap-1 cursor-pointer transition hover:bg-surface-container bg-surface-container-lowest text-on-surface-variant hover:text-on-surface">
+                                            <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                            Apartar en otro día / horario
+                                        </button>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </article>
+            @endif
+        @endforeach
+    </div>
+</section>
+
+{{-- ── MODAL 1: VER OTROS LABORATORIOS LIBRES A ESTA MISMA HORA ──────────── --}}
+<div id="modal-labs-libres-hora" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#1b1c18]/60 backdrop-blur-sm">
+    <div class="w-full max-w-2xl rounded-2xl border border-surface-container-highest p-6 shadow-2xl bg-surface-container-lowest text-on-surface">
+        <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest">
+            <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider block text-primary">Alternativas Disponibles en Tiempo Real</span>
+                <h3 class="text-lg font-extrabold text-on-surface">
+                    Laboratorios disponibles a las <span id="alt-hora-label" class="font-mono text-primary">09:00</span> ({{ $diaActual }})
+                </h3>
+            </div>
+            <button type="button" onclick="window.HorariosDecision.closeModal('modal-labs-libres-hora')"
+                    class="w-8 h-8 rounded-lg border border-surface-container-highest flex items-center justify-center cursor-pointer bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+            </button>
+        </div>
+        <div id="alt-labs-container" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto"></div>
     </div>
 </div>
+
+{{-- ── MODAL 2: SELECTOR RÁPIDO DE OTRO DÍA / HORARIO ───────────────────── --}}
+<div id="modal-otro-dia-horario" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#1b1c18]/60 backdrop-blur-sm">
+    <div class="w-full max-w-xl rounded-2xl border border-surface-container-highest p-6 shadow-2xl bg-surface-container-lowest text-on-surface">
+        <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest">
+            <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider block text-primary">Planificador de Sala · MetalNet</span>
+                <h3 class="text-lg font-extrabold text-on-surface" id="od-lab-titulo">L-01 · Redes y Telemetría</h3>
+            </div>
+            <button type="button" onclick="window.HorariosDecision.closeModal('modal-otro-dia-horario')"
+                    class="w-8 h-8 rounded-lg border border-surface-container-highest flex items-center justify-center cursor-pointer bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+            </button>
+        </div>
+
+        <div class="mt-4 space-y-4">
+            <div>
+                <span class="block text-xs font-bold uppercase mb-2 text-outline">1. Selecciona otro día de la semana</span>
+                <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5" id="od-dias-grid">
+                    @foreach($dias as $d)
+                        <button type="button"
+                                onclick="window.HorariosDecision.seleccionarDiaModal('{{ $d }}', this)"
+                                class="od-dia-btn py-2 px-2 rounded-lg text-xs font-bold border transition cursor-pointer {{ $d === $diaActual ? 'bg-primary text-white border-primary shadow-xs font-black' : 'bg-surface-container-low text-on-surface-variant border-surface-container-highest hover:bg-surface-container hover:text-on-surface' }}"
+                                data-dia="{{ $d }}">
+                            {{ $d }}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+
+            <div>
+                <span class="block text-xs font-bold uppercase mb-2 text-outline">2. Bloques horarios de este laboratorio</span>
+                <div id="od-slots-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-60 overflow-y-auto"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- ── MODAL 3: RESERVAR AHORA EN BLOQUE LIBRE (SEGÚN ROL DEL USUARIO) ──── --}}
+<div id="modal-reservar-bloque-libre" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-[#1b1c18]/60 backdrop-blur-sm">
+    <div class="w-full max-w-lg rounded-2xl border border-surface-container-highest p-6 shadow-2xl bg-surface-container-lowest text-on-surface">
+        <div class="flex items-center justify-between pb-3 border-b border-surface-container-highest">
+            <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider block text-primary">Reserva Inmediata de Horario</span>
+                <h3 class="text-lg font-extrabold text-on-surface" id="rb-titulo">Reservar L-01 · 11:00 - 13:00</h3>
+            </div>
+            <button type="button" onclick="window.HorariosDecision.closeModal('modal-reservar-bloque-libre')"
+                    class="w-8 h-8 rounded-lg border border-surface-container-highest flex items-center justify-center cursor-pointer bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+            </button>
+        </div>
+
+        @auth
+            @if(in_array($userRole, ['docente', 'admin'], true))
+                {{-- Formulario para Docente / Admin: Reserva de sala completa --}}
+                <form method="POST" action="{{ route('panel.reservar-sala') }}" class="mt-4 space-y-3.5">
+                    @csrf
+                    <input type="hidden" name="laboratorio_id" id="rb-lab-id" value="1">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase mb-1 text-outline">Día / Fecha *</label>
+                            <input type="text" name="dia" id="rb-dia-input" required value="{{ $diaActual }}"
+                                   class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-xs font-bold text-on-surface focus:outline-none focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase mb-1 text-outline">Bloque Horario *</label>
+                            <input type="text" name="bloque" id="rb-bloque-input" required value="11:00 - 13:00"
+                                   class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-xs font-mono font-bold text-primary focus:outline-none focus:border-primary">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase mb-1 text-outline">Modalidad de Sesión *</label>
+                            <select name="modalidad"
+                                    class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-xs font-bold text-on-surface focus:outline-none focus:border-primary">
+                                <option value="Clase">Clase Regular (Ocupa 20 PCs)</option>
+                                <option value="Examen">Examen Departamental (Ocupa 20 PCs)</option>
+                                <option value="Práctica" selected>Práctica de Laboratorio</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase mb-1 text-outline">Grupo Académico *</label>
+                            <input type="text" name="grupo" required value="MN-8A"
+                                   class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-xs font-mono text-on-surface focus:outline-none focus:border-primary">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase mb-1 text-outline">Asignatura / Nombre de la Sesión *</label>
+                        <input type="text" name="materia" required placeholder="Ej. Redes y Seguridad Informática"
+                               class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-xs text-on-surface focus:outline-none focus:border-primary">
+                    </div>
+                    <div class="pt-2 flex items-center justify-end gap-2">
+                        <button type="button" onclick="window.HorariosDecision.closeModal('modal-reservar-bloque-libre')"
+                                class="px-4 py-2 rounded-lg text-xs font-semibold border border-surface-container-highest bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface cursor-pointer">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                                class="px-5 py-2 text-white font-black rounded-lg text-xs cursor-pointer bg-primary hover:bg-primary-container transition shadow-sm">
+                            Confirmar Reserva de Sala
+                        </button>
+                    </div>
+                </form>
+            @else
+                {{-- Formulario para Alumno: Apartar computadora libre en esa sala --}}
+                <div class="mt-4 space-y-4">
+                    <p class="text-xs text-on-surface-variant leading-relaxed">
+                        Este bloque horario está disponible para práctica libre. Como <strong class="text-primary font-bold">Alumno</strong>, puedes apartar una estación de cómputo inmediatamente:
+                    </p>
+                    <form method="POST" action="{{ route('panel.reservar-pc') }}" class="space-y-3">
+                        @csrf
+                        <input type="hidden" name="laboratorio_id" id="rb-alu-lab-id" value="1">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase mb-1 text-outline">Selecciona Estación (PC-01 a PC-20) *</label>
+                            <select name="estacion_id" class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-xs font-mono font-bold text-primary focus:outline-none focus:border-primary">
+                                @for($p = 1; $p <= 20; $p++)
+                                    <option value="PC-{{ str_pad($p, 2, '0', STR_PAD_LEFT) }}">PC-{{ str_pad($p, 2, '0', STR_PAD_LEFT) }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase mb-1 text-outline">Duración de Práctica *</label>
+                            <select name="duracion" class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-xs font-bold text-on-surface focus:outline-none focus:border-primary">
+                                <option value="1">1 hora</option>
+                                <option value="2" selected>2 horas</option>
+                                <option value="3">3 horas</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase mb-1 text-outline">Objetivo de Práctica *</label>
+                            <input type="text" name="actividad" required value="Práctica libre individual" class="w-full h-10 px-3 rounded-lg border border-outline-variant bg-surface-container-low text-xs text-on-surface focus:outline-none focus:border-primary">
+                        </div>
+                        <div class="pt-2 flex items-center justify-end gap-2">
+                            <button type="button" onclick="window.HorariosDecision.closeModal('modal-reservar-bloque-libre')"
+                                    class="px-4 py-2 rounded-lg text-xs font-semibold border border-surface-container-highest bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface cursor-pointer">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                    class="px-5 py-2 text-white font-black rounded-lg text-xs cursor-pointer bg-primary hover:bg-primary-container transition shadow-sm">
+                                Apartar Computadora
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            @endif
+        @else
+            {{-- Usuario no autenticado (Visitante) --}}
+            <div class="mt-4 space-y-4 text-xs text-on-surface-variant">
+                <div class="p-3.5 rounded-xl border border-surface-container-highest bg-surface-container-low">
+                    <p class="font-bold text-on-surface mb-1">Inicia sesión para reservar este laboratorio o estación</p>
+                    <p class="leading-relaxed">
+                        Para programar salas completas como <strong class="text-primary">Docente</strong> (Clase, Práctica o Examen) o apartar estaciones individuales como <strong class="text-primary">Alumno</strong>, debes autenticarte con tu cuenta institucional.
+                    </p>
+                </div>
+                <div class="flex items-center justify-end gap-2">
+                    <button type="button" onclick="window.HorariosDecision.closeModal('modal-reservar-bloque-libre')"
+                            class="px-4 py-2 rounded-lg text-xs font-semibold border border-surface-container-highest bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface cursor-pointer">
+                        Cancelar
+                    </button>
+                    <a href="{{ route('login') }}"
+                       class="px-5 py-2 text-white font-black rounded-lg text-xs bg-primary hover:bg-primary-container transition shadow-sm">
+                        Ir a Iniciar Sesión
+                    </a>
+                </div>
+            </div>
+        @endauth
+    </div>
+</div>
+
+<script>
+    window.HorariosDecision = (function () {
+        const LABS = (window.BM_DATA && window.BM_DATA.labs) || [];
+        let selectedLabForDay = null;
+        let currentDayModal = @json($diaActual);
+
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove('hidden');
+            el.classList.add('flex');
+        }
+
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.add('hidden');
+            el.classList.remove('flex');
+        }
+
+        function verOtroLabLibre(horaStr, rangoStr, currentLabId) {
+            const label = document.getElementById('alt-hora-label');
+            if (label) label.textContent = rangoStr || horaStr;
+
+            const container = document.getElementById('alt-labs-container');
+            container.innerHTML = '';
+
+            const libres = LABS.filter(l => {
+                if (String(l.id) === String(currentLabId)) return false;
+                const slot = (l.horarios || []).find(s => s.hora === horaStr);
+                return slot && slot.estado === 'libre';
+            });
+
+            if (!libres.length) {
+                container.innerHTML = '<div class="col-span-2 p-4 rounded-xl border border-surface-container-highest bg-surface-container-low text-xs text-outline">Todos los laboratorios tienen sesión programada en este bloque. Usa el botón "Apartar en otro día / horario".</div>';
+            } else {
+                libres.forEach(l => {
+                    const card = document.createElement('div');
+                    card.className = 'p-4 rounded-xl border border-surface-container-highest bg-surface-container-low flex flex-col justify-between gap-3 shadow-xs';
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="px-2.5 py-0.5 rounded font-mono text-xs font-bold border border-surface-container-highest bg-surface-container text-primary">${l.codigo} · ${l.etiqueta}</span>
+                                <span class="text-xs font-mono font-bold text-primary">${l.conteo.disponible} PCs libres</span>
+                            </div>
+                            <h4 class="text-sm font-extrabold mt-2 text-on-surface">${l.nombre}</h4>
+                            <p class="text-[11px] mt-0.5 text-outline">${l.planta} · ${l.canon ? 'Cañón Activo' : 'Sin Cañón'}</p>
+                        </div>
+                        <button type="button" class="w-full py-2 px-3 rounded-lg text-white font-black text-xs cursor-pointer transition bg-primary hover:bg-primary-container shadow-xs">
+                            Reservar ${l.codigo} (${rangoStr})
+                        </button>
+                    `;
+                    card.querySelector('button').onclick = () => {
+                        closeModal('modal-labs-libres-hora');
+                        abrirReservaAhora(l.id, horaStr, rangoStr, currentDayModal);
+                    };
+                    container.appendChild(card);
+                });
+            }
+
+            openModal('modal-labs-libres-hora');
+        }
+
+        function abrirOtroDiaHorario(labId) {
+            const lab = LABS.find(l => String(l.id) === String(labId));
+            if (!lab) return;
+            selectedLabForDay = lab;
+            document.getElementById('od-lab-titulo').textContent = `${lab.codigo} · ${lab.nombre}`;
+            renderSlotsForLabDay(lab, currentDayModal);
+            openModal('modal-otro-dia-horario');
+        }
+
+        function seleccionarDiaModal(dia, btnEl) {
+            currentDayModal = dia;
+            document.querySelectorAll('.od-dia-btn').forEach(b => {
+                const active = b === btnEl;
+                b.className = 'od-dia-btn py-2 px-2 rounded-lg text-xs font-bold border transition cursor-pointer ' +
+                    (active ? 'bg-primary text-white border-primary shadow-xs font-black' : 'bg-surface-container-low text-on-surface-variant border-surface-container-highest hover:bg-surface-container hover:text-on-surface');
+            });
+            if (selectedLabForDay) renderSlotsForLabDay(selectedLabForDay, dia);
+        }
+
+        function renderSlotsForLabDay(lab, dia) {
+            const grid = document.getElementById('od-slots-grid');
+            grid.innerHTML = '';
+            (lab.horarios || []).forEach(slot => {
+                const isFree = slot.estado === 'libre';
+                const div = document.createElement('div');
+                div.className = 'p-3 rounded-xl border flex items-center justify-between gap-2 shadow-xs ' +
+                    (isFree ? 'border-[#b3f1be] bg-[#f5fbf7]' : 'border-[#fde68a] bg-[#fffdf5]');
+                div.innerHTML = `
+                    <div>
+                        <span class="font-mono text-xs font-extrabold block ${isFree ? 'text-[#16512c]' : 'text-[#92400e]'}">${slot.rango || slot.hora}</span>
+                        <span class="text-[11px] block truncate max-w-[170px] text-outline">${isFree ? 'Disponible para reserva' : slot.titulo}</span>
+                    </div>
+                    ${isFree
+                        ? '<button type="button" class="px-3 py-1.5 rounded-lg text-white font-black text-xs cursor-pointer bg-primary hover:bg-primary-container transition shadow-xs">Reservar</button>'
+                        : '<span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded border border-[#fde68a] bg-[#fef3c7] text-[#92400e]">Ocupado</span>'}
+                `;
+                if (isFree) {
+                    div.querySelector('button').onclick = () => {
+                        closeModal('modal-otro-dia-horario');
+                        abrirReservaAhora(lab.id, slot.hora, slot.rango || slot.hora, dia);
+                    };
+                }
+                grid.appendChild(div);
+            });
+        }
+
+        function abrirReservaAhora(labId, horaStr, rangoStr, diaStr) {
+            const lab = LABS.find(l => String(l.id) === String(labId));
+            if (!lab) return;
+            document.getElementById('rb-titulo').textContent = `Reservar ${lab.codigo} (${lab.corto}) · ${rangoStr}`;
+            const labInput = document.getElementById('rb-lab-id');
+            const aluLabInput = document.getElementById('rb-alu-lab-id');
+            const diaInput = document.getElementById('rb-dia-input');
+            const bloqueInput = document.getElementById('rb-bloque-input');
+            if (labInput) labInput.value = lab.id;
+            if (aluLabInput) aluLabInput.value = lab.id;
+            if (diaInput) diaInput.value = diaStr;
+            if (bloqueInput) bloqueInput.value = rangoStr;
+
+            openModal('modal-reservar-bloque-libre');
+        }
+
+        return { verOtroLabLibre, abrirOtroDiaHorario, seleccionarDiaModal, abrirReservaAhora, openModal, closeModal };
+    })();
+</script>
 @endsection

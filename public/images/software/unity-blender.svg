@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#0D1714" stroke="#F59E0B" stroke-width="2"/>
+  <!-- Unity / Blender 3D Cube + Ring -->
+  <polygon points="32,12 50,22 50,42 32,52 14,42 14,22" fill="#F59E0B" fill-opacity="0.18" stroke="#F59E0B" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M14 22 L32 32 L50 22 M32 32 V52" stroke="#38BDF8" stroke-width="2.2"/>
+  <circle cx="32" cy="32" r="5" fill="#34D399"/>
+</svg>

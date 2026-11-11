@@ -4,36 +4,30 @@ namespace Database\Seeders;
 
 use App\Models\CategoriaEquipo;
 use App\Models\Rol;
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Roles institucionales requeridos
+        // 1. Los 3 roles institucionales definitivos de MetalNet
         $roles = [
             [
-                'nombre' => 'Administrador',
-                'descripcion' => 'Acceso total a la configuración del sistema, usuarios, inventario, reportes e indicadores globales.',
+                'nombre' => 'admin',
+                'descripcion' => 'Administrador de Laboratorios · Control total institucional, inventario, mantenimiento y operación de salas, reparación de averías, autorización de solicitudes y horarios maestros.',
             ],
             [
-                'nombre' => 'Encargado de laboratorio',
-                'descripcion' => 'Administración operativa de laboratorios, estaciones, inventario, software, incidencias, mantenimientos y control de acceso.',
+                'nombre' => 'docente',
+                'descripcion' => 'Docente · Programación de laboratorios completos por bloque (Clase, Práctica o Examen), solicitud de software y gestión académica.',
             ],
             [
-                'nombre' => 'Docente',
-                'descripcion' => 'Consulta de disponibilidad, solicitud de reservas para clases y prácticas académicas, supervisión de equipos.',
-            ],
-            [
-                'nombre' => 'Alumno',
-                'descripcion' => 'Consulta de horarios y prácticas autorizadas, solicitud de reservas individuales y uso de equipos asignados.',
+                'nombre' => 'alumno',
+                'descripcion' => 'Alumno · Acceso a salas, reserva de estación individual para práctica libre y consulta de disponibilidad en tiempo real.',
             ],
         ];
 
         foreach ($roles as $r) {
-            Rol::firstOrCreate(
+            Rol::updateOrCreate(
                 ['nombre' => $r['nombre']],
                 ['descripcion' => $r['descripcion']]
             );
@@ -41,15 +35,15 @@ class RoleSeeder extends Seeder
 
         // 2. Categorías base de equipamiento
         $categorias = [
-            ['nombre' => 'Estaciones de Cómputo (PC)', 'descripcion' => 'Equipos de escritorio fijos instalados en las estaciones de laboratorio.'],
-            ['nombre' => 'Laptops y Portátiles', 'descripcion' => 'Equipos portátiles para préstamo y trabajo en campo.'],
-            ['nombre' => 'Servidores y Racks', 'descripcion' => 'Servidores institucionales, switches centrales y unidades de respaldo.'],
-            ['nombre' => 'Equipamiento de Redes', 'descripcion' => 'Switches didácticos, routers Cisco, patch panels y puntos de acceso.'],
-            ['nombre' => 'Periféricos e Instrumentación', 'descripcion' => 'Multímetros digitales, osciloscopios, proyectores y kits didácticos IoT.'],
+            ['nombre' => 'Estaciones de Cómputo (PC)', 'descripcion' => 'Workstations fijas instaladas en las estaciones PC-01 a PC-20 de cada laboratorio.'],
+            ['nombre' => 'Proyectores y Cañones', 'descripcion' => 'Cañones láser 4K/FHD fijos y portátiles para sesiones académicas.'],
+            ['nombre' => 'Servidores y Racks', 'descripcion' => 'Servidores de clúster GPU, switches centrales y unidades de almacenamiento.'],
+            ['nombre' => 'Equipamiento de Redes', 'descripcion' => 'Switches Cisco Catalyst, routers WAN, firewalls y transceptores SFP+.'],
+            ['nombre' => 'Periféricos e Instrumentación', 'descripcion' => 'Osciloscopios digitales, fuentes DC programables, visores XR y kits embebidos.'],
         ];
 
         foreach ($categorias as $c) {
-            CategoriaEquipo::firstOrCreate(
+            CategoriaEquipo::updateOrCreate(
                 ['nombre' => $c['nombre']],
                 ['descripcion' => $c['descripcion']]
             );

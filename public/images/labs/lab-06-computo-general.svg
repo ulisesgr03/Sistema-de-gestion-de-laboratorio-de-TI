@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <defs>
+    <linearGradient id="l6-bg" x1="0" y1="0" x2="600" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1B2B28"/>
+      <stop offset="55%" stop-color="#283F3B"/>
+      <stop offset="100%" stop-color="#162320"/>
+    </linearGradient>
+    <pattern id="l6-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#556F44" stroke-width="0.75" stroke-opacity="0.25"/>
+    </pattern>
+  </defs>
+
+  <rect width="600" height="300" rx="16" fill="url(#l6-bg)"/>
+  <rect width="600" height="300" rx="16" fill="url(#l6-grid)"/>
+
+  <!-- Left: Dual Dell OptiPlex Pro Display Workstation -->
+  <g transform="translate(60, 40)">
+    <!-- Primary 24" IPS Display -->
+    <rect x="0" y="10" width="180" height="120" rx="6" fill="#141E1C" stroke="#659B5E" stroke-width="2"/>
+    <rect x="8" y="18" width="164" height="104" rx="3" fill="#1A2825"/>
+    
+    <!-- Numerical Simulation Matrix & 3D Surface Curve (MATLAB Style) -->
+    <path d="M 20 90 Q 50 40 90 70 T 150 50" fill="none" stroke="#99DDC8" stroke-width="2.5"/>
+    <path d="M 20 105 Q 50 60 90 85 T 150 70" fill="none" stroke="#95BF74" stroke-width="1.8" stroke-dasharray="4 2"/>
+    <path d="M 20 115 Q 50 80 90 100 T 150 90" fill="none" stroke="#C5D9C0" stroke-width="1.2"/>
+    
+    <!-- Simulation Equations Text Overlay -->
+    <text x="18" y="32" fill="#99DDC8" font-family="monospace" font-size="9" font-weight="bold">MATLAB R2024b · ODE45 Solver</text>
+    <text x="18" y="44" fill="#95BF74" font-family="monospace" font-size="8">dy/dt = -0.5y + cos(ωt)</text>
+    <text x="18" y="56" fill="#C5D9C0" font-family="monospace" font-size="8">Convergence Error: 1.2e-6</text>
+
+    <!-- Monitor Stand -->
+    <rect x="75" y="130" width="30" height="24" fill="#20302D" stroke="#556F44" stroke-width="1"/>
+    <rect x="55" y="154" width="70" height="6" rx="3" fill="#283F3B" stroke="#659B5E" stroke-width="1.2"/>
+
+    <!-- Mini PC Tower (OptiPlex 7010) on right of desk -->
+    <rect x="195" y="40" width="34" height="118" rx="4" fill="#182321" stroke="#556F44" stroke-width="1.5"/>
+    <rect x="202" y="50" width="20" height="6" rx="1.5" fill="#283F3B"/>
+    <circle cx="212" cy="70" r="3" fill="#99DDC8"/>
+    <rect x="202" y="90" width="20" height="40" rx="1" fill="#121B19" stroke="#659B5E" stroke-width="0.8"/>
+  </g>
+
+  <!-- Right: Computational Simulation Cluster Metrics -->
+  <g transform="translate(325, 40)">
+    <rect x="0" y="0" width="215" height="220" rx="10" fill="#182421" stroke="#659B5E" stroke-width="2"/>
+    <rect x="12" y="12" width="191" height="28" rx="5" fill="#20332F"/>
+    <text x="22" y="30" fill="#99DDC8" font-family="sans-serif" font-size="10" font-weight="bold">Telemetría de Simulación</text>
+
+    <!-- Bars / Resource Allocation -->
+    <g transform="translate(18, 55)">
+      <text x="0" y="12" fill="#F3F7F5" font-family="sans-serif" font-size="9" font-weight="bold">Intel Core i5-13500 (14 Cores)</text>
+      <rect x="0" y="18" width="180" height="8" rx="3" fill="#131D1B"/>
+      <rect x="0" y="18" width="144" height="8" rx="3" fill="#99DDC8"/>
+      <text x="148" y="14" fill="#99DDC8" font-family="monospace" font-size="8">80%</text>
+
+      <text x="0" y="44" fill="#F3F7F5" font-family="sans-serif" font-size="9" font-weight="bold">RAM DDR5 4800MHz</text>
+      <rect x="0" y="50" width="180" height="8" rx="3" fill="#131D1B"/>
+      <rect x="0" y="50" width="115" height="8" rx="3" fill="#95BF74"/>
+      <text x="148" y="46" fill="#95BF74" font-family="monospace" font-size="8">10.2 GB</text>
+
+      <text x="0" y="76" fill="#F3F7F5" font-family="sans-serif" font-size="9" font-weight="bold">NVMe PCIe 4.0 Throughput</text>
+      <rect x="0" y="82" width="180" height="8" rx="3" fill="#131D1B"/>
+      <rect x="0" y="82" width="160" height="8" rx="3" fill="#99DDC8"/>
+      <text x="148" y="78" fill="#99DDC8" font-family="monospace" font-size="8">3.8 GB/s</text>
+    </g>
+
+    <!-- Bottom Status -->
+    <rect x="14" y="170" width="187" height="34" rx="6" fill="#141E1C" stroke="#556F44" stroke-width="1"/>
+    <circle cx="28" cy="187" r="4" fill="#99DDC8"/>
+    <text x="38" y="191" fill="#99DDC8" font-family="monospace" font-size="8.5" font-weight="bold">20 ESTACIONES · SEDE SIMULACIÓN</text>
+  </g>
+</svg>

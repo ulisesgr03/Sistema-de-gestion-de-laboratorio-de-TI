@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#0D1714" stroke="#1679A7" stroke-width="2"/>
+  <!-- Wireshark Fin Wave -->
+  <path d="M10 46 H22 C24 32 32 18 46 16 C42 26 42 36 46 46 H54" stroke="#38BDF8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="#0EA5E9" fill-opacity="0.22"/>
+  <path d="M12 52 H52" stroke="#34D399" stroke-width="2" stroke-dasharray="4 3" stroke-linecap="round"/>
+</svg>

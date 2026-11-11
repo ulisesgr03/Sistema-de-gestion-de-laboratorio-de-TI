@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <defs>
+    <linearGradient id="l5-bg" x1="0" y1="0" x2="600" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1B2B28"/>
+      <stop offset="55%" stop-color="#283F3B"/>
+      <stop offset="100%" stop-color="#15221F"/>
+    </linearGradient>
+    <pattern id="l5-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#556F44" stroke-width="0.75" stroke-opacity="0.25"/>
+    </pattern>
+  </defs>
+
+  <rect width="600" height="300" rx="16" fill="url(#l5-bg)"/>
+  <rect width="600" height="300" rx="16" fill="url(#l5-grid)"/>
+
+  <!-- Left: Rigol Digital Oscilloscope Bench Instrument -->
+  <g transform="translate(60, 40)">
+    <rect x="0" y="0" width="220" height="220" rx="10" fill="#182421" stroke="#556F44" stroke-width="2"/>
+    
+    <!-- Top Instrument Brand & Model -->
+    <rect x="12" y="12" width="196" height="24" rx="4" fill="#20332F"/>
+    <text x="20" y="28" fill="#99DDC8" font-family="sans-serif" font-size="10" font-weight="bold">Rigol DS1054Z · 4CH 100MHz</text>
+
+    <!-- Oscilloscope CRT/LCD Screen with Live Waveform -->
+    <rect x="12" y="44" width="144" height="110" rx="6" fill="#121C1A" stroke="#659B5E" stroke-width="1.5"/>
+    <!-- Screen Reticle Grid -->
+    <path d="M 12 71 H 156 M 12 99 H 156 M 12 127 H 156 M 48 44 V 154 M 84 44 V 154 M 120 44 V 154" stroke="#2B3F3B" stroke-width="0.75"/>
+    
+    <!-- Channel 1: Sine Wave (Pearl Aqua) -->
+    <path d="M 14 99 Q 32 60 50 99 T 86 99 T 122 99 T 154 99" fill="none" stroke="#99DDC8" stroke-width="2"/>
+    <!-- Channel 2: PWM Square Wave (Yellow) -->
+    <path d="M 14 130 H 32 V 110 H 50 V 130 H 68 V 110 H 86 V 130 H 104 V 110 H 122 V 130 H 154" fill="none" stroke="#F59E0B" stroke-width="1.8"/>
+
+    <!-- Screen Telemetry -->
+    <text x="18" y="58" fill="#99DDC8" font-family="monospace" font-size="8">CH1: 2.00V  1.00kHz</text>
+    <text x="18" y="150" fill="#F59E0B" font-family="monospace" font-size="8">CH2: 3.30V (PWM 50%)</text>
+
+    <!-- Control Knobs & BNC Inputs -->
+    <g transform="translate(164, 44)">
+      <!-- Big Encoder Knob -->
+      <circle cx="20" cy="20" r="14" fill="#243834" stroke="#659B5E" stroke-width="1.5"/>
+      <circle cx="20" cy="20" r="4" fill="#99DDC8"/>
+      <line x1="20" y1="6" x2="20" y2="12" stroke="#99DDC8" stroke-width="2"/>
+
+      <!-- Small Knobs -->
+      <circle cx="10" cy="56" r="8" fill="#20302D" stroke="#556F44" stroke-width="1.2"/>
+      <circle cx="30" cy="56" r="8" fill="#20302D" stroke="#556F44" stroke-width="1.2"/>
+
+      <circle cx="10" cy="80" r="8" fill="#20302D" stroke="#556F44" stroke-width="1.2"/>
+      <circle cx="30" cy="80" r="8" fill="#20302D" stroke="#556F44" stroke-width="1.2"/>
+    </g>
+
+    <!-- 4 BNC Probe Connectors (Bottom) -->
+    <g transform="translate(18, 168)" fill="#20332F" stroke="#659B5E" stroke-width="1.2">
+      <circle cx="20" cy="20" r="10"/>
+      <circle cx="20" cy="20" r="4" fill="#99DDC8"/>
+
+      <circle cx="56" cy="20" r="10"/>
+      <circle cx="56" cy="20" r="4" fill="#F59E0B"/>
+
+      <circle cx="92" cy="20" r="10"/>
+      <circle cx="92" cy="20" r="4" fill="#95BF74"/>
+
+      <circle cx="128" cy="20" r="10"/>
+      <circle cx="128" cy="20" r="4" fill="#C5D9C0"/>
+    </g>
+  </g>
+
+  <!-- Right: STM32 / ESP32 Microcontroller Board & IoT Sensors -->
+  <g transform="translate(310, 40)">
+    <!-- Circuit Board Substrate (PCB Green) -->
+    <rect x="0" y="0" width="230" height="220" rx="12" fill="#1C2D29" stroke="#659B5E" stroke-width="2"/>
+    
+    <!-- Copper Ground Plane Traces -->
+    <g stroke="#95BF74" stroke-width="1.2" opacity="0.65" fill="none">
+      <path d="M 20 20 H 60 V 50 H 80"/>
+      <path d="M 20 200 H 60 V 160 H 90"/>
+      <path d="M 210 20 H 170 V 60 H 140"/>
+      <path d="M 210 200 H 170 V 150 H 140"/>
+    </g>
+
+    <!-- Main MCU Chip (STM32 Cortex-M4 QFP) -->
+    <rect x="75" y="70" width="80" height="80" rx="6" fill="#141E1C" stroke="#99DDC8" stroke-width="2"/>
+    <circle cx="85" cy="80" r="3" fill="#99DDC8"/> <!-- Pin 1 index -->
+    <text x="88" y="105" fill="#99DDC8" font-family="monospace" font-size="9" font-weight="bold">STM32F4</text>
+    <text x="88" y="118" fill="#95BF74" font-family="monospace" font-size="7.5">ARM 168MHz</text>
+    <text x="88" y="130" fill="#C5D9C0" font-family="monospace" font-size="7">FreeRTOS</text>
+
+    <!-- Pins on 4 Sides of MCU -->
+    <g fill="#99DDC8">
+      <!-- Top -->
+      <rect x="85" y="62" width="3" height="8"/>
+      <rect x="95" y="62" width="3" height="8"/>
+      <rect x="105" y="62" width="3" height="8"/>
+      <rect x="115" y="62" width="3" height="8"/>
+      <rect x="125" y="62" width="3" height="8"/>
+      <rect x="135" y="62" width="3" height="8"/>
+      <!-- Bottom -->
+      <rect x="85" y="150" width="3" height="8"/>
+      <rect x="95" y="150" width="3" height="8"/>
+      <rect x="105" y="150" width="3" height="8"/>
+      <rect x="115" y="150" width="3" height="8"/>
+      <rect x="125" y="150" width="3" height="8"/>
+      <rect x="135" y="150" width="3" height="8"/>
+      <!-- Left -->
+      <rect x="67" y="80" width="8" height="3"/>
+      <rect x="67" y="90" width="8" height="3"/>
+      <rect x="67" y="100" width="8" height="3"/>
+      <rect x="67" y="110" width="8" height="3"/>
+      <rect x="67" y="120" width="8" height="3"/>
+      <rect x="67" y="130" width="8" height="3"/>
+      <!-- Right -->
+      <rect x="155" y="80" width="8" height="3"/>
+      <rect x="155" y="90" width="8" height="3"/>
+      <rect x="155" y="100" width="8" height="3"/>
+      <rect x="155" y="110" width="8" height="3"/>
+      <rect x="155" y="120" width="8" height="3"/>
+      <rect x="155" y="130" width="8" height="3"/>
+    </g>
+
+    <!-- Crystal Oscillator -->
+    <rect x="165" y="30" width="36" height="20" rx="3" fill="#243834" stroke="#659B5E" stroke-width="1.2"/>
+    <text x="170" y="44" fill="#95BF74" font-family="monospace" font-size="8">16.000</text>
+
+    <!-- USB Type-C Programming Port -->
+    <rect x="95" y="8" width="40" height="22" rx="4" fill="#283F3B" stroke="#99DDC8" stroke-width="1.5"/>
+    <rect x="102" y="12" width="26" height="12" rx="2" fill="#121B19"/>
+
+    <!-- Pin Headers (Dual Row) -->
+    <g fill="#99DDC8">
+      <circle cx="25" cy="40" r="2.5"/><circle cx="35" cy="40" r="2.5"/>
+      <circle cx="25" cy="55" r="2.5"/><circle cx="35" cy="55" r="2.5"/>
+      <circle cx="25" cy="70" r="2.5"/><circle cx="35" cy="70" r="2.5"/>
+      <circle cx="25" cy="85" r="2.5"/><circle cx="35" cy="85" r="2.5"/>
+      <circle cx="25" cy="100" r="2.5"/><circle cx="35" cy="100" r="2.5"/>
+      <circle cx="25" cy="115" r="2.5"/><circle cx="35" cy="115" r="2.5"/>
+      <circle cx="25" cy="130" r="2.5"/><circle cx="35" cy="130" r="2.5"/>
+    </g>
+
+    <!-- Status Banner at Bottom -->
+    <rect x="16" y="178" width="198" height="26" rx="6" fill="#152220" stroke="#95BF74" stroke-width="1"/>
+    <circle cx="30" cy="191" r="4" fill="#99DDC8"/>
+    <text x="42" y="195" fill="#99DDC8" font-family="monospace" font-size="9" font-weight="bold">MQTT / TELEMETRÍA I2C</text>
+  </g>
+</svg>

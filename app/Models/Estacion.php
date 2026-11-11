@@ -8,12 +8,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Estacion extends Model
 {
-    protected $fillable = [
-        'laboratorio_id',
-        'nombre',
-        'ubicacion',
-        'estado',
-    ];
+    protected $table = 'estaciones';
+
+    protected $guarded = [];
+
+    public function setCodigoAttribute($value): void
+    {
+        $this->attributes['nombre'] = $value;
+    }
+
+    public function setFilaAttribute($value): void {}
+    public function setColumnaAttribute($value): void {}
+    public function setEspecificacionesAttribute($value): void {}
+
+    public function getCodigoAttribute(): string
+    {
+        return $this->attributes['nombre'] ?? 'PC-01';
+    }
 
     public function laboratorio(): BelongsTo
     {
