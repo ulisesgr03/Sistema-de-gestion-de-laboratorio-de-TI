@@ -6,6 +6,10 @@
     - Modal "Mapa de laboratorios" con detalles técnicos completos de cada sala.
 --}}
 @php
+    if (!empty($GLOBALS['__bm_interactivo_rendered'])) {
+        return;
+    }
+    $GLOBALS['__bm_interactivo_rendered'] = true;
     $bmLabsList = $bmLabs ?? [];
     $userRoleSlug = Auth::check() ? Auth::user()->primaryRoleSlug() : null;
     $isStaff = in_array($userRoleSlug, ['admin', 'encargado'], true);
@@ -619,11 +623,9 @@
                 @endforeach
             </div>
         </div>
-        <div class="p-5 sm:p-6" data-tab-group="mapa-modal">
+        <div class="p-5 sm:p-6" data-tab-group="mapa-modal" id="mapa-modal-panels">
             @foreach($bmLabsList as $i => $labMapa)
-                <div data-tab-panel="{{ $labMapa['id'] }}" class="{{ $i === 0 ? '' : 'hidden' }}">
-                    @include('partials.lab-sala', ['lab' => $labMapa])
-                </div>
+                <div data-tab-panel="{{ $labMapa['id'] }}" data-lazy-lab="{{ $labMapa['id'] }}" class="{{ $i === 0 ? '' : 'hidden' }}"></div>
             @endforeach
         </div>
     </div>
@@ -776,7 +778,13 @@
     window.MetalNetPC = (function () {
         const LABS = window.BM_DATA.labs || [];
         const PCS = {};
-        LABS.forEach(l => l.pcs.forEach(p => { p.lab = l; p.original = p.estado; PCS[p.id] = p; }));
+        LABS.forEach(l => l.pcs.forEach(p => {
+            p.lab = l;
+            p.original = p.estado;
+            p.hw = p.hw || l.hw_detallado || l.specs_detalladas;
+            p.sw_versiones = p.sw_versiones || l.software;
+            PCS[p.id] = p;
+        }));
 
         const LABEL = {
             disponible: 'Disponible',
@@ -946,9 +954,84 @@
             });
         }
 
-        function abrirMapa(lab, pcId = null, filtro = 'todos') {
-            const l = LABS.find(x => x.id == lab || x.codigo === lab) || LABS[0];
+        function renderLazyLabPanel(labId) {
+            const panel = document.querySelector('#mapa-modal-panels [data-lazy-lab="' + labId + '"]');
+            if (!panel || panel.dataset.rendered === '1') return;
+            const l = LABS.find(x => String(x.id) === String(labId));
             if (!l) return;
+            panel.dataset.rendered = '1';
+
+            const hwChips = (l.hardware || []).map(hw => '<span class="bm-sw-chip">' + esc(hw) + '</span>').join('');
+            const swChips = (l.software || []).map(sw => '<span class="bm-sw-chip">' + esc(sw) + '</span>').join('');
+            const pcsHtml = (l.pcs || []).map(pc => {
+                const imgSrc = getImgForState(pc.estado);
+                const stUi = LABEL[pc.estado] || 'Ocupado';
+                return '<button type="button" class="pc-tile pc-tile--full" data-pc-id="' + esc(pc.id) + '" data-estado="' + esc(pc.estado) + '" aria-label="' + esc(pc.codigo + ' · ' + stUi + ' · ' + l.codigo) + '">' +
+                    '<span class="pc-tile__top"><span class="pc-tile__code">' + esc(pc.codigo) + '</span><span class="pc-tile__led"></span></span>' +
+                    '<img src="' + esc(imgSrc) + '" alt="' + esc(pc.codigo) + '" loading="lazy" decoding="async" class="w-14 h-11 object-contain pointer-events-none select-none pc-tile__img">' +
+                    '<span class="pc-tile__status">' + esc(stUi) + '</span>' +
+                '</button>';
+            }).join('');
+
+            panel.innerHTML =
+                '<div class="space-y-4">' +
+                    '<div class="p-4 bg-surface-container-low rounded-xl border border-surface-container-highest flex flex-col lg:flex-row lg:items-center justify-between gap-3">' +
+                        '<div class="flex items-center gap-3.5 min-w-0">' +
+                            '<div class="w-12 h-12 rounded-xl bg-primary text-on-primary flex items-center justify-center font-extrabold text-sm shrink-0 font-mono">' + esc(l.codigo) + '</div>' +
+                            '<div class="min-w-0">' +
+                                '<div class="flex flex-wrap items-center gap-2">' +
+                                    '<h3 class="text-base font-bold text-on-surface truncate">' + esc(l.nombre) + '</h3>' +
+                                    '<span class="px-2.5 py-0.5 text-[11px] rounded-md font-bold ' + esc(l.badge_color || 'bg-[#FEF3C7] text-[#854D0E] border border-[#EAB308]/60') + '">' + esc(l.badge) + '</span>' +
+                                    '<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-mono text-[11px] font-bold border border-surface-container-highest">Subred ' + esc(l.red || ('192.168.' + l.id + '0.0/24')) + '</span>' +
+                                '</div>' +
+                                '<div class="text-xs text-on-surface-variant flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">' +
+                                    '<span>' + esc(l.ubicacion) + ' (' + esc(l.planta) + ')</span>' +
+                                    '<span class="text-outline-variant">·</span>' +
+                                    '<span>Docente: <strong class="text-on-surface">' + esc(l.docente) + '</strong> (' + esc(l.asignatura) + ' · ' + esc(l.grupo) + ')</span>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="mn-legend-capsule shrink-0">' +
+                            '<span class="mn-legend-item"><span class="mn-legend-dot mn-legend-dot--free"></span><span>Disponible (<strong class="font-mono text-status-available">' + (l.conteo ? l.conteo.disponible : 0) + '</strong>)</span></span>' +
+                            '<span class="mn-legend-item"><span class="mn-legend-dot mn-legend-dot--busy"></span><span>Ocupado (<strong class="font-mono text-status-occupied">' + (l.conteo ? l.conteo.ocupado : 0) + '</strong>)</span></span>' +
+                            '<span class="mn-legend-item"><span class="mn-legend-dot mn-legend-dot--down"></span><span>No disponible (<strong class="font-mono text-status-unavailable">' + (l.conteo ? l.conteo.mantenimiento : 0) + '</strong>)</span></span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="p-4 bg-surface-container-low border border-surface-container-highest rounded-xl text-xs grid grid-cols-1 md:grid-cols-3 gap-4">' +
+                        '<div>' +
+                            '<span class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-tertiary mb-1.5">Sesión Actual y Red</span>' +
+                            '<p class="font-bold text-on-surface">' + esc(l.asignatura) + '</p>' +
+                            '<p class="text-on-surface-variant mt-0.5">' + esc(l.docente) + ' · Grupo ' + esc(l.grupo) + '</p>' +
+                            '<p class="font-mono text-[11px] text-primary font-semibold mt-1">IPv4 VLAN: ' + esc(l.red || ('192.168.' + l.id + '0.0/24')) + ' · Próximo cambio: ' + esc(l.proximo_cambio || '11:00 h') + '</p>' +
+                        '</div>' +
+                        '<div><span class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-tertiary mb-1.5">Hardware Instalado por Estación</span><div class="flex flex-wrap gap-1.5">' + hwChips + '</div></div>' +
+                        '<div><span class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-tertiary mb-1.5">Software Homologado en Sala</span><div class="flex flex-wrap gap-1.5">' + swChips + '</div></div>' +
+                    '</div>' +
+                    '<div class="relative bg-surface-container-lowest border border-surface-container-highest rounded-2xl p-4 sm:p-6">' +
+                        '<div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-5 border-b border-surface-container-highest text-xs font-bold text-on-surface-variant">' +
+                            '<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low border border-surface-container-highest text-on-surface"><span>Estrado Docente y Pizarrón (' + esc(l.canon_estado) + ')</span></div>' +
+                            '<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low border border-surface-container-highest text-on-surface-variant">Rack IDF · SW-' + esc(l.codigo) + '</span>' +
+                        '</div>' +
+                        '<div class="pc-grid pc-grid--full" data-lab-grid="' + esc(l.id) + '">' + pcsHtml + '</div>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        document.addEventListener('bm:tab', e => {
+            if (e.detail && e.detail.group === 'mapa-modal') {
+                renderLazyLabPanel(e.detail.key);
+            }
+        });
+
+        function abrirMapa(lab, pcId = null, filtro = 'todos') {
+            let l = LABS.find(x => x.id == lab || x.codigo === lab);
+            if (!l && lab !== null && lab !== undefined && !isNaN(parseInt(lab, 10))) {
+                const idx = parseInt(lab, 10);
+                if (LABS[idx]) l = LABS[idx];
+            }
+            if (!l) l = LABS[0];
+            if (!l) return;
+            renderLazyLabPanel(l.id);
             MetalNetUI.activateTab('mapa-modal', l.id);
             const modal = $('modal-mapa-labs');
             filtrar(modal.querySelector('[data-pc-scope]') || modal, filtro);
@@ -957,7 +1040,7 @@
                 setTimeout(() => {
                     const t = modal.querySelector('[data-pc-id="' + pcId + '"]');
                     if (t) { t.scrollIntoView({ block: 'center', behavior: 'smooth' }); t.classList.add('is-highlight'); setTimeout(() => t.classList.remove('is-highlight'), 3200); }
-                }, 120);
+                }, 80);
             }
         }
 
@@ -1026,10 +1109,15 @@
                 tile.setAttribute('data-estado', nuevoEstado);
                 const stText = tile.querySelector('.pc-tile__status');
                 if (stText) stText.textContent = LABEL[nuevoEstado] || nuevoEstado;
+                const img = tile.querySelector('.pc-tile__img');
+                if (img) img.src = getImgForState(nuevoEstado);
                 const led = tile.querySelector('.pc-tile__led');
                 if (led) {
                     led.style.background = nuevoEstado === 'disponible' ? '#94ECBE' : (nuevoEstado === 'mantenimiento' ? '#EF4444' : '#F59E0B');
                 }
+            });
+            document.querySelectorAll('.bm-3d-desk-unit[data-pc-id="' + pcId + '"] .bm-3d-monitor').forEach(mon => {
+                mon.className = 'bm-3d-monitor is-' + nuevoEstado;
             });
             window.dispatchEvent(new CustomEvent('metalnet:pc-updated', { detail: { pcId, estado: nuevoEstado } }));
         }
@@ -1122,5 +1210,128 @@
         }
 
         return { abrirFicha, abrirMapa, filtrar, LABS, PCS, LABEL, actualizarVisualPc };
+    })();
+
+    // Navegación Instantánea con Prefetch en Memoria (evita recargar Tailwind CDN al cambiar de página)
+    window.MetalNetNav = (function () {
+        const cache = new Map();
+        const TTL = 20000;
+        let navController = null;
+
+        function isNavigableLink(a) {
+            if (!a || !a.href) return false;
+            if (a.target || a.hasAttribute('download') || a.hasAttribute('data-no-instant')) return false;
+            try {
+                const u = new URL(a.href, window.location.origin);
+                if (u.origin !== window.location.origin) return false;
+                if (u.pathname === '/logout' || u.pathname === '/login' || u.pathname === '/register') return false;
+                if (u.pathname === window.location.pathname && u.search === window.location.search && u.hash) return false;
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function prefetch(url) {
+            const entry = cache.get(url);
+            if (entry && (Date.now() - entry.ts < TTL)) return entry.promise;
+            const promise = fetch(url, {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: { 'X-MetalNet-Prefetch': '1' }
+            }).then(r => {
+                if (!r.ok || r.redirected) {
+                    cache.delete(url);
+                    return null;
+                }
+                return r.text();
+            }).catch(() => {
+                cache.delete(url);
+                return null;
+            });
+            cache.set(url, { ts: Date.now(), promise });
+            return promise;
+        }
+
+        async function navigateTo(url, push = true) {
+            if (navController) navController.abort();
+            navController = new AbortController();
+
+            try {
+                let html = null;
+                const cached = cache.get(url);
+                if (cached && (Date.now() - cached.ts < TTL)) {
+                    html = await cached.promise;
+                }
+                if (!html) {
+                    const res = await fetch(url, {
+                        method: 'GET',
+                        credentials: 'same-origin',
+                        signal: navController.signal
+                    });
+                    if (!res.ok || res.redirected) {
+                        window.location.href = res.url || url;
+                        return;
+                    }
+                    html = await res.text();
+                }
+
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                const newMain = doc.querySelector('main');
+                const newHeader = doc.querySelector('header');
+                const curMain = document.querySelector('main');
+                const curHeader = document.querySelector('header');
+
+                if (!newMain || !curMain || !doc.getElementById('pc-popover')) {
+                    window.location.href = url;
+                    return;
+                }
+
+                while (window.MetalNetUI && window.MetalNetUI.closeTop && window.MetalNetUI.closeTop()) {}
+                document.title = doc.title || document.title;
+
+                if (newHeader && curHeader) {
+                    curHeader.replaceWith(newHeader);
+                }
+                curMain.replaceWith(newMain);
+
+                // Ejecutar scripts inline de la nueva vista
+                newMain.querySelectorAll('script').forEach(oldScript => {
+                    const s = document.createElement('script');
+                    Array.from(oldScript.attributes).forEach(attr => s.setAttribute(attr.name, attr.value));
+                    s.textContent = oldScript.textContent;
+                    oldScript.replaceWith(s);
+                });
+
+                if (push) {
+                    window.history.pushState({ metalnet: true }, '', url);
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                }
+            } catch (err) {
+                if (err && err.name === 'AbortError') return;
+                window.location.href = url;
+            }
+        }
+
+        document.addEventListener('mouseover', (e) => {
+            const a = e.target.closest('a[href]');
+            if (isNavigableLink(a)) prefetch(a.href);
+        }, { passive: true });
+
+        document.addEventListener('click', (e) => {
+            if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            const a = e.target.closest('a[href]');
+            if (!isNavigableLink(a)) return;
+            e.preventDefault();
+            navigateTo(a.href, true);
+        });
+
+        window.addEventListener('popstate', () => {
+            navigateTo(window.location.href, false);
+        });
+
+        window.addEventListener('metalnet:pc-updated', () => cache.clear());
+
+        return { prefetch, navigateTo, clearCache: () => cache.clear() };
     })();
 </script>

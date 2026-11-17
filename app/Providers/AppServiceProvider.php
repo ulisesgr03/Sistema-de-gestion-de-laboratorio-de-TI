@@ -21,24 +21,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer('*', function ($view) {
-            $labs = CatalogoLaboratorios::laboratorios();
-            $totales = CatalogoLaboratorios::totales();
-            $labsJs = CatalogoLaboratorios::paraJs();
-            $software = CatalogoLaboratorios::software();
-            $instrumental = CatalogoLaboratorios::instrumental();
-            $solicitudes = CatalogoLaboratorios::solicitudesPendientes();
-            $tareas = CatalogoLaboratorios::tareasAdmin();
-
+        View::composer(['layouts.*', 'public.*', 'private.*', 'partials.estructura-bm-3d', 'partials.bm-interactivo'], function ($view) {
             $view->with('institutionName', config('app.institution_name', 'MetalNet'));
             $view->with('institutionFull', config('app.institution_full', 'MetalNet · Laboratorios de Ingeniería en Sistemas'));
-            $view->with('bmLabs', $labs);
-            $view->with('bmTotales', $totales);
-            $view->with('bmLabsJs', $labsJs);
-            $view->with('bmSoftwareJs', $software);
-            $view->with('bmInstrumentalJs', $instrumental);
-            $view->with('bmSolicitudes', $solicitudes);
-            $view->with('bmTareas', $tareas);
+            $view->with('bmLabs', CatalogoLaboratorios::laboratorios());
+            $view->with('bmTotales', CatalogoLaboratorios::totales());
+            $view->with('bmLabsJs', CatalogoLaboratorios::paraJs());
+            $view->with('bmSoftwareJs', CatalogoLaboratorios::software());
+            $view->with('bmInstrumentalJs', CatalogoLaboratorios::instrumental());
         });
     }
 }

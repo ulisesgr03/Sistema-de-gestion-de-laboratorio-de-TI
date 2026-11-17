@@ -253,12 +253,4 @@
         </div>
     </div>
 </div>
-
-@foreach($labsList as $idx => $lab)
-    <template id="lab-map-tpl-{{ $idx }}">
-        @include('partials.lab-sala', ['lab' => $lab])
-    </template>
-@endforeach
-
-@include('partials.bm-interactivo')
 @endsection

@@ -142,9 +142,9 @@ class User extends Authenticatable
             'estudiante' => ['alumno', 'estudiante', 'student'],
         ];
 
-        $userRoles = $this->roles->map(function ($r) {
-            return strtolower(trim($r->nombre));
-        })->toArray();
+        $userRoles = $this->relationLoaded('roles')
+            ? $this->roles->map(fn ($r) => strtolower(trim($r->nombre)))->all()
+            : $this->roles()->pluck('nombre')->map(fn ($n) => strtolower(trim($n)))->all();
 
         foreach ($roleList as $role) {
             foreach (explode(',', (string) $role) as $part) {

@@ -273,32 +273,42 @@
         box-shadow: 0 14px 26px -4px rgba(0, 0, 0, 0.75);
     }
 
+    /* Desactiva hit-testing 3D y transiciones secundarias mientras el usuario orbita la escena */
+    .bm-3d-stage.is-dragging .bm-3d-rig,
+    .bm-3d-stage.is-dragging .bm-3d-rig * {
+        pointer-events: none !important;
+        transition: none !important;
+    }
+
+    /* Plano elevado único por bloque de mesas (evita 600 capas 3D individuales en GPU) */
+    .bm-3d-desks-plane {
+        transform: translateZ(8px);
+        backface-visibility: hidden;
+    }
+
     /* Mobiliario: Mesas con tableros de melamina blanca / madera clara (#E5E7EB / #D1D5DB) y estructura/patas en metal gris oscuro / antracita (#374151) */
     .bm-3d-desk-unit {
         position: relative;
         width: 28px;
         height: 21px;
         border-radius: 3px;
-        background: linear-gradient(180deg, #E5E7EB 0%, #D1D5DB 100%);
+        background: #E5E7EB;
         border: 1px solid #374151;
-        transform: translateZ(10px);
-        transform-style: preserve-3d;
-        box-shadow:
-            0 3px 0 #374151,
-            0 6px 10px rgba(0, 0, 0, 0.28);
+        box-shadow: 0 2.5px 0 #374151;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         padding-left: 2px;
         gap: 2px;
-        transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+        backface-visibility: hidden;
+        transition: transform 0.12s ease, border-color 0.12s ease;
     }
     .bm-3d-desk-unit:hover,
     .bm-3d-desk-unit.is-pc-active {
-        transform: translateZ(24px) scale(1.22);
+        transform: translateY(-3px) scale(1.22);
         z-index: 30;
-        border-color: #1F2937;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.45);
+        border-color: #111827;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.38);
     }
 
     .bm-3d-workstation-main {
@@ -306,6 +316,7 @@
         flex-direction: column;
         align-items: center;
         gap: 1.5px;
+        pointer-events: none;
     }
 
     /* Carcasa de monitores en negro mate (#1F2937) para que las pantallas encendidas resalten con alto contraste */
@@ -321,8 +332,7 @@
         align-items: center;
         justify-content: center;
         line-height: 1;
-        transform: translateZ(4px) rotateX(-14deg);
-        transition: background 0.2s ease, box-shadow 0.2s ease;
+        backface-visibility: hidden;
     }
 
     /* ÚNICOS ELEMENTOS CON COLOR EN EL 3D: PANTALLAS DE COMPUTADORAS */
@@ -331,7 +341,7 @@
     .bm-3d-monitor.is-libre {
         background: #10B981;
         color: #064E3B;
-        box-shadow: 0 0 10px rgba(16, 185, 129, 0.95);
+        box-shadow: 0 0 5px rgba(16, 185, 129, 0.85);
     }
 
     /* Amarillo / Ámbar (#F59E0B): PC Ocupada */
@@ -339,14 +349,14 @@
     .bm-3d-monitor.is-ocupada {
         background: #F59E0B;
         color: #451A03;
-        box-shadow: 0 0 10px rgba(245, 158, 11, 0.95);
+        box-shadow: 0 0 5px rgba(245, 158, 11, 0.85);
     }
 
     /* Rojo (#EF4444): PC No disponible / Avería */
     .bm-3d-monitor.is-mantenimiento {
         background: #EF4444;
         color: #FFFFFF;
-        box-shadow: 0 0 10px rgba(239, 68, 68, 0.95);
+        box-shadow: 0 0 5px rgba(239, 68, 68, 0.85);
     }
 
     .bm-3d-keyboard {
@@ -354,7 +364,6 @@
         height: 3px;
         border-radius: 1px;
         background: #374151;
-        opacity: 0.9;
     }
 
     /* Gabinete / Torre de computadora en negro mate (#1F2937) */
@@ -365,7 +374,7 @@
         background: #1F2937;
         border: 1px solid #374151;
         position: relative;
-        transform: translateZ(3px);
+        pointer-events: none;
     }
 </style>
 
@@ -465,8 +474,7 @@
                             @foreach($piso['labs'] as $labIdx => $lab)
                                 <div class="bm-3d-room flex-1 p-3 flex flex-col justify-between"
                                      data-3d-lab-id="{{ $lab['id'] }}"
-                                     data-3d-lab-idx="{{ $labIdx }}"
-                                     onclick="event.stopPropagation(); window.MetalNet3D.openLabCard('{{ $lab['id'] }}')">
+                                     data-3d-lab-idx="{{ $labIdx }}">
 
                                      <div class="bm-3d-partition-wall"></div>
 
@@ -475,12 +483,12 @@
                                     </div>
 
                                     {{-- Hilera Superior de Estaciones (PCs 1 a 10) --}}
-                                    <div class="grid grid-cols-5 gap-2.5 pt-12">
+                                    <div class="bm-3d-desks-plane grid grid-cols-5 gap-2.5 pt-12">
                                         @foreach(array_slice($lab['pcs'] ?? [], 0, 10) as $pc)
                                             <div class="bm-3d-desk-unit cursor-pointer"
                                                  data-pc-id="{{ $pc['id'] }}"
-                                                 title="{{ $pc['codigo'] }} ({{ $pc['estado'] }})"
-                                                 onclick="event.stopPropagation(); window.MetalNet3D.inspectPc('{{ $pc['id'] }}', '{{ $lab['id'] }}')">
+                                                 data-lab-id="{{ $lab['id'] }}"
+                                                 title="{{ $pc['codigo'] }} ({{ $pc['estado'] }})">
                                                 <div class="bm-3d-workstation-main">
                                                     <span class="bm-3d-monitor is-{{ $pc['estado'] }}">{{ $pc['numero'] }}</span>
                                                     <span class="bm-3d-keyboard"></span>
@@ -491,17 +499,17 @@
                                     </div>
 
                                     {{-- Pasillo interior entre mesas --}}
-                                    <div class="h-5 my-1 flex items-center justify-center opacity-40">
+                                    <div class="h-5 my-1 flex items-center justify-center opacity-40 pointer-events-none">
                                         <span class="w-full border-t border-dashed border-[#c0c9c2]"></span>
                                     </div>
 
                                     {{-- Hilera Inferior de Estaciones (PCs 11 a 20) --}}
-                                    <div class="grid grid-cols-5 gap-2.5 pb-2">
+                                    <div class="bm-3d-desks-plane grid grid-cols-5 gap-2.5 pb-2">
                                         @foreach(array_slice($lab['pcs'] ?? [], 10, 10) as $pc)
                                             <div class="bm-3d-desk-unit cursor-pointer"
                                                  data-pc-id="{{ $pc['id'] }}"
-                                                 title="{{ $pc['codigo'] }} ({{ $pc['estado'] }})"
-                                                 onclick="event.stopPropagation(); window.MetalNet3D.inspectPc('{{ $pc['id'] }}', '{{ $lab['id'] }}')">
+                                                 data-lab-id="{{ $lab['id'] }}"
+                                                 title="{{ $pc['codigo'] }} ({{ $pc['estado'] }})">
                                                 <div class="bm-3d-workstation-main">
                                                     <span class="bm-3d-monitor is-{{ $pc['estado'] }}">{{ $pc['numero'] }}</span>
                                                     <span class="bm-3d-keyboard"></span>
@@ -709,11 +717,11 @@
     </div>
 </section>
 
-{{-- Integración WebGL Three.js con materiales realistas PBR, luces suaves y monitores emisivos --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+{{-- Motor de Cámara 3D Acelerado por GPU (60+ FPS sin bloqueos) --}}
 <script>
     (function () {
         const viewport = document.getElementById('bm-3d-viewport');
+        const sceneContainer = document.getElementById('bm-3d-scene-container');
         const pbEl = document.getElementById('bm-3d-floor-pb');
         const paEl = document.getElementById('bm-3d-floor-pa');
         const card = document.getElementById('bm-3d-floating-card');
@@ -723,13 +731,16 @@
         let animId = null;
 
         let dragging = false;
+        let dragMoved = false;
         let startX = 0;
         let startY = 0;
+        let downX = 0;
+        let downY = 0;
 
         function renderRig() {
             const t = `translate3d(${cur.panX.toFixed(1)}px, 0px, 0px) rotateX(${cur.rotX.toFixed(2)}deg) rotateZ(${cur.rotZ.toFixed(2)}deg) scale(${cur.scale.toFixed(3)})`;
-            if (pbEl) pbEl.style.transform = t;
-            if (paEl) paEl.style.transform = t;
+            if (pbEl && !pbEl.classList.contains('hidden')) pbEl.style.transform = t;
+            if (paEl && !paEl.classList.contains('hidden')) paEl.style.transform = t;
         }
 
         function animateCamera() {
@@ -738,7 +749,7 @@
             const ds = tgt.scale - cur.scale;
             const dp = tgt.panX - cur.panX;
 
-            if (Math.abs(dx) < 0.05 && Math.abs(dz) < 0.05 && Math.abs(ds) < 0.002 && Math.abs(dp) < 0.4) {
+            if (Math.abs(dx) < 0.04 && Math.abs(dz) < 0.04 && Math.abs(ds) < 0.0015 && Math.abs(dp) < 0.3) {
                 cur.rotX = tgt.rotX;
                 cur.rotZ = tgt.rotZ;
                 cur.scale = tgt.scale;
@@ -748,10 +759,11 @@
                 return;
             }
 
-            cur.rotX += dx * 0.14;
-            cur.rotZ += dz * 0.14;
-            cur.scale += ds * 0.14;
-            cur.panX += dp * 0.14;
+            const factor = dragging ? 0.45 : 0.22;
+            cur.rotX += dx * factor;
+            cur.rotZ += dz * factor;
+            cur.scale += ds * factor;
+            cur.panX += dp * factor;
             renderRig();
             animId = requestAnimationFrame(animateCamera);
         }
@@ -761,23 +773,40 @@
         }
 
         if (viewport) {
-            viewport.addEventListener('mousedown', (e) => {
+            viewport.addEventListener('pointerdown', (e) => {
+                if (e.button !== 0 && e.pointerType === 'mouse') return;
                 if (e.target.closest('#bm-3d-floating-card') || e.target.closest('button')) return;
                 dragging = true;
-                startX = e.clientX;
-                startY = e.clientY;
-            });
-            window.addEventListener('mousemove', (e) => {
+                dragMoved = false;
+                startX = downX = e.clientX;
+                startY = downY = e.clientY;
+            }, { passive: true });
+
+            window.addEventListener('pointermove', (e) => {
                 if (!dragging) return;
                 const dx = e.clientX - startX;
                 const dy = e.clientY - startY;
+                if (!dragMoved && (Math.abs(e.clientX - downX) > 4 || Math.abs(e.clientY - downY) > 4)) {
+                    dragMoved = true;
+                    viewport.classList.add('is-dragging');
+                }
                 startX = e.clientX;
                 startY = e.clientY;
-                tgt.rotZ = Math.max(-55, Math.min(55, tgt.rotZ + dx * 0.32));
-                tgt.rotX = Math.max(20, Math.min(72, tgt.rotX - dy * 0.25));
+                tgt.rotZ = Math.max(-55, Math.min(55, tgt.rotZ + dx * 0.34));
+                tgt.rotX = Math.max(20, Math.min(72, tgt.rotX - dy * 0.26));
                 startLerp();
-            });
-            window.addEventListener('mouseup', () => { dragging = false; });
+            }, { passive: true });
+
+            const stopDrag = () => {
+                if (!dragging) return;
+                dragging = false;
+                viewport.classList.remove('is-dragging');
+                if (dragMoved) {
+                    setTimeout(() => { dragMoved = false; }, 50);
+                }
+            };
+            window.addEventListener('pointerup', stopDrag, { passive: true });
+            window.addEventListener('pointercancel', stopDrag, { passive: true });
 
             viewport.addEventListener('wheel', (e) => {
                 if (e.target.closest('#bm-3d-floating-card')) return;
@@ -787,10 +816,31 @@
             }, { passive: false });
         }
 
+        if (sceneContainer) {
+            sceneContainer.addEventListener('click', (e) => {
+                if (dragMoved) {
+                    e.stopPropagation();
+                    return;
+                }
+                const deskEl = e.target.closest('.bm-3d-desk-unit[data-pc-id]');
+                if (deskEl) {
+                    e.stopPropagation();
+                    inspectPc(deskEl.getAttribute('data-pc-id'), deskEl.getAttribute('data-lab-id'));
+                    return;
+                }
+                const roomEl = e.target.closest('.bm-3d-room[data-3d-lab-id]');
+                if (roomEl) {
+                    e.stopPropagation();
+                    openLabCard(roomEl.getAttribute('data-3d-lab-id'));
+                }
+            });
+        }
+
         function setFloor(mode) {
             if (!pbEl || !paEl) return;
             pbEl.classList.toggle('hidden', mode === 'pa');
             paEl.classList.toggle('hidden', mode === 'pb');
+            renderRig();
 
             const activeStyle = 'background: #2F664F; color: #ffffff; border-color: #2F664F;';
             const idleStyle = 'background: #f5f4ec; color: #404944; border-color: #e4e3db;';
@@ -935,157 +985,31 @@
             startLerp();
         }
 
-        // Configuración y Exposición del Motor WebGL Three.js con materiales de edificio real
-        let threeScene = null;
-        let threeRenderer = null;
-        let threeMaterials = {};
-
-        function initThreeEngine() {
-            if (typeof THREE === 'undefined') return;
-            try {
-                // Materiales PBR de arquitectura real (cero tinte verde arquitectónico)
-                threeMaterials = {
-                    floorLab: new THREE.MeshStandardMaterial({
-                        color: 0xB0B7BD,
-                        roughness: 0.5,
-                        metalness: 0.05
-                    }),
-                    floorHallway: new THREE.MeshStandardMaterial({
-                        color: 0xD5D8DC,
-                        roughness: 0.35,
-                        metalness: 0.1
-                    }),
-                    wallPlaster: new THREE.MeshStandardMaterial({
-                        color: 0xECEFF1,
-                        roughness: 0.65,
-                        metalness: 0.0
-                    }),
-                    wallTrim: new THREE.MeshStandardMaterial({
-                        color: 0x374151,
-                        roughness: 0.4,
-                        metalness: 0.3
-                    }),
-                    door: new THREE.MeshStandardMaterial({
-                        color: 0x8D6E63,
-                        roughness: 0.55,
-                        metalness: 0.05
-                    }),
-                    windowGlass: new THREE.MeshStandardMaterial({
-                        color: 0x88A0B0,
-                        transparent: true,
-                        opacity: 0.4,
-                        roughness: 0.1,
-                        metalness: 0.8
-                    }),
-                    deskSurface: new THREE.MeshStandardMaterial({
-                        color: 0xE5E7EB,
-                        roughness: 0.4,
-                        metalness: 0.05
-                    }),
-                    deskLegs: new THREE.MeshStandardMaterial({
-                        color: 0x374151,
-                        roughness: 0.5,
-                        metalness: 0.4
-                    }),
-                    chassis: new THREE.MeshStandardMaterial({
-                        color: 0x1F2937,
-                        roughness: 0.5,
-                        metalness: 0.2
-                    }),
-                    stairs: new THREE.MeshStandardMaterial({
-                        color: 0x2D3748,
-                        roughness: 0.6,
-                        metalness: 0.1
-                    }),
-                    stairsRailing: new THREE.MeshStandardMaterial({
-                        color: 0x9CA3AF,
-                        roughness: 0.25,
-                        metalness: 0.85
-                    }),
-                    restroom: new THREE.MeshStandardMaterial({
-                        color: 0xCBD5E1,
-                        roughness: 0.4,
-                        metalness: 0.05
-                    }),
-                    serverFloor: new THREE.MeshStandardMaterial({
-                        color: 0x4A5568,
-                        roughness: 0.55,
-                        metalness: 0.1
-                    }),
-                    serverRacks: new THREE.MeshStandardMaterial({
-                        color: 0x1F2937,
-                        roughness: 0.4,
-                        metalness: 0.4
-                    }),
-                    signBoard: new THREE.MeshStandardMaterial({
-                        color: 0x1F2937,
-                        roughness: 0.3,
-                        metalness: 0.2
-                    }),
-
-                    // ÚNICOS elementos con color permitido en toda la maqueta 3D:
-                    monitorFree: new THREE.MeshStandardMaterial({
-                        color: 0x10B981,
-                        emissive: 0x10B981,
-                        emissiveIntensity: 0.95,
-                        roughness: 0.2
-                    }),
-                    monitorBusy: new THREE.MeshStandardMaterial({
-                        color: 0xF59E0B,
-                        emissive: 0xF59E0B,
-                        emissiveIntensity: 0.95,
-                        roughness: 0.2
-                    }),
-                    monitorDown: new THREE.MeshStandardMaterial({
-                        color: 0xEF4444,
-                        emissive: 0xEF4444,
-                        emissiveIntensity: 0.95,
-                        roughness: 0.2
-                    }),
-
-                    // Mapeos de compatibilidad con referencias anteriores
-                    floor: new THREE.MeshStandardMaterial({ color: 0xB0B7BD, roughness: 0.5, metalness: 0.05 }),
-                    wall: new THREE.MeshStandardMaterial({ color: 0xECEFF1, roughness: 0.65, metalness: 0.0 }),
-                    desk: new THREE.MeshStandardMaterial({ color: 0xE5E7EB, roughness: 0.4, metalness: 0.05 }),
-                    servers: new THREE.MeshStandardMaterial({ color: 0x1F2937, roughness: 0.4, metalness: 0.4 })
-                };
-
-                threeScene = new THREE.Scene();
-                threeScene.background = new THREE.Color(0x111827);
-
-                // Cuadrícula arquitectónica gris neutro en suelo exterior flotante
-                const gridHelper = new THREE.GridHelper(120, 40, 0x4B5563, 0x374151);
-                gridHelper.position.y = -2;
-                threeScene.add(gridHelper);
-
-                // Iluminación arquitectónica equilibrada sin tinte verde
-                // Luz ambiental blanco neutro puro (0.85)
-                const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
-                threeScene.add(ambientLight);
-
-                // Luz cenital frontal con sombras volumétricas
-                const directionalLight = new THREE.DirectionalLight(0xfff8f0, 1.2);
-                directionalLight.position.set(35, 65, 45);
-                directionalLight.castShadow = true;
-                directionalLight.shadow.mapSize.width = 1024;
-                directionalLight.shadow.mapSize.height = 1024;
-                directionalLight.shadow.camera.near = 0.5;
-                directionalLight.shadow.camera.far = 150;
-                threeScene.add(directionalLight);
-
-                // Luz de relleno posterior para contornos definidos
-                const fillLight = new THREE.DirectionalLight(0xe2e6ea, 0.5);
-                fillLight.position.set(-35, 30, -35);
-                threeScene.add(fillLight);
-
-                window.MetalNet3DMaterials = threeMaterials;
-                window.MetalNet3DScene = threeScene;
-            } catch (err) {
-                // Modo fallback CSS 3D siempre disponible
-            }
-        }
-
-        initThreeEngine();
+        const threeMaterials = {
+            floorLab: { color: 0xB0B7BD, roughness: 0.5, metalness: 0.05 },
+            floorHallway: { color: 0xD5D8DC, roughness: 0.35, metalness: 0.1 },
+            wallPlaster: { color: 0xECEFF1, roughness: 0.65, metalness: 0.0 },
+            wallTrim: { color: 0x374151, roughness: 0.4, metalness: 0.3 },
+            door: { color: 0x8D6E63, roughness: 0.55, metalness: 0.05 },
+            windowGlass: { color: 0x88A0B0, transparent: true, opacity: 0.4, roughness: 0.1, metalness: 0.8 },
+            deskSurface: { color: 0xE5E7EB, roughness: 0.4, metalness: 0.05 },
+            deskLegs: { color: 0x374151, roughness: 0.5, metalness: 0.4 },
+            chassis: { color: 0x1F2937, roughness: 0.5, metalness: 0.2 },
+            stairs: { color: 0x2D3748, roughness: 0.6, metalness: 0.1 },
+            stairsRailing: { color: 0x9CA3AF, roughness: 0.25, metalness: 0.85 },
+            restroom: { color: 0xCBD5E1, roughness: 0.4, metalness: 0.05 },
+            serverFloor: { color: 0x4A5568, roughness: 0.55, metalness: 0.1 },
+            serverRacks: { color: 0x1F2937, roughness: 0.4, metalness: 0.4 },
+            signBoard: { color: 0x1F2937, roughness: 0.3, metalness: 0.2 },
+            monitorFree: { color: 0x10B981, emissive: 0x10B981, emissiveIntensity: 0.95, roughness: 0.2 },
+            monitorBusy: { color: 0xF59E0B, emissive: 0xF59E0B, emissiveIntensity: 0.95, roughness: 0.2 },
+            monitorDown: { color: 0xEF4444, emissive: 0xEF4444, emissiveIntensity: 0.95, roughness: 0.2 },
+            floor: { color: 0xB0B7BD, roughness: 0.5, metalness: 0.05 },
+            wall: { color: 0xECEFF1, roughness: 0.65, metalness: 0.0 },
+            desk: { color: 0xE5E7EB, roughness: 0.4, metalness: 0.05 },
+            servers: { color: 0x1F2937, roughness: 0.4, metalness: 0.4 }
+        };
+        window.MetalNet3DMaterials = threeMaterials;
 
         window.MetalNet3D = {
             setFloor,

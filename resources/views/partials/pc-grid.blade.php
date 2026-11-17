@@ -35,10 +35,9 @@
             @if($variant === 'mini')
                 <img src="{{ $svgAsset }}"
                      alt="{{ $pc['codigo'] }}"
-                     class="w-7 h-5 object-contain pointer-events-none select-none pc-tile__img"
-                     data-img-libre="{{ asset('images/equipos/pc-libre.svg') }}"
-                     data-img-ocupado="{{ asset('images/equipos/pc-ocupada.svg') }}"
-                     data-img-mantenimiento="{{ asset('images/equipos/pc-no-disponible.svg') }}">
+                     loading="lazy"
+                     decoding="async"
+                     class="w-7 h-5 object-contain pointer-events-none select-none pc-tile__img">
                 <span class="pc-tile__num">{{ $pc['numero'] }}</span>
             @else
                 <span class="pc-tile__top">
@@ -47,10 +46,9 @@
                 </span>
                 <img src="{{ $svgAsset }}"
                      alt="{{ $pc['codigo'] }}"
-                     class="w-14 h-11 object-contain pointer-events-none select-none pc-tile__img"
-                     data-img-libre="{{ asset('images/equipos/pc-libre.svg') }}"
-                     data-img-ocupado="{{ asset('images/equipos/pc-ocupada.svg') }}"
-                     data-img-mantenimiento="{{ asset('images/equipos/pc-no-disponible.svg') }}">
+                     loading="lazy"
+                     decoding="async"
+                     class="w-14 h-11 object-contain pointer-events-none select-none pc-tile__img">
                 <span class="pc-tile__status">{{ $estadoLabelUi }}</span>
             @endif
         </button>

@@ -292,17 +292,10 @@
             </div>
 
         </article>
-
-        {{-- Plantilla oculta para el modal de Plano --}}
-        <template id="lab-map-tpl-{{ $idx }}">
-            @include('partials.lab-sala', ['lab' => $lab])
-        </template>
         @endforeach
 
     </div>
 </div>
-
-@include('partials.bm-interactivo')
 
 <style>
 .filtro-btn {

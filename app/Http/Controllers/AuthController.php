@@ -23,7 +23,6 @@ class AuthController extends Controller
             return redirect()->to($user->dashboardRoute());
         }
 
-        $laboratorios = Laboratorio::where('activo', true)->orderBy('id')->get();
         $avisoContexto = null;
 
         if ($request->query('motivo') === 'solicitar_software') {
@@ -35,7 +34,7 @@ class AuthController extends Controller
             $avisoContexto = 'Inicia sesión con tu cuenta institucional para reservar estaciones o salas de laboratorio.';
         }
 
-        return view('auth.login', compact('laboratorios', 'avisoContexto'));
+        return view('auth.login', compact('avisoContexto'));
     }
 
     /**

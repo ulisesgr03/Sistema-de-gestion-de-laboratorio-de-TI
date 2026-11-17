@@ -41,10 +41,11 @@ class PanelOperativoController extends Controller
         $laboratorios = CatalogoLaboratorios::laboratorios();
         $labs = $laboratorios;
         $totales = CatalogoLaboratorios::totales();
-        $solicitudes = Proceso::with('usuario')->orderByDesc('id')->get();
+        $solicitudes = Proceso::with('usuario.roles')->orderByDesc('id')->limit(30)->get();
         $incidenciasAbiertas = Incidencia::with(['laboratorio', 'estacion'])
             ->where('estado', '!=', 'resuelta')
             ->orderByDesc('id')
+            ->limit(30)
             ->get();
         $usuarios = User::with('roles')->orderBy('id')->get();
         $roles = Rol::orderBy('id')->get();
@@ -337,25 +338,38 @@ class PanelOperativoController extends Controller
         // Si la reserva es de Clase o Examen, marcar automáticamente las 20 estaciones como ocupado
         // respetando las que estén en mantenimiento/avería
         if (in_array(strtolower($modalidad), ['clase', 'examen'], true)) {
-            for ($i = 1; $i <= 20; $i++) {
-                $codigoPc = sprintf('PC-%02d', $i);
-                $est = Estacion::where('laboratorio_id', $labId)->where('nombre', $codigoPc)->first();
-                if ($est && $est->estado === 'mantenimiento') {
-                    continue; // Preserva equipos averiados
-                }
-                $estActualizada = Estacion::updateOrCreate(
-                    [
-                        'laboratorio_id' => $labId,
-                        'nombre' => $codigoPc,
-                    ],
-                    [
-                        'estado' => 'ocupado',
-                        'ubicacion' => "{$modalidad}: {$materia} · {$user->name} ({$grupo})",
-                    ]
-                );
+            \Illuminate\Support\Facades\DB::transaction(function () use ($labId, $modalidad, $materia, $user, $grupo) {
+                $ubicacionTexto = "{$modalidad}: {$materia} · {$user->name} ({$grupo})";
+                $existentes = Estacion::where('laboratorio_id', $labId)->get()->keyBy('nombre');
+                $estacionIdsActualizar = [];
 
-                Equipo::where('estacion_id', $estActualizada->id)->update(['estado' => 'ocupado']);
-            }
+                for ($i = 1; $i <= 20; $i++) {
+                    $codigoPc = sprintf('PC-%02d', $i);
+                    $est = $existentes->get($codigoPc);
+                    if ($est && $est->estado === 'mantenimiento') {
+                        continue; // Preserva equipos averiados
+                    }
+                    if ($est) {
+                        $est->update([
+                            'estado' => 'ocupado',
+                            'ubicacion' => $ubicacionTexto,
+                        ]);
+                        $estacionIdsActualizar[] = $est->id;
+                    } else {
+                        $nueva = Estacion::create([
+                            'laboratorio_id' => $labId,
+                            'nombre' => $codigoPc,
+                            'estado' => 'ocupado',
+                            'ubicacion' => $ubicacionTexto,
+                        ]);
+                        $estacionIdsActualizar[] = $nueva->id;
+                    }
+                }
+
+                if (!empty($estacionIdsActualizar)) {
+                    Equipo::whereIn('estacion_id', $estacionIdsActualizar)->update(['estado' => 'ocupado']);
+                }
+            });
         }
 
         CatalogoLaboratorios::clearCache();

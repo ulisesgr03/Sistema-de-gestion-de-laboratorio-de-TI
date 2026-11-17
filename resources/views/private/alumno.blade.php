@@ -205,8 +205,6 @@
     </div>
 </div>
 
-@include('partials.bm-interactivo')
-
 <script>
 window.switchAluTab = function(panelKey, btnEl) {
     const container = document.getElementById('alumno-lab-tabs');

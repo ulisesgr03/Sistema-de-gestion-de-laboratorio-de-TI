@@ -315,8 +315,6 @@
     </div>
 </div>
 
-@include('partials.bm-interactivo')
-
 <script>
 window.switchLabTab = function(containerId, panelKey, btnEl) {
     const container = document.getElementById(containerId);

@@ -66,6 +66,4 @@
 
 {{-- ── PLANO ARQUITECTÓNICO 3D INTERACTIVO (PLANTA BAJA Y PLANTA ALTA) ────── --}}
 @include('partials.estructura-bm-3d', ['labs' => $labs])
-
-@include('partials.bm-interactivo')
 @endsection

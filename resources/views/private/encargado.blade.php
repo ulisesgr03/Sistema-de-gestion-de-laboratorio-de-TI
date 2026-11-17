@@ -112,10 +112,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <template id="lab-map-tpl-{{ $idx }}">
-                            @include('partials.lab-sala', ['lab' => $lab])
-                        </template>
                     @endforeach
                 </div>
             </div>
@@ -256,6 +252,4 @@
         </div>
     </div>
 </div>
-
-@include('partials.bm-interactivo')
 @endsection

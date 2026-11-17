@@ -17,10 +17,23 @@ use Illuminate\Support\Facades\Schema;
 class CatalogoLaboratorios
 {
     private static ?array $labsCache = null;
+    private static ?array $totalesCache = null;
+    private static ?array $jsCache = null;
+    private static ?array $solicitudesCache = null;
+    private static ?array $softwareCache = null;
+    private static ?array $instrumentalCache = null;
 
     public static function clearCache(): void
     {
         self::$labsCache = null;
+        self::$totalesCache = null;
+        self::$jsCache = null;
+        self::$solicitudesCache = null;
+        try {
+            \Illuminate\Support\Facades\Cache::forget('metalnet.catalogo.live_state');
+        } catch (\Throwable $e) {
+            // Ignorar si el contenedor de caché no está inicializado
+        }
     }
 
     /**
@@ -32,27 +45,37 @@ class CatalogoLaboratorios
             return self::$labsCache;
         }
 
-        // Mapear estados en vivo desde la base de datos si existen
+        // Mapear estados en vivo desde caché rápida o base de datos
         $dbStates = [];
         $activeReservas = [];
-        try {
-            if (Schema::hasTable('estaciones')) {
-                $estacionesDb = Estacion::all();
+
+        $fetchLiveState = function (): array {
+            $states = [];
+            $reservasMap = [];
+
+            try {
+                $estacionesDb = Estacion::select(['laboratorio_id', 'nombre', 'estado', 'ubicacion'])->get();
                 foreach ($estacionesDb as $est) {
-                    $dbStates[$est->laboratorio_id . ':' . strtoupper(trim($est->nombre))] = [
+                    $states[$est->laboratorio_id . ':' . strtoupper(trim($est->nombre))] = [
                         'estado' => $est->estado,
                         'ubicacion' => $est->ubicacion,
                     ];
                 }
+            } catch (\Throwable $e) {
+                // Fallback limpio en caso de migración en curso
             }
-            if (Schema::hasTable('reservas_laboratorio')) {
-                $reservas = ReservaLaboratorio::with('usuario')
+
+            try {
+                $hoyInicio = now()->startOfDay();
+                $hoyFin = now()->endOfDay();
+                $ahora = now();
+                $reservas = ReservaLaboratorio::with('usuario:id,name')
                     ->whereIn('estado', ['confirmada', 'aprobada'])
-                    ->where(function ($q) {
-                        $q->whereBetween('inicio', [now()->startOfDay(), now()->endOfDay()])
-                          ->orWhere(function ($q2) {
-                              $q2->where('inicio', '<=', now())
-                                 ->where('fin', '>=', now());
+                    ->where(function ($q) use ($hoyInicio, $hoyFin, $ahora) {
+                        $q->whereBetween('inicio', [$hoyInicio, $hoyFin])
+                          ->orWhere(function ($q2) use ($ahora) {
+                              $q2->where('inicio', '<=', $ahora)
+                                 ->where('fin', '>=', $ahora);
                           });
                     })
                     ->get();
@@ -61,18 +84,39 @@ class CatalogoLaboratorios
                     if (str_starts_with($res->materia ?? '', '[ESTACIÓN')) {
                         if (preg_match('/\[ESTACIÓN\s+PC-(\d+)\]/i', $res->materia, $m)) {
                             $pcNum = str_pad($m[1], 2, '0', STR_PAD_LEFT);
-                            $dbStates[$res->laboratorio_id . ":PC-{$pcNum}"] = [
+                            $states[$res->laboratorio_id . ":PC-{$pcNum}"] = [
                                 'estado' => 'ocupado',
                                 'ubicacion' => 'Reservado por ' . ($res->usuario?->name ?? 'Alumno'),
                             ];
                         }
                     } else {
-                        $activeReservas[$res->laboratorio_id] = $res;
+                        $reservasMap[$res->laboratorio_id] = [
+                            'modalidad' => $res->modalidad,
+                            'materia' => $res->materia,
+                            'grupo' => $res->grupo,
+                            'docente_nombre' => $res->usuario?->name,
+                        ];
                     }
                 }
+            } catch (\Throwable $e) {
+                // Fallback limpio en caso de migración en curso
             }
+
+            return ['states' => $states, 'reservas' => $reservasMap];
+        };
+
+        try {
+            if (!app()->runningUnitTests()) {
+                $live = \Illuminate\Support\Facades\Cache::remember('metalnet.catalogo.live_state', 60, $fetchLiveState);
+            } else {
+                $live = $fetchLiveState();
+            }
+            $dbStates = $live['states'] ?? [];
+            $activeReservas = $live['reservas'] ?? [];
         } catch (\Throwable $e) {
-            // Fallback limpio en caso de migración en curso
+            $live = $fetchLiveState();
+            $dbStates = $live['states'] ?? [];
+            $activeReservas = $live['reservas'] ?? [];
         }
 
         $base = [
@@ -544,15 +588,15 @@ class CatalogoLaboratorios
             $tieneClaseOExamen = false;
             $tituloSesionDocente = null;
 
-            if ($resActiva && in_array(strtolower($resActiva->modalidad), ['clase', 'examen', 'práctica', 'practica'], true)) {
-                $docenteName = $resActiva->usuario ? $resActiva->usuario->name : ($lab['docente'] ?? 'Docente Titular');
-                $lab['estado_badge'] = "{$resActiva->modalidad}: {$resActiva->materia} · {$docenteName}";
+            if ($resActiva && in_array(strtolower($resActiva['modalidad'] ?? ''), ['clase', 'examen', 'práctica', 'practica'], true)) {
+                $docenteName = $resActiva['docente_nombre'] ?: ($lab['docente'] ?? 'Docente Titular');
+                $lab['estado_badge'] = "{$resActiva['modalidad']}: {$resActiva['materia']} · {$docenteName}";
                 $lab['tipo'] = 'clase';
-                $lab['asignatura'] = $resActiva->materia;
+                $lab['asignatura'] = $resActiva['materia'];
                 $lab['docente'] = $docenteName;
-                $lab['grupo'] = $resActiva->grupo;
+                $lab['grupo'] = $resActiva['grupo'];
                 $tieneClaseOExamen = true;
-                $tituloSesionDocente = "{$resActiva->modalidad}: {$resActiva->materia} · {$docenteName}";
+                $tituloSesionDocente = "{$resActiva['modalidad']}: {$resActiva['materia']} · {$docenteName}";
             } elseif (
                 in_array(strtolower($lab['tipo'] ?? ''), ['clase', 'taller'], true) ||
                 str_contains(strtolower($lab['estado_badge'] ?? ''), 'clase') ||
@@ -633,6 +677,10 @@ class CatalogoLaboratorios
      */
     public static function totales(): array
     {
+        if (self::$totalesCache !== null) {
+            return self::$totalesCache;
+        }
+
         $tot = [
             'disponible' => 0,
             'ocupado' => 0,
@@ -662,7 +710,7 @@ class CatalogoLaboratorios
         $tot['operativo'] = $tot['total'] > 0
             ? (int) round((($tot['total'] - $tot['mantenimiento']) / $tot['total']) * 100)
             : 100;
-        return $tot;
+        return self::$totalesCache = $tot;
     }
 
     /**
@@ -670,7 +718,11 @@ class CatalogoLaboratorios
      */
     public static function paraJs(): array
     {
-        return array_map(function ($lab) {
+        if (self::$jsCache !== null) {
+            return self::$jsCache;
+        }
+
+        return self::$jsCache = array_map(function ($lab) {
             return [
                 'id' => $lab['id'],
                 'codigo' => $lab['codigo'],
@@ -681,7 +733,10 @@ class CatalogoLaboratorios
                 'imagen' => $lab['imagen'],
                 'planta' => $lab['planta'],
                 'ubicacion' => $lab['ubicacion'],
+                'red' => $lab['red'],
+                'proximo_cambio' => $lab['proximo_cambio'],
                 'badge' => $lab['estado_badge'],
+                'badge_color' => $lab['badge_color'],
                 'asignatura' => $lab['asignatura'],
                 'docente' => $lab['docente'],
                 'grupo' => $lab['grupo'],
@@ -712,9 +767,6 @@ class CatalogoLaboratorios
                     'ip' => $pc['ip'],
                     'detalle' => $pc['usuario'],
                     'averia_detalle' => $pc['averia_detalle'],
-                    'imagen_estado' => $pc['imagen_estado'],
-                    'hw' => $pc['specs_detalladas'],
-                    'sw_versiones' => $lab['software_lista'],
                 ], $lab['pcs']),
             ];
         }, self::laboratorios());
@@ -727,7 +779,7 @@ class CatalogoLaboratorios
     private static function generarEstaciones(
         array $lab,
         array $dbStates = [],
-        ?ReservaLaboratorio $reservaActiva = null,
+        mixed $reservaActiva = null,
         bool $esClaseOExamen = false,
         ?string $tituloSesionDocente = null
     ): array {
@@ -813,33 +865,35 @@ class CatalogoLaboratorios
      */
     public static function solicitudesPendientes(): array
     {
+        if (self::$solicitudesCache !== null) {
+            return self::$solicitudesCache;
+        }
+
         $items = [];
 
         try {
-            if (Schema::hasTable('procesos')) {
-                $procesos = Proceso::with(['usuario', 'laboratorio'])
-                    ->orderByDesc('created_at')
-                    ->limit(15)
-                    ->get();
+            $procesos = Proceso::with(['usuario:id,name,matricula,email', 'laboratorio:id,codigo'])
+                ->orderByDesc('created_at')
+                ->limit(15)
+                ->get();
 
-                foreach ($procesos as $proc) {
-                    $items[] = [
-                        'id' => 'PROC-' . $proc->id,
-                        'db_id' => $proc->id,
-                        'origen' => 'proceso',
-                        'tipo' => $proc->tipo,
-                        'solicitante' => $proc->usuario->name ?? 'Usuario MetalNet',
-                        'matricula' => $proc->usuario->matricula ?? ($proc->usuario->email ?? 'MN-USR'),
-                        'lab' => $proc->laboratorio ? ('L-' . str_pad((string) $proc->laboratorio->id, 2, '0', STR_PAD_LEFT)) : 'L-01',
-                        'equipo' => $proc->tipo,
-                        'horario' => $proc->created_at ? $proc->created_at->format('d/m H:i') : 'Hoy',
-                        'hora' => $proc->created_at ? $proc->created_at->format('H:i') : 'Hoy',
-                        'motivo' => $proc->descripcion ?: 'Solicitud registrada en plataforma',
-                        'estado' => $proc->estado,
-                        'hace' => $proc->created_at ? $proc->created_at->diffForHumans() : 'Reciente',
-                        'prioridad' => str_contains(strtolower($proc->tipo), 'actualizaci') || str_contains(strtolower($proc->tipo), 'software') ? 'alta' : 'media',
-                    ];
-                }
+            foreach ($procesos as $proc) {
+                $items[] = [
+                    'id' => 'PROC-' . $proc->id,
+                    'db_id' => $proc->id,
+                    'origen' => 'proceso',
+                    'tipo' => $proc->tipo,
+                    'solicitante' => $proc->usuario->name ?? 'Usuario MetalNet',
+                    'matricula' => $proc->usuario->matricula ?? ($proc->usuario->email ?? 'MN-USR'),
+                    'lab' => $proc->laboratorio ? ('L-' . str_pad((string) $proc->laboratorio->id, 2, '0', STR_PAD_LEFT)) : 'L-01',
+                    'equipo' => $proc->tipo,
+                    'horario' => $proc->created_at ? $proc->created_at->format('d/m H:i') : 'Hoy',
+                    'hora' => $proc->created_at ? $proc->created_at->format('H:i') : 'Hoy',
+                    'motivo' => $proc->descripcion ?: 'Solicitud registrada en plataforma',
+                    'estado' => $proc->estado,
+                    'hace' => $proc->created_at ? $proc->created_at->diffForHumans() : 'Reciente',
+                    'prioridad' => str_contains(strtolower($proc->tipo), 'actualizaci') || str_contains(strtolower($proc->tipo), 'software') ? 'alta' : 'media',
+                ];
             }
         } catch (\Throwable $e) {
             // Fallback
@@ -852,7 +906,7 @@ class CatalogoLaboratorios
             ['id' => 'SOL-104', 'db_id' => null, 'origen' => 'seed', 'tipo' => 'Reserva Estación GPU', 'solicitante' => 'Alumno Ingeniería TI', 'matricula' => 'MN-ALU-2026', 'lab' => 'L-04', 'equipo' => 'PC-07 · RTX 4070', 'horario' => 'Hoy 13:00 – 15:00', 'hora' => '13:00 – 15:00', 'motivo' => 'Entrenamiento de red neuronal con PyTorch 2.4', 'estado' => 'pendiente', 'hace' => '22 min', 'prioridad' => 'media'],
         ];
 
-        return array_merge($items, $defaults);
+        return self::$solicitudesCache = array_merge($items, $defaults);
     }
 
     /**

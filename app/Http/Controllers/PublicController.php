@@ -21,8 +21,8 @@ class PublicController extends Controller
     {
         $laboratoriosDetallados = CatalogoLaboratorios::laboratorios();
         $totales = CatalogoLaboratorios::totales();
-        $totalEstaciones = Estacion::count() ?: $totales['total'];
-        $softwareCount = Software::count() ?: count(CatalogoLaboratorios::software());
+        $totalEstaciones = $totales['total'] ?: 200;
+        $softwareCount = count(CatalogoLaboratorios::software());
 
         return view('public.inicio', [
             'laboratorios' => $laboratoriosDetallados,
