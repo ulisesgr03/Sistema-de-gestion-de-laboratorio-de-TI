@@ -20,6 +20,7 @@ class User extends Authenticatable
         'matricula',
         'password',
         'activo',
+        'estado',
         'telefono',
     ];
 

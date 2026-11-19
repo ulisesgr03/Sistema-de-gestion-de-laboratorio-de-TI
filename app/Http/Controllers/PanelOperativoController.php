@@ -47,7 +47,14 @@ class PanelOperativoController extends Controller
             ->orderByDesc('id')
             ->limit(30)
             ->get();
-        $usuarios = User::with('roles')->orderBy('id')->get();
+        $usuarios = User::with('roles')
+            ->where('estado', 'aprobado')
+            ->orderBy('id')
+            ->get();
+        $cuentasPendientes = User::with('roles')
+            ->where('estado', 'pendiente')
+            ->orderByDesc('id')
+            ->get();
         $roles = Rol::orderBy('id')->get();
 
         return view('private.admin', compact(
@@ -58,6 +65,7 @@ class PanelOperativoController extends Controller
             'solicitudes',
             'incidenciasAbiertas',
             'usuarios',
+            'cuentasPendientes',
             'roles'
         ));
     }
@@ -442,5 +450,37 @@ class PanelOperativoController extends Controller
         }
 
         return back()->with('status', "Usuario {$targetUser->name} actualizado al rol {$targetUser->primaryRoleLabel()}.");
+    }
+
+    /**
+     * Aprueba o rechaza una solicitud de cuenta de usuario pendiente (Admin).
+     */
+    public function resolverCuentaUsuario(Request $request): JsonResponse|RedirectResponse
+    {
+        $validated = $request->validate([
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+            'accion' => ['required', 'in:aprobar,rechazar,aprobado,rechazado'],
+        ]);
+
+        $targetUser = User::findOrFail((int) $validated['user_id']);
+        $accion = strtolower($validated['accion']);
+        $nuevoEstado = in_array($accion, ['aprobar', 'aprobado'], true) ? 'aprobado' : 'rechazado';
+
+        $targetUser->estado = $nuevoEstado;
+        $targetUser->save();
+
+        $mensaje = $nuevoEstado === 'aprobado'
+            ? "La cuenta de {$targetUser->name} ({$targetUser->matricula}) ha sido aprobada."
+            : "La solicitud de cuenta de {$targetUser->name} ({$targetUser->matricula}) fue rechazada.";
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $mensaje,
+                'estado' => $nuevoEstado,
+            ]);
+        }
+
+        return back()->with('status', $mensaje);
     }
 }

@@ -166,6 +166,13 @@
                 </div>
             </div>
 
+            @if(session('status') || session('success'))
+                <div class="p-3.5 rounded-xl border border-[#b3f1be] text-xs font-bold flex items-start gap-2.5 bg-[#e8f5ec] text-[#16512c]" role="alert">
+                    <svg class="w-4 h-4 shrink-0 mt-0.5 text-[#16512c]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>{{ session('status') ?? session('success') }}</span>
+                </div>
+            @endif
+
             @if(!empty($avisoContexto))
                 <div class="p-3.5 rounded-xl border border-[#fde68a] text-xs flex items-start gap-2.5 bg-[#fef3c7] text-[#92400e]">
                     <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>

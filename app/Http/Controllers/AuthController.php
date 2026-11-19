@@ -80,6 +80,32 @@ class AuthController extends Controller
             /** @var User $user */
             $user = Auth::user();
 
+            $estadoCuenta = $user->estado ?? 'aprobado';
+
+            if ($estadoCuenta === 'pendiente') {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()
+                    ->withInput($request->only('identifier'))
+                    ->withErrors([
+                        'identifier' => 'Tu cuenta aún está pendiente de aprobación',
+                    ]);
+            }
+
+            if ($estadoCuenta === 'rechazado') {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()
+                    ->withInput($request->only('identifier'))
+                    ->withErrors([
+                        'identifier' => 'Tu solicitud de cuenta fue rechazada',
+                    ]);
+            }
+
             if (isset($user->activo) && !$user->activo) {
                 Auth::logout();
                 $request->session()->invalidate();
@@ -108,7 +134,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Registra un nuevo usuario institucional (Alumno o Docente) y redirige a su panel privado.
+     * Registra un nuevo usuario institucional (Alumno o Docente) con estado pendiente de aprobación.
      */
     public function register(Request $request): RedirectResponse
     {
@@ -133,16 +159,14 @@ class AuthController extends Controller
             'telefono' => $validated['telefono'] ?? null,
             'password' => Hash::make($validated['password']),
             'activo' => true,
+            'estado' => 'pendiente',
         ]);
 
         $user->assignRole($validated['rol']);
 
-        Auth::login($user);
-        $request->session()->regenerate();
-
-        return redirect()->to($user->dashboardRoute())->with(
-            'success',
-            "Cuenta registrada exitosamente. Bienvenido a tu panel de {$user->primaryRoleLabel()}, {$user->name}."
+        return redirect()->route('login')->with(
+            'status',
+            'Tu cuenta fue creada y está pendiente de aprobación por un administrador'
         );
     }
 

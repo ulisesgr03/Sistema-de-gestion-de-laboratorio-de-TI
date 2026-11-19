@@ -7,7 +7,8 @@
     $labsList = $laboratorios ?? $bmLabs ?? [];
     $solicitudesList = $solicitudes ?? collect();
     $incidenciasList = $incidenciasAbiertas ?? collect();
-    $usuariosList = $usuarios ?? collect();
+    $usuariosList = ($usuarios ?? collect())->where('estado', 'aprobado');
+    $cuentasPendientesList = $cuentasPendientes ?? collect();
     $rolesList = $roles ?? collect();
 @endphp
 
@@ -277,6 +278,58 @@
                         </div>
                     @empty
                         <p class="text-xs text-outline">Todas las estaciones están operativas sin incidencias.</p>
+                    @endforelse
+                </div>
+            </div>
+
+            {{-- Solicitudes de Acceso · Cuentas Pendientes de Aprobación --}}
+            <div class="p-5 rounded-2xl border border-surface-container-highest bg-surface-container-lowest shadow-sm">
+                <div class="flex items-center justify-between pb-3 mb-3.5 border-b border-surface-container-highest">
+                    <div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider block text-primary">Solicitudes de Acceso</span>
+                        <h3 class="text-base font-extrabold text-on-surface">Cuentas Pendientes</h3>
+                    </div>
+                    <span class="px-2.5 py-0.5 rounded border font-mono text-xs font-extrabold {{ $cuentasPendientesList->count() > 0 ? 'border-[#fde68a] bg-[#fef3c7] text-[#92400e]' : 'border-[#b3f1be] bg-[#e8f5ec] text-[#16512c]' }}">
+                        {{ $cuentasPendientesList->count() }}
+                    </span>
+                </div>
+
+                <div class="space-y-2.5 max-h-60 overflow-y-auto">
+                    @forelse($cuentasPendientesList as $usrPend)
+                        <div class="p-3.5 rounded-xl border border-surface-container-highest space-y-2 text-xs bg-surface-container-low">
+                            <div class="flex items-start justify-between gap-2">
+                                <div class="min-w-0">
+                                    <p class="font-bold truncate text-on-surface">{{ $usrPend->name }}</p>
+                                    <span class="font-mono text-[11px] block truncate text-outline">{{ $usrPend->matricula }} · {{ $usrPend->email }}</span>
+                                </div>
+                                <span class="px-2 py-0.5 rounded border border-[#fde68a] text-[10px] font-extrabold uppercase shrink-0 bg-[#fef3c7] text-[#92400e]">
+                                    {{ $usrPend->primaryRoleLabel() }}
+                                </span>
+                            </div>
+
+                            <div class="flex items-center justify-end gap-2 pt-1.5 border-t border-surface-container-highest">
+                                <form method="POST" action="{{ route('panel.usuario-estado') }}">
+                                    @csrf
+                                    <input type="hidden" name="user_id" value="{{ $usrPend->id }}">
+                                    <input type="hidden" name="accion" value="aprobar">
+                                    <button type="submit"
+                                            class="px-3 py-1.5 rounded-lg text-white font-extrabold text-[11px] cursor-pointer transition hover:bg-primary-container bg-primary">
+                                        Aprobar
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ route('panel.usuario-estado') }}">
+                                    @csrf
+                                    <input type="hidden" name="user_id" value="{{ $usrPend->id }}">
+                                    <input type="hidden" name="accion" value="rechazar">
+                                    <button type="submit"
+                                            class="px-3 py-1.5 rounded-lg border border-[#fca5a5] font-bold text-[11px] cursor-pointer transition bg-[#ffdad6] text-[#991b1b] hover:bg-[#ba1a1a] hover:text-white">
+                                        Rechazar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-xs text-outline">No hay cuentas pendientes de aprobación.</p>
                     @endforelse
                 </div>
             </div>

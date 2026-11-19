@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
                 'matricula' => 'MN-ADM-001',
                 'password' => Hash::make(env('ADMIN_PASSWORD', 'AdminMN2026!')),
                 'activo' => true,
+                'estado' => 'aprobado',
                 'telefono' => '55-8000-0001',
             ]
         );
@@ -48,6 +49,7 @@ class DatabaseSeeder extends Seeder
                 'matricula' => 'MN-DOC-001',
                 'password' => Hash::make(env('TEACHER_PASSWORD', 'TeacherMN2026!')),
                 'activo' => true,
+                'estado' => 'aprobado',
                 'telefono' => '55-8000-0003',
             ]
         );
@@ -60,6 +62,7 @@ class DatabaseSeeder extends Seeder
                 'matricula' => 'MN-ALU-2026',
                 'password' => Hash::make(env('STUDENT_PASSWORD', 'StudentMN2026!')),
                 'activo' => true,
+                'estado' => 'aprobado',
                 'telefono' => '55-8000-0004',
             ]
         );

@@ -75,6 +75,10 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('panel.usuario-rol');
 
+    Route::post('/panel/usuario-estado', [PanelOperativoController::class, 'resolverCuentaUsuario'])
+        ->middleware('role:admin')
+        ->name('panel.usuario-estado');
+
     Route::post('/panel/reservar-sala', [PanelOperativoController::class, 'reservarSala'])
         ->middleware('role:docente,admin')
         ->name('panel.reservar-sala');
